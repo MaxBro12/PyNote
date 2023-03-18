@@ -23,11 +23,11 @@ def main_check() -> dict:
 def check_conf() -> dict:
     if not exists(file_conf):
         write(file_conf_inner, file_conf)
-    create_log_file('Config file created', 'info')
+        create_log_file('Config file created', 'info')
     return read(file_conf)
 
 
 def check_notes():
     if not exists(fold_notes):
         mkdir(fold_notes)
-    create_log_file('Notes folder created', 'info')
+        create_log_file('Notes folder created', 'info')

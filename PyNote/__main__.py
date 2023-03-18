@@ -6,7 +6,7 @@ from launch import main_check
 
 def main(args: list = []):
     conf = main_check()
-    create_log_file('App launched', 'info')
+    create_log_file('Application launched successfully', 'info')
 
 
 if __name__ == '__main__':
