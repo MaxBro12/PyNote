@@ -1,0 +1,15 @@
+__pycache__
+*.bat
+*.bash
+patch.txt
+
+.vscode
+.idea
+
+admin
+error.log
+
+test
+test.*
+*.exe
+settings.toml

@@ -1,0 +1,6 @@
+toml
+logging
+requests
+
+PyQt6
+PySide
