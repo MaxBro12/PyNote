@@ -8,10 +8,6 @@ from .tomlreader import (
     write,
 )
 
-from .adtypes import (
-    Stack,
-)
-
 
 __all__ = [
     'error_found',
@@ -19,6 +15,4 @@ __all__ = [
 
     'read',
     'write',
-
-    'Stack',
 ]

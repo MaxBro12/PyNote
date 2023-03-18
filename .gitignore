@@ -12,4 +12,6 @@ error.log
 test
 test.*
 *.exe
+
 settings.toml
+notes

@@ -1,15 +1,21 @@
 from sys import argv
-from core import error_found
+
+from core import create_log_file
+from launch import main_check
 
 
 def main(args: list = []):
-    pass
+    conf = main_check()
+    create_log_file('App launched', 'info')
 
 
 if __name__ == '__main__':
     try:
-        if len(argv) > 1:
-            main(argv[1:])
-        main()
+        argv.pop()
+        main(argv)
     except Exception as err:
-        error_found(err)
+        create_log_file(err, 'crit')
+        print(
+            "Во время работы приложния обнаружена ошибка!\n" +
+            "Отправьте файл error.log разработчику"
+        )
