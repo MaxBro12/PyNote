@@ -1,6 +1,10 @@
 
 # ! Основное
-file_conf = 'settings.toml'
+file_log = 'data/logger.log'
+file_error = 'error.log'
+
+fold_data = 'data'
+file_conf = 'data/settings.toml'
 file_conf_inner = {
     'app': {
         'width': 500,
@@ -11,5 +15,7 @@ file_conf_inner = {
         'token': 0,
     }
 }
+file_conf_row = r"^\[app\]\nwidth = [\d]*\nheight = [\d]*\n\n\[user]" \
+    r"\nid = [\d]*\ntoken = [\d]*\n"
 
-fold_notes = 'notes'
+fold_notes = 'data/notes'

@@ -13,5 +13,4 @@ test
 test.*
 *.exe
 
-settings.toml
-notes
+data

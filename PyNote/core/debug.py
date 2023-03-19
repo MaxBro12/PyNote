@@ -2,6 +2,8 @@ import logging
 from typing import Union
 from os import get_terminal_size
 
+from settings import file_log, file_error
+
 
 def error_found(err):
     print(f"{'=' * (get_terminal_size()[0] - 1)}\nError logged:\n{err}")
@@ -9,7 +11,7 @@ def error_found(err):
 
 
 def create_log_file(log: Union[Exception, str], levelname: str = 'debug'):
-    """Добовляем в лог данные log с указанием типа уровня:
+    """Добавляем в лог данные log с указанием типа уровня:
     - debug - дебаг
     - warning - предупреждение
     - info - информация
@@ -17,7 +19,7 @@ def create_log_file(log: Union[Exception, str], levelname: str = 'debug'):
     - crit - критическая ошибка"""
     logging.basicConfig(
         level=logging.DEBUG,
-        filename="error.log",
+        filename=file_log,
         filemode="a",
         format="%(asctime)s %(levelname)s %(message)s",
     )
