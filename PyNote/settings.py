@@ -18,4 +18,27 @@ file_conf_inner = {
 file_conf_row = r"^\[app\]\nwidth = [\d]*\nheight = [\d]*\n\n\[user]" \
     r"\nid = [\d]*\ntoken = [\d]*\n"
 
+
+# ! Все что касается заметок
 fold_notes = 'data/notes'
+file_notes = '_data.toml'
+file_notes_sample = {
+    'sync': False,
+
+    'last_save': '',
+
+    'timer': False,
+    'timer_at': '',
+}
+
+
+# ? Темы для приложения
+fold_themes = 'data/themes'
+file_dark = 'data/themes/dark.toml'
+file_dark_inner = {
+    'test': ''
+}
+file_light = 'data/themes/light.toml'
+file_light_inner = {
+    'test': ''
+}

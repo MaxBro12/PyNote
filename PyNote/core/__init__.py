@@ -3,9 +3,11 @@ from .debug import (
     create_log_file,
 )
 
-from .tomlreader import (
+from .filemanage import (
     read,
     write,
+    create_file,
+    rename_file,
 )
 
 from .adtypes import (
@@ -19,6 +21,8 @@ __all__ = [
 
     'read',
     'write',
+    'create_file',
+    'rename_file',
 
     'Stack',
 ]

@@ -12,6 +12,12 @@ from settings import (
     file_conf_row,
 
     fold_notes,
+
+    fold_themes,
+    file_dark,
+    file_dark_inner,
+    file_light,
+    file_light_inner,
 )
 
 
@@ -22,6 +28,8 @@ def main_check() -> dict:
     conf = check_conf()
     # ? Проверяем папку с заметками
     check_notes()
+    # ? Проверяем папку с темами
+    check_themes()
 
     return conf
 
@@ -51,3 +59,14 @@ def check_data():
     if not exists(fold_data):
         mkdir(fold_data)
         create_log_file('Data folder created', 'info')
+
+
+def check_themes():
+    if not exists(fold_themes):
+        mkdir(fold_themes)
+        create_log_file('Themes folder created', 'info')
+
+    if not exists(file_dark):
+        write(file_dark_inner, file_dark)
+    if not exists(file_light):
+        write(file_light_inner, file_light)

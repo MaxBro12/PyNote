@@ -1,5 +1,5 @@
 from toml import load, dump
-from .debug import create_log_file
+from ..debug import create_log_file
 
 
 def read(way: str) -> dict:
