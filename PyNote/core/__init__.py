@@ -8,6 +8,8 @@ from .filemanage import (
     write,
     create_file,
     rename_file,
+    load_file,
+    get_files,
 )
 
 from .adtypes import (
@@ -23,6 +25,8 @@ __all__ = [
     'write',
     'create_file',
     'rename_file',
+    'load_file',
+    'get_files',
 
     'Stack',
 ]

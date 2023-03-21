@@ -7,16 +7,17 @@ fold_data = 'data'
 file_conf = 'data/settings.toml'
 file_conf_inner = {
     'app': {
-        'width': 500,
-        'height': 500,
+        'width': 1000,
+        'height': 700,
+        'theme': "dracula.toml",
     },
     'user': {
         'id': 0,
         'token': 0,
     }
 }
-file_conf_row = r"^\[app\]\nwidth = [\d]*\nheight = [\d]*\n\n\[user]" \
-    r"\nid = [\d]*\ntoken = [\d]*\n"
+file_conf_row = r'^\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
+    r'\.toml"\n\n\[user\]\nid = [\d]*\ntoken = [\d]*\n'
 
 
 # ! Все что касается заметок
@@ -32,6 +33,7 @@ file_notes_sample = {
 }
 
 
+file_icon = 'PyNote/icon.ico'
 # ? Темы для приложения
 fold_themes = 'data/themes'
 file_dark = 'data/themes/dark.toml'

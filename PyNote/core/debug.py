@@ -24,7 +24,7 @@ def create_log_file(log: Union[Exception, str], levelname: str = 'debug'):
         format="%(asctime)s %(levelname)s %(message)s",
     )
     log_exc = False
-    if type(log) == Exception:
+    if type(log) != str:
         log_exc = True
     match levelname:
         case 'debug':

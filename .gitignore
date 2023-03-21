@@ -14,3 +14,4 @@ test.*
 *.exe
 
 data
+venv
