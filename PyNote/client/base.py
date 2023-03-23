@@ -1,4 +1,4 @@
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtWidgets, QtGui
 from PySide6.QtGui import QPalette, QColor
 from os import path
 
@@ -6,6 +6,7 @@ from core import read
 from handlers import get_notes
 
 from .editor import Editor
+from .notelist import NoteList
 
 from settings import file_icon, fold_themes
 
@@ -30,7 +31,7 @@ class MyApp(QtWidgets.QWidget):
         # self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 
         # ? Список заметок
-        self.notes_list = QtWidgets.QListWidget()
+        self.notes_list = NoteList()
         self.notes_list.setMaximumWidth(300)
         self.notes_list.setMinimumWidth(0)
 
