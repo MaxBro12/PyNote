@@ -4,6 +4,8 @@ from os import mkdir
 from core import write, read, create_log_file
 
 from settings import (
+    fold_data,
+
     file_conf,
     file_conf_inner,
 
@@ -12,12 +14,23 @@ from settings import (
 
 
 def main_check() -> dict:
+    # ? Проверяем папки
+    check_fold(fold_data)
+    check_fold(fold_notes)
+
     # ? Проверяем файл конфига
     conf = check_conf()
-    # ? Проверяем папку с заметками
-    check_notes()
+
+    # ? Проверяем базу пользователей
+    check_db()
 
     return conf
+
+
+def check_fold(fold: str):
+    if not exists(fold):
+        mkdir(fold)
+    create_log_file(f'{fold} folder created', 'info')
 
 
 def check_conf() -> dict:
@@ -27,7 +40,5 @@ def check_conf() -> dict:
     return read(file_conf)
 
 
-def check_notes():
-    if not exists(fold_notes):
-        mkdir(fold_notes)
-    create_log_file('Notes folder created', 'info')
+def check_db():
+    pass

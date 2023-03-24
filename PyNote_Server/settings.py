@@ -1,6 +1,9 @@
 
 # ! Основное
-file_conf = 'settings.toml'
+fold_data = 'server_data'
+
+file_conf = f'{fold_data}/settings.toml'
+
 file_conf_inner = {
     'app': {
         'width': 500,
@@ -12,4 +15,9 @@ file_conf_inner = {
     }
 }
 
-fold_notes = 'notes'
+file_log = f'{fold_data}/logger.log'
+file_error = f'{fold_data}/error.log'
+
+file_db = f'{fold_data}/base.db'
+
+fold_notes = f'{fold_data}/notes'

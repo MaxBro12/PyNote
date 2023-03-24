@@ -14,4 +14,5 @@ test.*
 *.exe
 
 data
+server_data
 venv

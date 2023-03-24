@@ -1,9 +1,11 @@
 from sys import argv
-from core import error_found
+from core import create_log_file
+from launch import main_check
 
 
 def main(args: list = []):
-    pass
+    conf = main_check()
+    create_log_file('Server UP', 'info')
 
 
 if __name__ == '__main__':
@@ -11,4 +13,4 @@ if __name__ == '__main__':
         argv.pop()
         main(argv)
     except Exception as err:
-        error_found(err)
+        create_log_file(err, 'crit')
