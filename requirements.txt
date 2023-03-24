@@ -2,5 +2,7 @@ toml
 logging
 requests
 
-PyQt6
 PySide6
+
+flask-restful
+requests
