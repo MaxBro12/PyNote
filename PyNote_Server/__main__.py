@@ -2,35 +2,20 @@ from sys import argv
 
 from core import create_log_file
 from launch import main_check
-from sql import DataBase
+from sql import DataBase, add_to_db
 
 from settings import file_db
 
 
 def main(args: list = []):
-    conf, data = main_check()
+    conf = main_check()
+    db = DataBase(file_db)
     create_log_file('Server UP', 'info')
-    data = DataBase(file_db)
 
-    a = {
-        'id': 70486,
-        'username': 'maxbro',
-        'password': '123123',
-        'token': '1dsg3j1po3'
-    }
-    b = {
-        'id': 70426,
-        'username': 'maxbro2',
-        'password': '123123',
-        'token': '1dsg3j1po3'
-    }
+    a = {'username': 'test', 'password': '123123'}
 
-    data.add(a)
-    data.add(b)
-
-    data.remove(70426)
-    data.remove(70426)
-    print(data.user_list)
+    add_to_db(db, a)
+    db.remove(70486)
 
 
 if __name__ == '__main__':

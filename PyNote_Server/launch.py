@@ -2,7 +2,7 @@ from os.path import exists
 from os import mkdir
 
 from core import write, read, create_log_file
-from sql import create_base, load_db
+from sql import create_base
 
 from settings import (
     fold_data,
@@ -16,7 +16,7 @@ from settings import (
 )
 
 
-def main_check() -> tuple:
+def main_check() -> dict:
     # ? Проверяем папки
     check_fold(fold_data)
     check_fold(fold_notes)
@@ -24,12 +24,11 @@ def main_check() -> tuple:
 
     # ? Проверяем файл конфига
     conf = check_conf()
-    db = load_db(file_db)
 
     # ? Проверяем базу пользователей
     check_db()
 
-    return conf, db
+    return conf
 
 
 def check_fold(fold: str):

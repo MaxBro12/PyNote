@@ -13,6 +13,11 @@ from .filemanage import (
     write
 )
 
+from .spec import (
+    create_id,
+    create_token,
+)
+
 
 __all__ = [
     'error_found',
@@ -24,5 +29,8 @@ __all__ = [
     'get_files',
 
     'read',
-    'write'
+    'write',
+
+    'create_id',
+    'create_token',
 ]

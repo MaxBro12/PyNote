@@ -31,4 +31,7 @@ table = """CREATE TABLE users (
         password TEXT NOT NULL,
         token TEXT NOT NULL);"""
 
-table_get_list = """SELECT username from users"""
+table_get_users = """SELECT username from users"""
+table_get_id = """SELECT id from users"""
+
+token_len = 20

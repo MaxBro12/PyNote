@@ -4,7 +4,8 @@ from settings import (
     file_db,
     table,
 
-    table_get_list,
+    table_get_id,
+    table_get_users,
 )
 from core import create_log_file
 
@@ -28,7 +29,6 @@ class DataBase():
             )
             self.data.commit()
             create_log_file(f'User ID {data["id"]} added', 'info')
-
         except sqlite3.IntegrityError:
             create_log_file(f'Cant add ID {data["id"]}', 'error')
 
@@ -59,7 +59,11 @@ class DataBase():
 
     @property
     def user_list(self) -> list:
-        return self.cursor.execute(table_get_list).fetchall()
+        return self.cursor.execute(table_get_users).fetchall()
+
+    @property
+    def id_list(self) -> list:
+        return self.cursor.execute(table_get_id).fetchall()
 
 
 def create_base():
