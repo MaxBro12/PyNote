@@ -35,3 +35,9 @@ table_get_users = """SELECT username from users"""
 table_get_id = """SELECT id from users"""
 
 token_len = 20
+
+
+# ! Flask
+debug = True
+port = 3334
+host = "127.0.0.1"

@@ -1,6 +1,6 @@
-from .source import *
+from .source import UsersResources
 
 
 __all__ = [
-    '',
+    'UsersResources',
 ]
