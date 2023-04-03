@@ -7,7 +7,14 @@ from .filemanage import (
     create_file,
     rename_file,
     load_file,
+    delete_file,
     get_files,
+
+    create_folder,
+    rename_folder,
+    delete_folder,
+
+    pjoin,
 
     read,
     write
@@ -26,7 +33,14 @@ __all__ = [
     'create_file',
     'rename_file',
     'load_file',
+    'delete_file',
     'get_files',
+
+    'create_folder',
+    'rename_folder',
+    'delete_folder',
+
+    'pjoin',
 
     'read',
     'write',

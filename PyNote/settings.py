@@ -12,12 +12,16 @@ file_conf_inner = {
         'theme': "dracula.toml",
     },
     'user': {
-        'id': 0,
-        'token': 0,
+        'username': "",
+        'password': "",
+    },
+    'server': {
+        'host': "",
     }
 }
-file_conf_row = r'^\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
-    r'\.toml"\n\n\[user\]\nid = [\d]*\ntoken = [\d]*\n'
+file_conf_row = r'\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
+    r'\.toml"\n\n\[user\]\nusername = "[\w]*"\npassword = "[\w]*"\n\n\[ser' \
+    r'ver\]\nhost = "[^"]*"\n'
 
 
 # ! Все что касается заметок

@@ -1,6 +1,6 @@
 from ..debug import create_log_file
 
-from os import rename, listdir
+from os import rename, listdir, remove
 
 
 def create_file(
@@ -41,12 +41,23 @@ def rename_file(last_name: str, new_name: str) -> bool:
     except FileExistsError:
         create_log_file(
             f'Не возможно переименовать файл {last_name} в {new_name}! ' +
-            'Файл с таким именем уже существует.'
+            'Файл с таким именем уже существует.', 'error'
         )
         return False
 
 
-def get_files(where: str) -> list:
+def delete_file(name: str) -> bool:
+    try:
+        remove(name)
+        return True
+    except FileNotFoundError:
+        create_log_file(
+            f'Не возможно удалить файл {name} файл не найден!', 'error'
+        )
+        return False
+
+
+def get_files(where: str) -> list[str]:
     try:
         return listdir(where)
     except FileNotFoundError:

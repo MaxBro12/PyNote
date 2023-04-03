@@ -18,7 +18,7 @@ class NotesResources(Resource, Data):
     def __init__(self) -> None:
         super().__init__()
 
-    def get(self):
+    def get(self, token: str):
         pass
 
     def post(self):
@@ -35,8 +35,14 @@ class UsersResources(Resource, Data):
     def __init__(self):
         super().__init__()
 
-    def get(self, uid: int):
-        return self.data.get(uid), 200
+    def get(self, user: str):
+        req = dict(request.form)
+        data = self.data.get_by_name(req['username'])
+        if data is not None:
+            if req['password'] == data['password']:
+                return data
+        else:
+            return {'user': 'User not found'}
 
     def post(self):
         pass

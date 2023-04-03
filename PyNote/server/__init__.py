@@ -1,10 +1,15 @@
 from .urls import url
 
-from .users import check_user, create_user
+from .users import (
+    api_check_user,
+    api_create_user,
+    api_login_user,
+)
 
 __all__ = [
     'url',
 
-    'check_user',
-    'create_user'
+    'api_check_user',
+    'api_create_user',
+    'api_login_user',
 ]

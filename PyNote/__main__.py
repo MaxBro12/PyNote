@@ -21,7 +21,7 @@ def main(args: list):
     # exit(app.exec())
 
     # check_user('test')
-    print(check_user('maxbro1234'))
+    # print(check_user('maxbro1234'))
     # create_user('maxbro2', '123123')
 
 
