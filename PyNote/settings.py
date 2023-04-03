@@ -44,3 +44,9 @@ file_light = 'data/themes/light.toml'
 file_light_inner = {
     'test': ''
 }
+
+
+# ! Сервер
+api_1 = "http://192.168.1.67:3334"
+api_new = "/new/"
+api_usr = "/usr/"

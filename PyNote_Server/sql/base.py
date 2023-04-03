@@ -59,11 +59,17 @@ class DataBase():
 
     @property
     def user_list(self) -> list:
-        return self.cursor.execute(table_get_users).fetchall()
+        return list(
+            map(lambda x: x[0],
+                self.cursor.execute(table_get_users).fetchall())
+        )
 
     @property
     def id_list(self) -> list:
-        return self.cursor.execute(table_get_id).fetchall()
+        return list(
+            map(lambda x: x[0],
+                self.cursor.execute(table_get_id).fetchall())
+        )
 
 
 def create_base():

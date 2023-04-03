@@ -38,6 +38,11 @@ token_len = 20
 
 
 # ! Flask
-debug = True
+debug = False
 port = 3334
 host = "127.0.0.1"
+
+api_new_user_1 = "/new/<string:user>"
+api_new_user_2 = "/new/"
+api_new_user_3 = "/new"
+api_user_data = "/usr/<int:id>"
