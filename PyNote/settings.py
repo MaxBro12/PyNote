@@ -47,6 +47,6 @@ file_light_inner = {
 
 
 # ! Сервер
-api_1 = "http://192.168.1.67:3334"
-api_new = "/new/"
-api_usr = "/usr/"
+api_1 = "http://192.168.1.64:3334"
+api_new = "new"
+api_usr = "usr"

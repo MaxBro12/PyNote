@@ -14,6 +14,7 @@ __all__ = [
     'create_file',
     'rename_file',
     'load_file',
+    'get_files',
 
     'read',
     'write',

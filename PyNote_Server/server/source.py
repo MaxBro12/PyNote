@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask import request
 
 
 from core import create_log_file
@@ -52,13 +53,11 @@ class NewUserResources(Resource, Data):
         super().__init__()
 
     def get(self, user: str = ''):
-        return {'aval': True if user not in self.data.user_list else False}
+        return {
+            'available': True if user not in self.data.user_list else False
+        }
 
     def post(self, user: str = ''):
-        parser = reqparse.RequestParser()
-        parser.add_argument("username", type=str)
-        parser.add_argument("password", type=str)
-        param = parser.parse_args()
-        add_to_db(self.data, param)
-        create_log_file(param, 'debug')
-        return {'message': "Got it"}
+        data = dict(request.form)
+        add_to_db(self.data, data)
+        return self.data.get_by_name(data['username'])

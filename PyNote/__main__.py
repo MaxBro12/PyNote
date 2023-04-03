@@ -11,7 +11,7 @@ from sys import exit
 from settings import file_log
 
 
-def main(args: list = []):
+def main(args: list):
     conf = main_check()
     create_log_file('Application launched successfully', 'info')
 
@@ -21,8 +21,8 @@ def main(args: list = []):
     # exit(app.exec())
 
     # check_user('test')
-    # `check_user('maxbro')
-    create_user('maxbro2', '123123')
+    print(check_user('maxbro1234'))
+    # create_user('maxbro2', '123123')
 
 
 if __name__ == '__main__':

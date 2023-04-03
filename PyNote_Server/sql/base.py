@@ -10,7 +10,7 @@ from settings import (
 from core import create_log_file
 
 
-class DataBase():
+class DataBase:
     def __init__(self, db_name: str = file_db):
         self.data = load_db(db_name)
         self.cursor = self.data.cursor()
@@ -32,15 +32,17 @@ class DataBase():
         except sqlite3.IntegrityError:
             create_log_file(f'Cant add ID {data["id"]}', 'error')
 
-    def remove(self, uid: int):
+    def remove(self, uid: int) -> list | None:
         if self.get(uid) is not None:
             a = self.cursor.execute(
                 f"DELETE FROM users WHERE id = '{uid}'"
             ).fetchall()
             self.data.commit()
             create_log_file(f'User {uid} was deleted', 'info')
+            return a
         else:
             create_log_file(f'Unable delete ID {uid}')
+            return None
 
     def get(self, uid: int) -> dict | None:
         try:
@@ -55,6 +57,21 @@ class DataBase():
             }
         except IndexError:
             create_log_file(f'Cant find user by id {uid}')
+            return None
+
+    def get_by_name(self, username: str) -> dict | None:
+        try:
+            a = self.cursor.execute(
+                f"SELECT * FROM users WHERE username = '{username}'"
+            ).fetchall()
+            return {
+                'id': a[0][0],
+                'username': a[0][1],
+                'password': a[0][2],
+                'token': a[0][3],
+            }
+        except IndexError:
+            create_log_file(f'Cant find user by name {username}')
             return None
 
     @property
