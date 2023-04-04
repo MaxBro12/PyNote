@@ -59,6 +59,8 @@ class NewUserResources(Resource, Data):
         super().__init__()
 
     def get(self, user: str = ''):
+        test = list(request.access_route)
+        create_log_file(test[0], 'debug')
         return {
             'available': True if user not in self.data.user_list else False
         }

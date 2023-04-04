@@ -3,7 +3,7 @@ from sys import argv
 from core import create_log_file
 from launch import main_check
 from client import MyApp
-from server import check_user, create_user
+from server import api_check_user
 
 from PySide6 import QtWidgets
 from sys import exit
@@ -21,7 +21,7 @@ def main(args: list):
     # exit(app.exec())
 
     # check_user('test')
-    # print(check_user('maxbro1234'))
+    print(api_check_user(conf['server']['host'], 'maxbro1234'))
     # create_user('maxbro2', '123123')
 
 
