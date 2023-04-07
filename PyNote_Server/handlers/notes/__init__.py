@@ -1,6 +1,9 @@
 from .notes_folders import (
     create_userfolder,
-    create_notes,
+    create_note,
+
+    delete_userfolder,
+    delete_note,
 )
 
 from .load_notes import (
@@ -10,7 +13,10 @@ from .load_notes import (
 
 __all__ = [
     'create_userfolder',
-    'create_notes',
+    'create_note',
+
+    'delete_userfolder',
+    'delete_note',
 
     'get_notes',
 ]

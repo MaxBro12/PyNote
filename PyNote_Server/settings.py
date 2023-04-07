@@ -1,4 +1,4 @@
-
+from typing import TypedDict
 # ! Основное
 fold_data = 'server_data'
 
@@ -45,4 +45,24 @@ host = "127.0.0.1"
 api_new_user_1 = "/new/<string:user>"
 api_new_user_2 = "/new/"
 api_new_user_3 = "/new"
-api_user_data = "/usr/<int:id>"
+
+api_user_data_1 = "/usr/<string:user>"
+api_user_data_2 = "/usr/"
+api_user_data_3 = "/usr"
+
+api_notes_1 = "/note/<string:user>"
+api_notes_2 = "/note/"
+api_notes_3 = "/note"
+
+
+# ! Доп классы
+class User_Dict(TypedDict):
+    id: int
+    username: str
+    password: str
+    token: str
+
+
+class Notes_dict(TypedDict):
+    name: str
+    inner: str

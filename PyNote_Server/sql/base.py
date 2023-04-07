@@ -6,6 +6,8 @@ from settings import (
 
     table_get_id,
     table_get_users,
+
+    User_Dict,
 )
 from core import create_log_file
 
@@ -44,7 +46,7 @@ class DataBase:
             create_log_file(f'Unable delete ID {uid}')
             return None
 
-    def get(self, uid: int) -> dict | None:
+    def get(self, uid: int) -> User_Dict | None:
         try:
             a = self.cursor.execute(
                 f"SELECT * FROM users WHERE id = '{uid}'"
@@ -59,7 +61,7 @@ class DataBase:
             create_log_file(f'Cant find user by id {uid}')
             return None
 
-    def get_by_name(self, username: str) -> dict | None:
+    def get_by_name(self, username: str) -> User_Dict | None:
         try:
             a = self.cursor.execute(
                 f"SELECT * FROM users WHERE username = '{username}'"

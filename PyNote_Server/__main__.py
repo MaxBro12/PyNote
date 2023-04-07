@@ -15,7 +15,7 @@ def main(args: list = []):
     # db = DataBase(file_db)
 
     ip = get_local_ip()
-    create_log_file(f'Server UPing at {ip}:{port}', 'info')
+    create_log_file(f'Server UP at {ip}:{port}', 'info')
     start_server(ip)
 
 
