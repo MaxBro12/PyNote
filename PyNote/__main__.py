@@ -1,14 +1,14 @@
 from sys import argv
 
-from core import create_log_file
+from core import create_log_file, get_files, pjoin, load_file, create_file
 from launch import main_check
+from server import api_check_user, api_login_user, api_save_note, api_get_notes
 from client import MyApp
-from server import api_check_user
 
 from PySide6 import QtWidgets
 from sys import exit
 
-from settings import file_log
+from settings import file_log, Load_User, Post_Note, fold_notes
 
 
 def main(args: list):
@@ -21,8 +21,11 @@ def main(args: list):
     # exit(app.exec())
 
     # check_user('test')
-    print(api_check_user(conf['server']['host'], 'maxbro1234'))
-    # create_user('maxbro2', '123123')
+    new_user: Load_User = {'username': 'maxbro', 'password': '123123'}
+
+    user = api_login_user(conf['server']['host'], new_user)
+    if user is not None:
+        pass
 
 
 if __name__ == '__main__':

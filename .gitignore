@@ -10,6 +10,7 @@ admin
 error.log
 
 test
+cleaner.py
 test.*
 *.exe
 

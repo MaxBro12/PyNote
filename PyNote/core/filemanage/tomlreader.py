@@ -1,8 +1,10 @@
+from typing import Any, MutableMapping
+
 from toml import load, dump
 from ..debug import create_log_file
 
 
-def read(way: str) -> dict:
+def read(way: str) -> MutableMapping[str, Any]:
     """Считываем файл по пути way формата .toml и возвращаем словарь"""
     return load(way)
 

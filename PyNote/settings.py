@@ -1,3 +1,5 @@
+from typing import TypedDict
+
 
 # ! Основное
 file_log = 'data/logger.log'
@@ -54,3 +56,51 @@ file_light_inner = {
 api_1 = "http://192.168.1.64:3334"
 api_new = "new"
 api_usr = "usr"
+api_notes = "note"
+
+
+# ! Доп классы
+class User_Data(TypedDict):
+    id: int
+    username: str
+    password: str
+    token: str
+
+
+class UserNote(TypedDict):
+    id: int
+    username: str
+    password: str
+    token: str
+    name: str
+    inner: str
+
+
+class Load_User(TypedDict):
+    username: str
+    password: str
+
+
+class Note(TypedDict):
+    name: str
+    inner: str
+
+
+class Post_Note(TypedDict):
+    id: int
+    token: str
+    name: str
+    inner: str
+
+
+class Get_User_Note(TypedDict):
+    id: int
+    token: str
+
+
+class Delete_Note(TypedDict):
+    id: int
+    username: str
+    password: str
+    token: str
+    name: str

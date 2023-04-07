@@ -10,6 +10,8 @@ from .filemanage import (
     rename_file,
     load_file,
     get_files,
+
+    pjoin,
 )
 
 from .adtypes import (
@@ -27,6 +29,8 @@ __all__ = [
     'rename_file',
     'load_file',
     'get_files',
+
+    'pjoin',
 
     'Stack',
 ]

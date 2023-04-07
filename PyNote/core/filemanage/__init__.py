@@ -2,7 +2,18 @@ from .simplefiles import (
     create_file,
     rename_file,
     load_file,
+    delete_file,
     get_files,
+)
+
+from .simplefolders import (
+    create_folder,
+    rename_folder,
+    delete_folder,
+)
+
+from .path import (
+    pjoin,
 )
 
 from .tomlreader import (
@@ -14,6 +25,12 @@ __all__ = [
     'create_file',
     'rename_file',
     'load_file',
+    'delete_file',
+    'get_files',
+
+    'create_folder',
+
+    'pjoin',
 
     'read',
     'write',

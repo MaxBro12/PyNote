@@ -1,13 +1,53 @@
-from requests import get, post, delete
+from requests import get, post, delete, exceptions
 
 
-def get_note(data: dict) -> dict:
-    pass
+from core import create_log_file
 
 
-def save_note(data: dict) -> dict:
-    pass
+from .urls import url
 
 
-def delete_note(data: dict) -> bool:
-    pass
+from settings import (
+    api_notes,
+    Note,
+    Get_User_Note,
+    Post_Note,
+    Delete_Note,
+
+    User_Data,
+    UserNote
+)
+
+
+def api_get_notes(host: str, data: User_Data) -> list[Note] | None:
+    try:
+        return get(url(host, api_notes), data=data).json()['log']
+    except exceptions.Timeout:
+        create_log_file('Server timeout!', 'error')
+        return None
+
+
+def api_save_note(host: str, data: UserNote) -> bool:
+    try:
+        return True if post(
+            url(host, api_notes), data=data
+        ).json()['log'] else False
+    except exceptions.Timeout:
+        create_log_file('Server timeout!', 'error')
+        return False
+    except KeyError:
+        create_log_file('Server dont undestend request', 'error')
+        return False
+
+
+def api_delete_note(host: str, data: Delete_Note) -> bool:
+    try:
+        return True if delete(
+            url(host, api_notes), data=data
+        ).json()['log'] else False
+    except exceptions.Timeout:
+        create_log_file('Server timeout!', 'error')
+        return False
+    except KeyError:
+        create_log_file('Server dont undestend request', 'error')
+        return False
