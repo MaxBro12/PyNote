@@ -6,14 +6,9 @@ file_conf = f'{fold_data}/settings.toml'
 
 file_conf_inner = {
     'app': {
-        'width': 500,
-        'height': 500,
+        'server_token': "",
     },
-    'user': {
-        'id': 0,
-        'token': 0,
     }
-}
 
 file_log = f'{fold_data}/logger.log'
 file_error = f'{fold_data}/error.log'
