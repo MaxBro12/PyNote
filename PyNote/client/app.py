@@ -12,7 +12,7 @@ from handlers import (
 )
 
 from .layout import Main_Layout, Notes_Layout
-from .notelist import NoteItem
+from .notelist import NoteItem, EmptyNote
 
 
 from settings import (
@@ -77,7 +77,10 @@ class MyApp(QtWidgets.QWidget):
         self.notes = get_local_notes()
         for note in self.notes:
             self.notes_layout.notes_list.column.addWidget(
-                NoteItem()
+                NoteItem(), 0
+            )
+        self.notes_layout.notes_list.column.addWidget(
+                EmptyNote(), 1
             )
 
     def open_note(self):

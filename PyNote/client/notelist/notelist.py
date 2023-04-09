@@ -10,7 +10,8 @@ class NoteList(QWidget):
         self.column.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.column.setSpacing(0)
         self.column.setContentsMargins(0, 0, 0, 0)
-        self.setMaximumWidth(230)
+        self.setMaximumWidth(250)
+        self.setMinimumWidth(250)
 
     def add(self, widget):
         self.column.addWidget(widget, 1)

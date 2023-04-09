@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QPushButton, QLabel
+from PySide6.QtWidgets import (
+    QWidget, QHBoxLayout, QPushButton, QTextBrowser, QLabel
+)
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon
 
@@ -38,6 +40,22 @@ class NoteItem(QWidget):
         self.text_area.setText(new)
 
 
+class EmptyNote(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+
+        # ? Кнопки
+        self.newn = ButtonNewNote()
+
+        # ? Разметка
+        self.row = QHBoxLayout()
+        self.row.setSpacing(0)
+        self.row.setContentsMargins(0, 0, 0, 0)
+        self.row.addWidget(self.newn)
+
+        self.setLayout(self.row)
+
+
 class Text(QLabel):
     def __init__(self):
         super().__init__()
@@ -48,7 +66,7 @@ class ButtonNewNote(QPushButton):
     def __init__(self):
         super().__init__()
         self.setIcon(QIcon(file_new_note_icon))
-        self.setFixedSize(QSize(50, 50))
+        # self.setFixedSize(QSize(50, 50))
 
 
 class ButtonDelete(QPushButton):
