@@ -18,6 +18,8 @@ from settings import (
     file_dark_inner,
     file_light,
     file_light_inner,
+    file_space,
+    file_space_inner,
 )
 
 
@@ -70,3 +72,5 @@ def check_themes():
         write(file_dark_inner, file_dark)
     if not exists(file_light):
         write(file_light_inner, file_light)
+    if not exists(file_space):
+        write(file_space_inner, file_space)

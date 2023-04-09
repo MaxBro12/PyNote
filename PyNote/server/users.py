@@ -16,9 +16,9 @@ from settings import (
 )
 
 
-def api_check_user(host: str, name: str) -> bool:
+def api_check_user(host: str, key: str, name: str) -> bool:
     try:
-        return True if get(url(host, api_new, name)).json()['log'] \
+        return True if get(url(host, key, api_new, name)).json()['log'] \
             else False
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
@@ -28,20 +28,20 @@ def api_check_user(host: str, name: str) -> bool:
         return False
 
 
-def api_create_user(host: str, user: Load_User) -> User_Data | None:
+def api_create_user(host: str, key: str, user: Load_User) -> User_Data | None:
     try:
         return post(
-            url(host, api_new, user['username']), data=user
+            url(host, key, api_new, user['username']), data=user
         ).json()
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
         return None
 
 
-def api_login_user(host: str, user: Load_User) -> User_Data | None:
+def api_login_user(host: str, key: str, user: Load_User) -> User_Data | None:
     try:
         return get(
-            url(host, api_usr, user['username']), data=user
+            url(host, key, api_usr, user['username']), data=user
         ).json()
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')

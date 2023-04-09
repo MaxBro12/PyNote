@@ -1,14 +1,16 @@
 from .notes import (
-    add_note,
-    remove_note,
-    save_note,
-    get_notes,
+    sent_notes,
+    upload_notes,
+    serv_delete_note,
+
+    get_local_notes,
 )
 
 
 __all__ = [
-    'add_note',
-    'remove_note',
-    'save_note',
-    'get_notes',
+    'sent_notes',
+    'upload_notes',
+    'serv_delete_note',
+
+    'get_local_notes',
 ]

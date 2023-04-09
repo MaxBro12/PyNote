@@ -19,18 +19,18 @@ from settings import (
 )
 
 
-def api_get_notes(host: str, data: User_Data) -> list[Note] | None:
+def api_get_notes(host: str, key: str, data: User_Data) -> list[Note] | None:
     try:
-        return get(url(host, api_notes), data=data).json()['log']
+        return get(url(host, key, api_notes), data=data).json()['log']
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
         return None
 
 
-def api_save_note(host: str, data: UserNote) -> bool:
+def api_save_note(host: str, key: str, data: UserNote) -> bool:
     try:
         return True if post(
-            url(host, api_notes), data=data
+            url(host, key, api_notes), data=data
         ).json()['log'] else False
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
@@ -40,10 +40,10 @@ def api_save_note(host: str, data: UserNote) -> bool:
         return False
 
 
-def api_delete_note(host: str, data: Delete_Note) -> bool:
+def api_delete_note(host: str, key: str, data: Delete_Note) -> bool:
     try:
         return True if delete(
-            url(host, api_notes), data=data
+            url(host, key, api_notes), data=data
         ).json()['log'] else False
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')

@@ -1,4 +1,4 @@
-from .base import MyApp
+from .app import MyApp
 
 
 __all__ = [

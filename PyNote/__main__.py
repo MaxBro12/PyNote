@@ -1,31 +1,25 @@
 from sys import argv
 
-from core import create_log_file, get_files, pjoin, load_file, create_file
+from core import create_log_file
 from launch import main_check
-from server import api_check_user, api_login_user, api_save_note, api_get_notes
 from client import MyApp
 
 from PySide6 import QtWidgets
 from sys import exit
 
-from settings import file_log, Load_User, Post_Note, fold_notes
+from settings import file_log
 
 
 def main(args: list):
     conf = main_check()
-    create_log_file('Application launched successfully', 'info')
+    if conf['server']['token'] == '':
+        conf['server']['token'] = 'a'
+    create_log_file('===== Application launched successfully =====', 'info')
 
-    # app = QtWidgets.QApplication([])
-    # widget = MyApp(conf)
-    # widget.show()
-    # exit(app.exec())
-
-    # check_user('test')
-    new_user: Load_User = {'username': 'maxbro', 'password': '123123'}
-
-    user = api_login_user(conf['server']['host'], new_user)
-    if user is not None:
-        pass
+    app = QtWidgets.QApplication([])
+    widget = MyApp(conf)
+    widget.show()
+    exit(app.exec())
 
 
 if __name__ == '__main__':

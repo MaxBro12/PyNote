@@ -4,9 +4,9 @@ from toml import load, dump
 from ..debug import create_log_file
 
 
-def read(way: str) -> MutableMapping[str, Any]:
+def read(way: str) -> dict[str, Any]:
     """Считываем файл по пути way формата .toml и возвращаем словарь"""
-    return load(way)
+    return dict(load(way))
 
 
 def write(dictionary: dict, way: str):
