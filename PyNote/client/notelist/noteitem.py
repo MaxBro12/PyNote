@@ -13,12 +13,13 @@ from settings import (
 
 
 class NoteItem(QWidget):
-    def __init__(self):
+    def __init__(self, text: str = '', sync: bool = True):
         super().__init__()
         # ? Кнопки, текст и тд
         self.text_area = Text()
         self.b_sync = ButtonSunc()
         self.b_delete = ButtonDelete()
+        self.__sync = sync
         # ? Разметка
         self.row = QHBoxLayout()
         self.row.setSpacing(0)
@@ -28,16 +29,17 @@ class NoteItem(QWidget):
         self.row.addWidget(self.b_delete, 0)
 
         self.setLayout(self.row)
+        self.setFixedSize(QSize(250, 50))
 
-        self.text_area.setText('wtf')
+        self.text_area.setText(text)
 
     @property
     def text(self) -> str:
         return self.text_area.text()
 
     @text.setter
-    def text(self, new):
-        self.text_area.setText(new)
+    def text(self, new_text: str):
+        self.text_area.setText(new_text)
 
 
 class EmptyNote(QWidget):
@@ -66,7 +68,7 @@ class ButtonNewNote(QPushButton):
     def __init__(self):
         super().__init__()
         self.setIcon(QIcon(file_new_note_icon))
-        # self.setFixedSize(QSize(50, 50))
+        self.setMinimumSize(QSize(150, 150))
 
 
 class ButtonDelete(QPushButton):

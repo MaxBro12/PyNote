@@ -51,11 +51,14 @@ class MyApp(QtWidgets.QWidget):
         # ? Загружаем темку
         self.load_theme()
 
-        self.load_notes()
+        self.update_notes()
 
     def update_conf(self, write_to_file: bool = True):
+        # ? Запись в файл
         if write_to_file:
             write(self.config, file_conf)
+
+        # ? Обновления параметров
         self.setWindowOpacity(self.config['app']['opacity'])
 
     def load_theme(self):
@@ -73,15 +76,13 @@ class MyApp(QtWidgets.QWidget):
             f"background-color: {theme['side_pannel']};"
         )
 
-    def load_notes(self):
-        self.notes = get_local_notes()
-        for note in self.notes:
-            self.notes_layout.notes_list.column.addWidget(
-                NoteItem(), 0
-            )
-        self.notes_layout.notes_list.column.addWidget(
-                EmptyNote(), 1
-            )
+    def update_notes(self):
+        # self.notes = get_local_notes()
+        # for note in self.notes:
+        #     self.notes_layout.notes_list.add(
+        #         NoteItem(note['name'].split('.')[0])
+        #     )
+        pass
 
     def open_note(self):
         pass
