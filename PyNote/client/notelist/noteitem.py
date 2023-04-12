@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import (
-    QWidget, QHBoxLayout, QPushButton, QTextBrowser, QLabel
+    QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 )
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon
@@ -53,22 +53,26 @@ class EmptyNote(QWidget):
         self.row = QHBoxLayout()
         self.row.setSpacing(0)
         self.row.setContentsMargins(0, 0, 0, 0)
-        self.row.addWidget(self.newn)
+        self.row.addWidget(self.newn, 0)
+
+        self.setMinimumSize(QSize(200, 50))
 
         self.setLayout(self.row)
 
 
-class Text(QLabel):
+class Text(QLineEdit):
     def __init__(self):
         super().__init__()
         self.setFixedSize(QSize(150, 50))
+        self.setTextMargins(10, 0, 0, 0)
+        self.setMaxLength(20)  # ? Пока ограничим размер текстового поля
 
 
 class ButtonNewNote(QPushButton):
     def __init__(self):
         super().__init__()
         self.setIcon(QIcon(file_new_note_icon))
-        self.setMinimumSize(QSize(150, 150))
+        self.setMinimumSize(QSize(50, 50))
 
 
 class ButtonDelete(QPushButton):

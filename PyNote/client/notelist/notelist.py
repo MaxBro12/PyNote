@@ -6,18 +6,19 @@ from .noteitem import EmptyNote
 
 
 class NoteList(QWidget):
-    def __init__(self):
+    def __init__(self, app):
         super().__init__()
+        self.app = app
         self.__notes = []
         # ! Разметка
         self.column = QVBoxLayout()
         self.setLayout(self.column)
         self.column.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
-        self.column.setSpacing(5)
+        self.column.setSpacing(1)
         self.column.setContentsMargins(0, 0, 0, 0)
         self.setFixedWidth(250)
 
-        self.empty = EmptyNote()
+        self.setts = EmptyNote()
 
     def update_list(self):
         # ? Очищаем список
@@ -27,7 +28,7 @@ class NoteList(QWidget):
         # ? Закидывем новые виджеты
         for note in self.__notes:
             self.column.addWidget(note, 0)
-        self.column.addWidget(self.empty)
+        self.column.addWidget(self.setts, 0)
 
     def add(self, widget: QWidget):
         self.__notes.append(widget)
@@ -36,6 +37,11 @@ class NoteList(QWidget):
     @property
     def notes(self) -> list:
         return self.__notes
+
+    @notes.setter
+    def notes(self, lst: list):
+        self.__notes = lst
+        self.update_list()
 
     def __getitem__(self, index: int) -> QWidget:
         return self.__notes[index]

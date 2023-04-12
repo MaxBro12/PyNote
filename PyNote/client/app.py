@@ -9,6 +9,7 @@ from core import (
 )
 from handlers import (
     get_local_notes,
+    add_local_note,
 )
 
 from .layout import Main_Layout, Notes_Layout
@@ -42,7 +43,7 @@ class MyApp(QtWidgets.QWidget):
         # ! Разметка
         self.layout_main = Main_Layout()
         self.setLayout(self.layout_main)
-        self.notes_layout = Notes_Layout()
+        self.notes_layout = Notes_Layout(self)
         self.layout_main.addLayout(self.notes_layout)
 
         # ! Применяем настройки
@@ -77,12 +78,12 @@ class MyApp(QtWidgets.QWidget):
         )
 
     def update_notes(self):
-        # self.notes = get_local_notes()
-        # for note in self.notes:
-        #     self.notes_layout.notes_list.add(
-        #         NoteItem(note['name'].split('.')[0])
-        #     )
-        pass
+        self.notes = get_local_notes()
+        self.notes_layout.notes_list.notes = [
+            NoteItem(n['name'].split('.')[0]) for n in self.notes
+        ]
+        self.notes_layout.notes_list.setts.newn.clicked.connect(self.add_note)
 
-    def open_note(self):
-        pass
+    def add_note(self):
+        add_local_note(f'new-{len(self.notes)}')
+        self.update_notes()

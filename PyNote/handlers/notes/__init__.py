@@ -6,6 +6,7 @@ from .notes_server import (
 
 from .notes_local import (
     get_local_notes,
+    add_local_note,
 )
 
 
@@ -15,4 +16,5 @@ __all__ = [
     'serv_delete_note',
 
     'get_local_notes',
+    'add_local_note',
 ]

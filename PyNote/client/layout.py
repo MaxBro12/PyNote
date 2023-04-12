@@ -12,11 +12,11 @@ class Main_Layout(QVBoxLayout):
 
 
 class Notes_Layout(QHBoxLayout):
-    def __init__(self):
+    def __init__(self, app):
         super().__init__()
 
         # ! Список заметок
-        self.notes_list = NoteList()
+        self.notes_list = NoteList(app)
         # ! Редактор заметки
         self.note_edit = Editor()
 
