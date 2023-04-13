@@ -99,8 +99,6 @@ class MyApp(QtWidgets.QWidget):
 
     def add_note(self, name: str = '', inner: str = ''):
         self.notes_l.notes.add(name, inner)
-        # add_local_note(f'new-{len(self.notes)}')
-        # self.update_notes()
 
     def load_note(self, item: QtWidgets.QListWidgetItem):
         widget = self.notes_l.notes.list.itemWidget(item)

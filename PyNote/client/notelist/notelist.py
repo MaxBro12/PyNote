@@ -36,20 +36,18 @@ class NoteList(QVBoxLayout):
         if type(name) is bool or name == '':
             name = f'new-{len(get_local_notes())}'
             inner = ''
+            # ? Создаем заметку
+            add_local_note(name)
 
         # ? Создаем ячейку
         item = QListWidgetItem(self.list)
         item.setSizeHint(QSize(250, 50))
-
-        # ? Создаем заметку
-        add_local_note(name)
 
         # ? Создаем виджет
         widget = NoteItem(name, inner, item, self.app)
         # Сигнал удаления привязки
         widget.itemDeleted.connect(self.remove)
         self.list.setItemWidget(item, widget)
-        # self.num += 1
 
     def remove(self, item):
         # Получить количество строк, соответствующих item

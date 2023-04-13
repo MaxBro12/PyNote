@@ -28,8 +28,10 @@ def add_local_note(name: str) -> bool:
     # https://ru.stackoverflow.com/questions/1295971/%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5-%D0%B4%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B8%D0%B4%D0%B6%D0%B5%D1%82%D0%BE%D0%B2
 
 
-def save_local_note(name: str, inner: str) -> bool:
-    return save_file(pjoin(fold_notes, name + '.txt'), inner)
+def save_local_note(name: str, inner: str = '') -> bool:
+    if inner != '':
+        return save_file(pjoin(fold_notes, name + '.txt'), inner)
+    return False
 
 
 def rename_local_note(last_name: str, new_name: str) -> bool:

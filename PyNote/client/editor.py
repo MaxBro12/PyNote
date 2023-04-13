@@ -45,10 +45,11 @@ class Editor(QVBoxLayout):
         self.text_e.setText(self.widget_i.inner)
 
     def slot_save_note(self):
-        save_local_note(
+        if save_local_note(
             self.title_e.text(),
             self.text_e.toPlainText()
-        )
+        ):
+            self.widget_i.inner = self.text_e.toPlainText()
 
     def slot_rename_note(self):
         self.widget_i.slot_text_changed(self.title_e.text())
