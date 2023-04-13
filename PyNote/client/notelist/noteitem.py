@@ -1,8 +1,19 @@
 from PySide6.QtWidgets import (
-    QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
+    QWidget,
+    QHBoxLayout,
+    QPushButton,
+    QLineEdit,
+
+    QListWidgetItem,
 )
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Signal
 from PySide6.QtGui import QIcon
+
+
+from handlers import (
+    rename_local_note,
+    remove_local_note,
+)
 
 
 from settings import (
@@ -12,78 +23,77 @@ from settings import (
 )
 
 
-class NoteItem(QWidget):
-    def __init__(self, text: str = '', sync: bool = True):
+class NoteItem(QPushButton):
+    itemDeleted = Signal(QListWidgetItem)
+    itemSync = Signal(QListWidgetItem)
+
+    def __init__(self, name: str, item, app):
         super().__init__()
-        # ? Кнопки, текст и тд
-        self.text_area = Text()
-        self.b_sync = ButtonSunc()
-        self.b_delete = ButtonDelete()
-        self.__sync = sync
-        # ? Разметка
+        self.__item = item
+        self.name = name
+        self.sync_s = False
+        self.parent = app
+
+        # ? Текст
+        self.text_e = QLineEdit(name)
+        self.text_e.editingFinished.connect(self.slot_text_changed)
+        self.text_e.setFixedSize(QSize(150, 50))
+        self.text_e.setTextMargins(10, 0, 0, 0)
+        self.text_e.setMaxLength(20)  # ? Пока ограничим размер текстового поля
+
+        # ? Синхронизация
+        self.sync = QPushButton()
+        self.sync.clicked.connect(self.slot_sync)
+        self.sync.setIcon(QIcon(file_sync_icon))
+        self.sync.setFixedSize(QSize(50, 50))
+
+        # ? Удаление
+        self.delete = QPushButton()
+        self.delete.clicked.connect(self.slot_delete)
+        self.delete.setIcon(QIcon(file_delete_icon))
+        self.delete.setFixedSize(QSize(50, 50))
+
+        # ! Разметка
         self.row = QHBoxLayout()
         self.row.setSpacing(0)
         self.row.setContentsMargins(0, 0, 0, 0)
-        self.row.addWidget(self.text_area, 1)
-        self.row.addWidget(self.b_sync, 0)
-        self.row.addWidget(self.b_delete, 0)
-
+        self.row.addWidget(self.text_e, 1)
+        self.row.addWidget(self.sync, 1)
+        self.row.addWidget(self.delete, 1)
         self.setLayout(self.row)
+
+    def slot_delete(self):
+        if remove_local_note(self.name):
+            self.itemDeleted.emit(self.__item)
+
+    def slot_sync(self):
+        self.itemSync.emit(self.__item)
+
+    def slot_text_changed(self):
+        if rename_local_note(self.name, self.text_e.text()):
+            self.name = self.text_e.text()
+
+
+class Settings(QWidget):
+    def __init__(self, app):
+        super().__init__()
+        self.parent = app
         self.setFixedSize(QSize(250, 50))
 
-        self.text_area.setText(text)
+        # ? Новая заметка
+        self.add_note = QPushButton()
+        self.add_note.setIcon(QIcon(file_new_note_icon))
+        self.add_note.setMinimumSize(QSize(50, 50))
 
-    @property
-    def text(self) -> str:
-        return self.text_area.text()
+        # ? Настройки
+        self.settings = QPushButton()
+        self.settings.setIcon(QIcon(file_sync_icon))
+        self.settings.setMinimumSize(QSize(50, 50))
 
-    @text.setter
-    def text(self, new_text: str):
-        self.text_area.setText(new_text)
-
-
-class EmptyNote(QWidget):
-    def __init__(self) -> None:
-        super().__init__()
-
-        # ? Кнопки
-        self.newn = ButtonNewNote()
-
-        # ? Разметка
+        # ! Разметка
         self.row = QHBoxLayout()
         self.row.setSpacing(0)
         self.row.setContentsMargins(0, 0, 0, 0)
-        self.row.addWidget(self.newn, 0)
-
-        self.setMinimumSize(QSize(200, 50))
-
+        self.row.addWidget(self.add_note, 1)
+        self.row.addWidget(self.settings, 1)
         self.setLayout(self.row)
-
-
-class Text(QLineEdit):
-    def __init__(self):
-        super().__init__()
-        self.setFixedSize(QSize(150, 50))
-        self.setTextMargins(10, 0, 0, 0)
-        self.setMaxLength(20)  # ? Пока ограничим размер текстового поля
-
-
-class ButtonNewNote(QPushButton):
-    def __init__(self):
-        super().__init__()
-        self.setIcon(QIcon(file_new_note_icon))
-        self.setMinimumSize(QSize(50, 50))
-
-
-class ButtonDelete(QPushButton):
-    def __init__(self):
-        super().__init__()
-        self.setIcon(QIcon(file_delete_icon))
-        self.setFixedSize(QSize(50, 50))
-
-
-class ButtonSunc(QPushButton):
-    def __init__(self):
-        super().__init__()
-        self.setIcon(QIcon(file_sync_icon))
-        self.setFixedSize(QSize(50, 50))

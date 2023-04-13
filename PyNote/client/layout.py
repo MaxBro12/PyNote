@@ -16,9 +16,9 @@ class Notes_Layout(QHBoxLayout):
         super().__init__()
 
         # ! Список заметок
-        self.notes_list = NoteList(app)
+        self.notes = NoteList(app)
         # ! Редактор заметки
-        self.note_edit = Editor()
+        self.edit = Editor()
 
-        self.addWidget(self.notes_list, 1)
-        self.addLayout(self.note_edit, 0)
+        self.addLayout(self.notes, 1)
+        self.addLayout(self.edit, 0)

@@ -16,7 +16,7 @@ def main(args: list):
         conf['server']['token'] = 'a'
     create_log_file('===== Application launched successfully =====', 'info')
 
-    app = QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(args)
     widget = MyApp(conf)
     widget.show()
     exit(app.exec())

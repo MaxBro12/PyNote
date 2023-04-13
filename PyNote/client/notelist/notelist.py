@@ -1,55 +1,58 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout
-from PySide6 import QtCore
+from PySide6.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QListWidget,
+    QListWidgetItem,
+)
+from PySide6.QtCore import QSize
 
 
-from .noteitem import EmptyNote
+from .noteitem import NoteItem, Settings
 
 
-class NoteList(QWidget):
+from handlers import (
+    add_local_note,
+    get_local_notes,
+)
+
+
+class NoteList(QVBoxLayout):
     def __init__(self, app):
         super().__init__()
         self.app = app
-        self.__notes = []
-        # ! Разметка
-        self.column = QVBoxLayout()
-        self.setLayout(self.column)
-        self.column.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
-        self.column.setSpacing(1)
-        self.column.setContentsMargins(0, 0, 0, 0)
-        self.setFixedWidth(250)
 
-        self.setts = EmptyNote()
+        # ! Список:
+        self.list = QListWidget()
+        self.list.setMaximumWidth(250)
 
-    def update_list(self):
-        # ? Очищаем список
-        for i in range(self.column.count()):
-            self.column.removeItem(self.column.itemAt(i))
+        # ! Настройки
+        self.settings = Settings(app)
 
-        # ? Закидывем новые виджеты
-        for note in self.__notes:
-            self.column.addWidget(note, 0)
-        self.column.addWidget(self.setts, 0)
+        self.addWidget(self.list, 0)
+        self.addWidget(self.settings, 1)
 
-    def add(self, widget: QWidget):
-        self.__notes.append(widget)
-        self.update_list()
+    def add(self, name: str):
+        # ? Создаем ячейку
+        item = QListWidgetItem(self.list)
+        item.setSizeHint(QSize(250, 50))
 
-    @property
-    def notes(self) -> list:
-        return self.__notes
+        # ? Создаем заметку
+        note_name = f'New-{len(get_local_notes())}'
+        add_local_note(note_name)
 
-    @notes.setter
-    def notes(self, lst: list):
-        self.__notes = lst
-        self.update_list()
+        # ? Создаем виджет
+        widget = NoteItem(note_name, item, self.app)
+        # Сигнал удаления привязки
+        widget.itemDeleted.connect(self.remove)
+        self.list.setItemWidget(item, widget)
+        # self.num += 1
 
-    def __getitem__(self, index: int) -> QWidget:
-        return self.__notes[index]
-
-    def __setitem__(self, index: int, widget: QWidget):
-        self.__notes[index] = widget
-
-    def __len__(self) -> int:
-        return self.column.count()
-
-        # https://stackoverflow.com/questions/948444/qlistview-qlistwidget-with-custom-items-and-custom-item-widgets
+    def remove(self, item):
+        # Получить количество строк, соответствующих item
+        row = self.list.indexFromItem(item).row()
+        # Удалить item
+        item = self.list.takeItem(row)
+        # Удалить widget
+        self.list.removeItemWidget(item)
+        del item

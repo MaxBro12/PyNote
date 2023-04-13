@@ -1,8 +1,8 @@
 from PySide6.QtWidgets import (
     QVBoxLayout,
 
+    QLineEdit,
     QTextEdit,
-    QTextBrowser,
 
     QWidget,
 )

@@ -1,4 +1,7 @@
-from PySide6 import QtWidgets, QtGui
+from PySide6 import (
+    QtWidgets,
+    QtGui,
+)
 
 
 from core import (
@@ -13,15 +16,12 @@ from handlers import (
 )
 
 from .layout import Main_Layout, Notes_Layout
-from .notelist import NoteItem, EmptyNote
 
 
 from settings import (
     file_icon,
     file_conf,
     fold_themes,
-
-    Theme,
 )
 
 
@@ -41,10 +41,15 @@ class MyApp(QtWidgets.QWidget):
         self.setMinimumSize(300, 400)
 
         # ! Разметка
-        self.layout_main = Main_Layout()
-        self.setLayout(self.layout_main)
-        self.notes_layout = Notes_Layout(self)
-        self.layout_main.addLayout(self.notes_layout)
+        self.layout_m = Main_Layout()
+        self.setLayout(self.layout_m)
+        self.notes_l = Notes_Layout(self)
+        self.layout_m.addLayout(self.notes_l)
+
+        # ! Подключаем основные кнопки
+        self.notes_l.notes.settings.add_note.clicked.connect(
+            self.add_note
+        )
 
         # ! Применяем настройки
         self.update_conf(False)
@@ -73,17 +78,23 @@ class MyApp(QtWidgets.QWidget):
         )
 
         # ? Переключаем темы у заметок
-        self.notes_layout.notes_list.setStyleSheet(
+        self.notes_l.notes.list.setStyleSheet(
+            f"background-color: {theme['side_pannel']};"
+        )
+        self.notes_l.notes.settings.setStyleSheet(
             f"background-color: {theme['side_pannel']};"
         )
 
     def update_notes(self):
         self.notes = get_local_notes()
-        self.notes_layout.notes_list.notes = [
-            NoteItem(n['name'].split('.')[0]) for n in self.notes
-        ]
-        self.notes_layout.notes_list.setts.newn.clicked.connect(self.add_note)
+        for note in self.notes:
+            self.add_note
+        # self.notes_layout.notes_list.notes = [
+        #     NoteItem(n['name'].split('.')[0]) for n in self.notes
+        # ]
+        # self.notes_layout.notes_list.setts.newn.clicked.connect(self.add_note)
 
     def add_note(self):
-        add_local_note(f'new-{len(self.notes)}')
-        self.update_notes()
+        self.notes_l.notes.add(f'new-{len(self.notes)}')
+        # add_local_note(f'new-{len(self.notes)}')
+        # self.update_notes()
