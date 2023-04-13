@@ -22,6 +22,16 @@ def create_file(
         return False
 
 
+def save_file(name: str, inner: str) -> bool:
+    try:
+        with open(name, 'w') as f:
+            f.write(inner)
+            return True
+    except FileNotFoundError:
+        create_log_file(f'Файл {name} не найден')
+        return False
+
+
 def load_file(name: str) -> str:
     try:
         with open(name, 'r') as f:

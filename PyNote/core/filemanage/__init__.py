@@ -1,5 +1,6 @@
 from .simplefiles import (
     create_file,
+    save_file,
     rename_file,
     load_file,
     delete_file,
@@ -23,6 +24,7 @@ from .tomlreader import (
 
 __all__ = [
     'create_file',
+    'save_file',
     'rename_file',
     'load_file',
     'delete_file',

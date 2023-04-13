@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QPushButton,
     QLineEdit,
+    QLabel,
 
     QListWidgetItem,
 )
@@ -23,23 +24,28 @@ from settings import (
 )
 
 
-class NoteItem(QPushButton):
+class NoteItem(QWidget):
     itemDeleted = Signal(QListWidgetItem)
     itemSync = Signal(QListWidgetItem)
 
-    def __init__(self, name: str, item, app):
+    def __init__(self, name: str, inner: str, item, app):
         super().__init__()
         self.__item = item
         self.name = name
+        self.inner = inner
         self.sync_s = False
         self.parent = app
 
         # ? Текст
-        self.text_e = QLineEdit(name)
-        self.text_e.editingFinished.connect(self.slot_text_changed)
+        self.text_e = QLabel('  ' + name)  # QLineEdit
         self.text_e.setFixedSize(QSize(150, 50))
-        self.text_e.setTextMargins(10, 0, 0, 0)
-        self.text_e.setMaxLength(20)  # ? Пока ограничим размер текстового поля
+        self.text_e.setContentsMargins(5, 0, 0, 0)
+
+        # self.text_e = QLineEdit(name)  # QLineEdit
+        # self.text_e.setFixedSize(QSize(150, 50))
+        # self.text_e.editingFinished.connect(self.slot_text_changed)
+        # self.text_e.setTextMargins(10, 0, 0, 0)
+        # self.text_e.setMaxLength(20)  # ? Пока ограничим размер текстового поля
 
         # ? Синхронизация
         self.sync = QPushButton()
@@ -69,9 +75,10 @@ class NoteItem(QPushButton):
     def slot_sync(self):
         self.itemSync.emit(self.__item)
 
-    def slot_text_changed(self):
-        if rename_local_note(self.name, self.text_e.text()):
-            self.name = self.text_e.text()
+    def slot_text_changed(self, new: str = ''):
+        if rename_local_note(self.name, new):
+            self.name = new
+            self.text_e.setText('  ' + new)
 
 
 class Settings(QWidget):

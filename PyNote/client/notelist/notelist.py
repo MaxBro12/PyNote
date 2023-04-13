@@ -32,17 +32,20 @@ class NoteList(QVBoxLayout):
         self.addWidget(self.list, 0)
         self.addWidget(self.settings, 1)
 
-    def add(self, name: str):
+    def add(self, name: str, inner: str):
+        if type(name) is bool or name == '':
+            name = f'new-{len(get_local_notes())}'
+            inner = ''
+
         # ? Создаем ячейку
         item = QListWidgetItem(self.list)
         item.setSizeHint(QSize(250, 50))
 
         # ? Создаем заметку
-        note_name = f'New-{len(get_local_notes())}'
-        add_local_note(note_name)
+        add_local_note(name)
 
         # ? Создаем виджет
-        widget = NoteItem(note_name, item, self.app)
+        widget = NoteItem(name, inner, item, self.app)
         # Сигнал удаления привязки
         widget.itemDeleted.connect(self.remove)
         self.list.setItemWidget(item, widget)

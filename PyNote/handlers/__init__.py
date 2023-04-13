@@ -5,6 +5,7 @@ from .notes import (
 
     get_local_notes,
     add_local_note,
+    save_local_note,
     rename_local_note,
     remove_local_note,
 )
@@ -17,6 +18,7 @@ __all__ = [
 
     'get_local_notes',
     'add_local_note',
+    'save_local_note',
     'rename_local_note',
     'remove_local_note',
 ]

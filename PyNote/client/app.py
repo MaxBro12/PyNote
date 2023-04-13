@@ -16,6 +16,7 @@ from handlers import (
 )
 
 from .layout import Main_Layout, Notes_Layout
+from .notelist import NoteItem
 
 
 from settings import (
@@ -49,6 +50,9 @@ class MyApp(QtWidgets.QWidget):
         # ! Подключаем основные кнопки
         self.notes_l.notes.settings.add_note.clicked.connect(
             self.add_note
+        )
+        self.notes_l.notes.list.itemClicked.connect(
+            self.load_note
         )
 
         # ! Применяем настройки
@@ -88,13 +92,16 @@ class MyApp(QtWidgets.QWidget):
     def update_notes(self):
         self.notes = get_local_notes()
         for note in self.notes:
-            self.add_note
-        # self.notes_layout.notes_list.notes = [
-        #     NoteItem(n['name'].split('.')[0]) for n in self.notes
-        # ]
-        # self.notes_layout.notes_list.setts.newn.clicked.connect(self.add_note)
+            self.add_note(
+                note['name'].split('.')[0],
+                note['inner']
+            )
 
-    def add_note(self):
-        self.notes_l.notes.add(f'new-{len(self.notes)}')
+    def add_note(self, name: str = '', inner: str = ''):
+        self.notes_l.notes.add(name, inner)
         # add_local_note(f'new-{len(self.notes)}')
         # self.update_notes()
+
+    def load_note(self, item: QtWidgets.QListWidgetItem):
+        widget = self.notes_l.notes.list.itemWidget(item)
+        self.notes_l.edit.update_info(widget)
