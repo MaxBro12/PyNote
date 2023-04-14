@@ -21,6 +21,7 @@ from settings import (
     file_new_note_icon,
     file_delete_icon,
     file_sync_icon,
+    file_settings_icon,
 )
 
 
@@ -41,22 +42,18 @@ class NoteItem(QWidget):
         self.text_e.setFixedSize(QSize(150, 50))
         self.text_e.setContentsMargins(5, 0, 0, 0)
 
-        # self.text_e = QLineEdit(name)  # QLineEdit
-        # self.text_e.setFixedSize(QSize(150, 50))
-        # self.text_e.editingFinished.connect(self.slot_text_changed)
-        # self.text_e.setTextMargins(10, 0, 0, 0)
-        # self.text_e.setMaxLength(20)  # ? Пока ограничим размер текстового поля
-
         # ? Синхронизация
         self.sync = QPushButton()
         self.sync.clicked.connect(self.slot_sync)
         self.sync.setIcon(QIcon(file_sync_icon))
+        self.sync.setIconSize(QSize(30, 30))
         self.sync.setFixedSize(QSize(50, 50))
 
         # ? Удаление
         self.delete = QPushButton()
         self.delete.clicked.connect(self.slot_delete)
         self.delete.setIcon(QIcon(file_delete_icon))
+        self.delete.setIconSize(QSize(30, 30))
         self.delete.setFixedSize(QSize(50, 50))
 
         # ! Разметка
@@ -90,11 +87,13 @@ class Settings(QWidget):
         # ? Новая заметка
         self.add_note = QPushButton()
         self.add_note.setIcon(QIcon(file_new_note_icon))
+        self.add_note.setIconSize(QSize(30, 30))
         self.add_note.setMinimumSize(QSize(50, 50))
 
         # ? Настройки
         self.settings = QPushButton()
-        self.settings.setIcon(QIcon(file_sync_icon))
+        self.settings.setIcon(QIcon(file_settings_icon))
+        self.settings.setIconSize(QSize(40, 40))
         self.settings.setMinimumSize(QSize(50, 50))
 
         # ! Разметка

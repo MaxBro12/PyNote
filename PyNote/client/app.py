@@ -16,7 +16,6 @@ from handlers import (
 )
 
 from .layout import Main_Layout, Notes_Layout
-from .notelist import NoteItem
 
 
 from settings import (

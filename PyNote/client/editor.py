@@ -14,12 +14,16 @@ from handlers import (
     save_local_note,
 )
 
+from settings import (
+    server_upload_note_after_changes,
+)
+
 
 class Editor(QVBoxLayout):
     def __init__(self):
         # ! Основа
         super().__init__()
-        # self.widget_i = None
+        self.save_times = 0
 
         # ? Редактор названия
         self.title_e = QLineEdit()
@@ -45,11 +49,17 @@ class Editor(QVBoxLayout):
         self.text_e.setText(self.widget_i.inner)
 
     def slot_save_note(self):
+        # ! Локальное сохранение изменений
         if save_local_note(
             self.title_e.text(),
             self.text_e.toPlainText()
         ):
             self.widget_i.inner = self.text_e.toPlainText()
+            self.save_times += 1
+
+        # ! Выгрузка на сервак
+        if self.save_times >= server_upload_note_after_changes:
+            pass
 
     def slot_rename_note(self):
         self.widget_i.slot_text_changed(self.title_e.text())

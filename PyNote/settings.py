@@ -56,6 +56,7 @@ file_notes_sample = {
 
 # ! Приложение
 file_icon = 'PyNote/icons/icon.ico'
+file_settings_icon = 'PyNote/icons/settings.svg'
 file_delete_icon = 'PyNote/icons/delete.ico'
 file_sync_icon = 'PyNote/icons/sync.ico'
 file_new_note_icon = 'PyNote/icons/newnote.ico'
@@ -87,6 +88,8 @@ api_1 = "http://192.168.1.64:3334"
 api_new = "new"
 api_usr = "usr"
 api_notes = "note"
+
+server_upload_note_after_changes = 5
 
 
 # ! Доп классы
