@@ -15,7 +15,7 @@ from handlers import (
     add_local_note,
 )
 
-from .layout import Main_Layout, Notes_Layout
+from .layout import Main_Layout
 
 
 from settings import (
@@ -41,17 +41,18 @@ class MyApp(QtWidgets.QWidget):
         self.setMinimumSize(300, 400)
 
         # ! Разметка
-        self.layout_m = Main_Layout()
+        self.layout_m = Main_Layout(self)
         self.setLayout(self.layout_m)
-        self.notes_l = Notes_Layout(self)
-        self.layout_m.addLayout(self.notes_l)
 
         # ! Подключаем основные кнопки
-        self.notes_l.notes.settings.add_note.clicked.connect(
+        self.layout_m.notes_l.notes.settings.add_note.clicked.connect(
             self.add_note
         )
-        self.notes_l.notes.list.itemClicked.connect(
+        self.layout_m.notes_l.notes.list.itemClicked.connect(
             self.load_note
+        )
+        self.layout_m.notes_l.edit.newNote.connect(
+            self.add_empty_note
         )
 
         # ! Применяем настройки
@@ -81,10 +82,10 @@ class MyApp(QtWidgets.QWidget):
         )
 
         # ? Переключаем темы у заметок
-        self.notes_l.notes.list.setStyleSheet(
+        self.layout_m.notes_l.notes.list.setStyleSheet(
             f"background-color: {theme['side_pannel']};"
         )
-        self.notes_l.notes.settings.setStyleSheet(
+        self.layout_m.notes_l.notes.settings.setStyleSheet(
             f"background-color: {theme['side_pannel']};"
         )
 
@@ -97,8 +98,12 @@ class MyApp(QtWidgets.QWidget):
             )
 
     def add_note(self, name: str = '', inner: str = ''):
-        self.notes_l.notes.add(name, inner)
+        self.layout_m.notes_l.notes.add(name, inner)
+
+    def add_empty_note(self, name):
+        widget = self.layout_m.notes_l.notes.spec_add(name)
+        self.layout_m.notes_l.edit.update_info(widget)
 
     def load_note(self, item: QtWidgets.QListWidgetItem):
-        widget = self.notes_l.notes.list.itemWidget(item)
-        self.notes_l.edit.update_info(widget)
+        widget = self.layout_m.notes_l.notes.list.itemWidget(item)
+        self.layout_m.notes_l.edit.update_info(widget)

@@ -11,6 +11,7 @@ file_conf_inner = {
     'app': {
         'width': 1000,
         'height': 700,
+        'lang': "ru",
         'theme': "dark.toml",
         'opacity': 1,
     },
@@ -24,13 +25,14 @@ file_conf_inner = {
         'token': "",
     }
 }
-file_conf_row = r'\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
+file_conf_row2 = r'\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
     r'\.toml"\nopacity = [^\n]*\n\n\[user\]\nusername = "[\w]*"\npasswor' \
     r'd = "[\w]*"\nwtkey = "[^"]*"\n\n\[ser' \
     r'ver\]\nhost = "[^"]*"\ntoken = "[\w]*"\n'
-file_conf_row2 = r"""\[app\]
+file_conf_row = r"""\[app\]
 width = [\d]*
 height = [\d]*
+lang = "[\w]*"
 theme = "[\w]*\.toml"
 opacity = [^\n]*\n
 \[user\]
@@ -39,7 +41,8 @@ password = "[\w]*"
 wtkey = "[^"]*"\n
 \[server\]
 host = "[^"]*"
-token = "[\w]*"\n"""
+token = "[\w]*"
+"""
 
 
 # ! Заметки
