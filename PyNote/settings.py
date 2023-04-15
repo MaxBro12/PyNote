@@ -46,6 +46,7 @@ token = "[\w]*"
 
 
 # ! Заметки
+title_max_length = 16
 fold_notes = 'data/notes'
 file_notes = '_data.toml'
 file_notes_sample = {
@@ -56,6 +57,20 @@ file_notes_sample = {
     'timer': False,
     'timer_at': '',
 }
+
+# ? Шрифты
+font_notes_list_family = 'Noto Sans Brahmi'
+font_notes_list_size = 12
+font_notes_list_bond = 0
+
+font_editor_title_family = 'Noto Sans Brahmi'
+font_editor_title_size = 15
+font_editor_title_bond = 0
+
+font_editor_text_family = 'Noto Sans'
+font_editor_text_size = ''
+font_editor_text_bond = 0
+
 
 # ! Приложение
 file_icon = 'PyNote/icons/icon.ico'

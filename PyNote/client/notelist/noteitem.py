@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QListWidgetItem,
 )
 from PySide6.QtCore import QSize, Signal
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QFont
 
 
 from handlers import (
@@ -22,6 +22,9 @@ from settings import (
     file_delete_icon,
     file_sync_icon,
     file_settings_icon,
+
+    font_notes_list_family,
+    font_notes_list_size,
 )
 from language import lang
 
@@ -40,6 +43,10 @@ class NoteItem(QWidget):
 
         # ? Текст
         self.text_e = QLabel('  ' + name)  # QLineEdit
+        self.text_e.setFont(QFont(
+            font_notes_list_family,
+            font_notes_list_size
+        ))
         self.text_e.setFixedSize(QSize(150, 50))
         self.text_e.setContentsMargins(5, 0, 0, 0)
 
