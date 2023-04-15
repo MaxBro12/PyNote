@@ -15,13 +15,13 @@ file_conf_inner = {
         'opacity': 1,
     },
     'user': {
-        'username': "maxbro",
-        'password': "123123",
+        'username': "",
+        'password': "",
         'wtkey': "",
     },
     'server': {
         'host': "",
-        'token': "vc3200uv65h56t9yrp3rtlqe6vguqb8z25fylafe6qbf0v83bu",
+        'token': "",
     }
 }
 file_conf_row = r'\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
