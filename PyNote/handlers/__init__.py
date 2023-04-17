@@ -9,6 +9,14 @@ from .notes import (
     rename_local_note,
     remove_local_note,
 )
+from .servers import (
+    login_user,
+    create_user,
+
+    serv_get_notes,
+    serv_save_note,
+    serv_delete_note,
+)
 
 
 __all__ = [

@@ -1,8 +1,11 @@
 import logging
-from typing import Union
+from typing import Union, Literal
 from os import get_terminal_size
 
 from settings import file_log, file_error
+
+
+Level = Literal['debug', 'warning', 'info', 'error', 'crit']
 
 
 def error_found(err):
@@ -10,7 +13,7 @@ def error_found(err):
     create_log_file(err)
 
 
-def create_log_file(log: Union[Exception, str], levelname: str = 'debug'):
+def create_log_file(log: Union[Exception, str], levelname: Level = 'debug'):
     """Добавляем в лог данные log с указанием типа уровня:
     - debug - дебаг
     - warning - предупреждение

@@ -12,7 +12,8 @@ from settings import (
     api_usr,
 
     Load_User,
-    User_Data
+    User_Data,
+    Server_Log,
 )
 
 
@@ -28,21 +29,23 @@ def api_check_user(host: str, key: str, name: str) -> bool:
         return False
 
 
-def api_create_user(host: str, key: str, user: Load_User) -> User_Data | None:
+def api_create_user(host: str, key: str, user: Load_User) \
+        -> User_Data | Server_Log:
     try:
         return post(
             url(host, key, api_new, user['username']), data=user
         ).json()
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
-        return None
+        return {'log': 'timeout'}
 
 
-def api_login_user(host: str, key: str, user: Load_User) -> User_Data | None:
+def api_login_user(host: str, key: str, user: Load_User) \
+        -> User_Data | Server_Log:
     try:
         return get(
             url(host, key, api_usr, user['username']), data=user
         ).json()
     except exceptions.Timeout:
         create_log_file('Server timeout!', 'error')
-        return None
+        return {'log': 'timeout'}

@@ -2,20 +2,25 @@ from sys import argv
 
 from core import create_log_file
 from launch import main_check
+from handlers import login_user
 from client import MyApp
 
 from PySide6 import QtWidgets
 from sys import exit
 
-from settings import file_log
+from settings import file_log, Server_Data, Load_User
 
 
 def main(args: list):
+    # ? Загрузка
     conf = main_check()
     if conf['server']['token'] == '':
         conf['server']['token'] = 'a'
     create_log_file('===== Application launched successfully =====', 'info')
 
+    # ? Сервер
+
+    # ? Запуск приложения
     app = QtWidgets.QApplication(args)
     widget = MyApp(conf)
     widget.show()

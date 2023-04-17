@@ -15,7 +15,7 @@ from settings import (
     Delete_Note,
 
     User_Data,
-    UserNote
+    User_Note,
 )
 
 
@@ -27,7 +27,7 @@ def api_get_notes(host: str, key: str, data: User_Data) -> list[Note] | None:
         return None
 
 
-def api_save_note(host: str, key: str, data: UserNote) -> bool:
+def api_save_note(host: str, key: str, data: User_Note) -> bool:
     try:
         return True if post(
             url(host, key, api_notes), data=data

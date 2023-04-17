@@ -13,6 +13,10 @@ from core import (
 from handlers import (
     get_local_notes,
     add_local_note,
+
+    login_user,
+
+    serv_get_notes,
 )
 
 from .layout import Main_Layout
@@ -22,15 +26,21 @@ from settings import (
     file_icon,
     file_conf,
     fold_themes,
+
+    Server_Data,
+    User_Data,
+
+    Config
 )
 
 
 class MyApp(QtWidgets.QWidget):
-    def __init__(self, config):
+    def __init__(self, config: Config):
         super().__init__()
         self.config = config
-
-        self.notes = get_local_notes()
+        self.user = login_user(config['server'], config['user'])
+        self.notes = get_local_notes() + \
+            serv_get_notes(config['server'], self.user)
 
         # ? Топ панель
         self.setWindowIcon(QtGui.QIcon(file_icon))

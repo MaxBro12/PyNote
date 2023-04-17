@@ -9,7 +9,7 @@ def read(way: str) -> dict[str, Any]:
     return dict(load(way))
 
 
-def write(dictionary: dict, way: str):
+def write(dictionary, way: str):
     """Записываем словарь dictionary в toml файл по пути way"""
     with open(way, 'w') as toml_file:
         dump(dictionary, toml_file)

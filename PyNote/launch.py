@@ -20,10 +20,12 @@ from settings import (
     file_light_inner,
     file_space,
     file_space_inner,
+
+    Config,
 )
 
 
-def main_check() -> dict:
+def main_check() -> Config:
     # ? Проверяем папку с данными
     check_data()
     # ? Проверяем файл конфига
@@ -36,7 +38,7 @@ def main_check() -> dict:
     return conf
 
 
-def check_conf() -> dict:
+def check_conf() -> Config:
     if not exists(file_conf):
         write(file_conf_inner, file_conf)
         create_log_file('Config file created', 'info')
@@ -48,7 +50,26 @@ def check_conf() -> dict:
             create_log_file(
                 f'Error in {file_conf}, file has been overwritten!', 'error'
             )
-    return read(file_conf)
+    data = read(file_conf)
+    config: Config = {
+        'app': {
+            'width': data['app']['width'],
+            'height': data['app']['height'],
+            'lang': data['app']['lang'],
+            'theme': data['app']['theme'],
+            'opacity': data['app']['opacity'],
+        },
+        'user': {
+            'username': data['user']['username'],
+            'password': data['user']['password'],
+            'wtkey': data['user']['wtkey'],
+        },
+        'server': {
+            'host': data['server']['host'],
+            'token': data['server']['token'],
+        }
+    }
+    return config
 
 
 def check_notes():

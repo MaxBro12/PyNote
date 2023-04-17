@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, Literal
 
 
 # ! Основное
@@ -102,19 +102,35 @@ file_space_inner = {
 
 
 # ! Сервер
-api_1 = "http://192.168.1.64:3334"
 api_new = "new"
 api_usr = "usr"
 api_notes = "note"
 
-server_upload_note_after_changes = 5
-
 
 # ! Доп классы
-class Conf(TypedDict):
-    app: dict
-    user: dict
-    server: dict
+class Config_app(TypedDict):
+    width: int
+    height: int
+    lang: str
+    theme: str
+    opacity: float | int
+
+
+class Config_user(TypedDict):
+    username: str
+    password: str
+    wtkey: str
+
+
+class Config_server(TypedDict):
+    host: str
+    token: str
+
+
+class Config(TypedDict):
+    app: Config_app
+    user: Config_user
+    server: Config_server
 
 
 class Theme(TypedDict):
@@ -130,7 +146,7 @@ class User_Data(TypedDict):
     token: str
 
 
-class UserNote(TypedDict):
+class User_Note(TypedDict):
     id: int
     username: str
     password: str
@@ -139,6 +155,21 @@ class UserNote(TypedDict):
     inner: str
 
 
+class Server_Data(TypedDict):
+    host: str
+    token: str
+
+
+class Server_Log(TypedDict):
+    log: Literal[
+        'user not found',
+        'incorrect password',
+        'note not found',
+        'timeout'
+    ]
+
+
+# ==============================
 class Load_User(TypedDict):
     username: str
     password: str
