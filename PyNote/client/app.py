@@ -38,9 +38,9 @@ class MyApp(QtWidgets.QWidget):
     def __init__(self, config: Config):
         super().__init__()
         self.config = config
-        self.user = login_user(config['server'], config['user'])
-        self.notes = get_local_notes() + \
-            serv_get_notes(config['server'], self.user)
+        # self.user = login_user(config['server'], config['user'])
+        self.notes = get_local_notes() #+ \
+            #serv_get_notes(config['server'], self.user)
 
         # ? Топ панель
         self.setWindowIcon(QtGui.QIcon(file_icon))

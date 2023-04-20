@@ -21,8 +21,6 @@ from handlers import (
 )
 
 from settings import (
-    server_upload_note_after_changes,
-
     title_max_length,
 
     font_editor_title_family,
@@ -87,8 +85,7 @@ class Editor(QVBoxLayout):
                 self.save_times += 1
 
         # ! Выгрузка на сервак
-        if self.save_times >= server_upload_note_after_changes:
-            pass
+        pass
 
     def slot_rename_note(self):
         if self.widget_i is None:
