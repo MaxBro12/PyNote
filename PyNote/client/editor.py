@@ -89,7 +89,6 @@ class Editor(QVBoxLayout):
 
     def slot_rename_note(self):
         if self.widget_i is None:
-            print('yees')
             self.newNote.emit(self.title_e.text())
 
         if self.widget_i is not None:
