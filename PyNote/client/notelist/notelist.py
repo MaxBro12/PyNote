@@ -16,19 +16,22 @@ from handlers import (
     get_local_notes,
 )
 
+from spec_types import Theme
+
 
 class NoteList(QVBoxLayout):
-    def __init__(self, app, conf: dict):
+    def __init__(self, app, theme: Theme, conf: dict):
         super().__init__()
         self.app = app
         self.config = conf
+        self.theme = theme
 
         # ! Список:
         self.list = QListWidget()
         self.list.setMaximumWidth(250)
 
         # ! Настройки
-        self.settings = Settings(app, self.config['app']['lang'])
+        self.settings = Settings(app, self.theme, self.config['app']['lang'])
 
         self.addWidget(self.list, 0)
         self.addWidget(self.settings, 1)
@@ -46,7 +49,7 @@ class NoteList(QVBoxLayout):
 
         # ? Создаем виджет
         widget = NoteItem(
-            name, inner, item, self.app, self.config['app']['lang']
+            name, inner, item, self.app, self.theme, self.config['app']['lang']
         )
         # Сигнал удаления привязки
         widget.itemDeleted.connect(self.remove)

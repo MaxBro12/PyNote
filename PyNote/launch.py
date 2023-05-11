@@ -20,8 +20,10 @@ from settings import (
     file_light_inner,
     file_space,
     file_space_inner,
-
+)
+from spec_types import (
     Config,
+    cast
 )
 
 
@@ -51,24 +53,26 @@ def check_conf() -> Config:
                 f'Error in {file_conf}, file has been overwritten!', 'error'
             )
     data = read(file_conf)
-    config: Config = {
-        'app': {
-            'width': data['app']['width'],
-            'height': data['app']['height'],
-            'lang': data['app']['lang'],
-            'theme': data['app']['theme'],
-            'opacity': data['app']['opacity'],
-        },
-        'user': {
-            'username': data['user']['username'],
-            'password': data['user']['password'],
-            'wtkey': data['user']['wtkey'],
-        },
-        'server': {
-            'host': data['server']['host'],
-            'token': data['server']['token'],
-        }
-    }
+    config = cast(Config, data)
+    # config: Config = {
+    #     'app': {
+    #         'width': data['app']['width'],
+    #         'height': data['app']['height'],
+    #         'lang': data['app']['lang'],
+    #         'theme': data['app']['theme'],
+    #         'opacity': data['app']['opacity'],
+    #     },
+    #     'user': {
+    #         'username': data['user']['username'],
+    #         'password': data['user']['password'],
+    #         'wtkey': data['user']['wtkey'],
+    #     },
+    #     'server': {
+    #         'host': data['server']['host'],
+    #         'token': data['server']['token'],
+    #     }
+    # }
+
     return config
 
 

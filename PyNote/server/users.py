@@ -10,7 +10,8 @@ from .urls import url
 from settings import (
     api_new,
     api_usr,
-
+)
+from spec_types import (
     Load_User,
     User_Data,
     Server_Log,

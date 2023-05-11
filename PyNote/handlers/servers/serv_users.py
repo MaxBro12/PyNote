@@ -6,7 +6,7 @@ from server import (
 from core import create_log_file
 
 
-from settings import (
+from spec_types import (
     User_Data,
     Load_User,
 

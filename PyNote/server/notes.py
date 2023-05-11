@@ -9,6 +9,8 @@ from .urls import url
 
 from settings import (
     api_notes,
+)
+from spec_types import (
     Note,
     Get_User_Note,
     Post_Note,

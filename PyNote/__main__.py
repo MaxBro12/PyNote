@@ -3,12 +3,13 @@ from sys import argv
 from core import create_log_file
 from launch import main_check
 from handlers import login_user
-from client import MyApp
+from client import MyApp, MyAppMain
 
 from PySide6 import QtWidgets
 from sys import exit
 
-from settings import file_log, Server_Data, Load_User
+from settings import file_log
+from spec_types import Server_Data, Load_User
 
 
 def main(args: list):

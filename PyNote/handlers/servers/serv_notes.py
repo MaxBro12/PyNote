@@ -5,7 +5,7 @@ from server import (
 )
 
 
-from settings import (
+from spec_types import (
     User_Data,
     User_Note,
     Delete_Note,
@@ -24,7 +24,9 @@ def serv_delete_note(server: Config_server, data: Delete_Note) -> bool:
     return api_delete_note(server['host'], server['token'], data)
 
 
-def serv_get_notes(server: Config_server, data: User_Data | None) -> list[Note]:
+def serv_get_notes(
+        server: Config_server, data: User_Data | None
+) -> list[Note]:
     if data is None:
         return []
     ans = api_get_notes(server['host'], server['token'], data)

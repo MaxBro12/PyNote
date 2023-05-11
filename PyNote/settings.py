@@ -1,5 +1,3 @@
-from typing import TypedDict, Literal
-
 
 # ! Основное
 file_log = 'data/logger.log'
@@ -14,6 +12,9 @@ file_conf_inner = {
         'lang': "ru",
         'theme': "dark.toml",
         'opacity': 1,
+        'font_editor_title_size': 25,
+        'font_editor_text_size': 10,
+        'font_notes_list_size': 12
     },
     'user': {
         'username': "",
@@ -25,16 +26,15 @@ file_conf_inner = {
         'token': "",
     }
 }
-file_conf_row2 = r'\[app\]\nwidth = [\d]*\nheight = [\d]*\ntheme = "[\w]*' \
-    r'\.toml"\nopacity = [^\n]*\n\n\[user\]\nusername = "[\w]*"\npasswor' \
-    r'd = "[\w]*"\nwtkey = "[^"]*"\n\n\[ser' \
-    r'ver\]\nhost = "[^"]*"\ntoken = "[\w]*"\n'
 file_conf_row = r"""\[app\]
 width = [\d]*
 height = [\d]*
 lang = "[\w]*"
 theme = "[\w]*\.toml"
-opacity = [^\n]*\n
+opacity = [^\n]*
+font_editor_title_size = [\d]*
+font_editor_text_size = [\d]*
+font_notes_list_size = [\d]*\n
 \[user\]
 username = "[\w]*"
 password = "[\w]*"
@@ -74,10 +74,10 @@ font_editor_text_bond = 0
 
 # ! Приложение
 file_icon = 'PyNote/icons/icon.ico'
-file_settings_icon = 'PyNote/icons/settings.svg'
-file_delete_icon = 'PyNote/icons/delete.ico'
-file_sync_icon = 'PyNote/icons/sync.ico'
-file_new_note_icon = 'PyNote/icons/newnote.ico'
+# file_settings_icon = 'PyNote/icons/settings.svg'
+# file_delete_icon = 'PyNote/icons/delete.svg'
+# file_sync_icon = 'PyNote/icons/sync.svg'
+# file_new_note_icon = 'PyNote/icons/newnote.svg'
 
 # ? Темы для приложения
 fold_themes = 'data/themes'
@@ -85,19 +85,31 @@ file_dark = 'data/themes/dark.toml'
 file_dark_inner = {
     'background': '#1e1e1e',
     'text_color': '#ffffff',
-    'side_pannel': '#252526',
+    'side_panel': '#252526',
+    'file_settings_icon': 'PyNote/icons/settings_light.svg',
+    'file_delete_icon': 'PyNote/icons/delete_light.svg',
+    'file_sync_icon': 'PyNote/icons/sync_light.svg',
+    'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
 }
 file_light = 'data/themes/light.toml'
 file_light_inner = {
     'background': '#ffffff',
     'text_color': '#000000',
-    'side_pannel': '#f3f3f3',
+    'side_panel': '#f3f3f3',
+    'file_settings_icon': 'PyNote/icons/settings.svg',
+    'file_delete_icon': 'PyNote/icons/delete.svg',
+    'file_sync_icon': 'PyNote/icons/sync.svg',
+    'file_new_note_icon': 'PyNote/icons/newnote.svg',
 }
 file_space = 'data/themes/spacekit.toml'
 file_space_inner = {
     'background': '#2b303b',
     'text_color': '#ffffff',
-    'side_pannel': '#1c1f26',
+    'side_panel': '#1c1f26',
+    'file_settings_icon': 'PyNote/icons/settings_light.svg',
+    'file_delete_icon': 'PyNote/icons/delete_light.svg',
+    'file_sync_icon': 'PyNote/icons/sync_light.svg',
+    'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
 }
 
 
@@ -105,96 +117,3 @@ file_space_inner = {
 api_new = "new"
 api_usr = "usr"
 api_notes = "note"
-
-
-# ! Доп классы
-class Config_app(TypedDict):
-    width: int
-    height: int
-    lang: str
-    theme: str
-    opacity: float | int
-
-
-class Config_user(TypedDict):
-    username: str
-    password: str
-    wtkey: str
-
-
-class Config_server(TypedDict):
-    host: str
-    token: str
-
-
-class Config(TypedDict):
-    app: Config_app
-    user: Config_user
-    server: Config_server
-
-
-class Theme(TypedDict):
-    background: str
-    text_pannel: str
-    side_pannel: str
-
-
-class User_Data(TypedDict):
-    id: int
-    username: str
-    password: str
-    token: str
-
-
-class User_Note(TypedDict):
-    id: int
-    username: str
-    password: str
-    token: str
-    name: str
-    inner: str
-
-
-class Server_Data(TypedDict):
-    host: str
-    token: str
-
-
-class Server_Log(TypedDict):
-    log: Literal[
-        'user not found',
-        'incorrect password',
-        'note not found',
-        'timeout'
-    ]
-
-
-# ==============================
-class Load_User(TypedDict):
-    username: str
-    password: str
-
-
-class Note(TypedDict):
-    name: str
-    inner: str
-
-
-class Post_Note(TypedDict):
-    id: int
-    token: str
-    name: str
-    inner: str
-
-
-class Get_User_Note(TypedDict):
-    id: int
-    token: str
-
-
-class Delete_Note(TypedDict):
-    id: int
-    username: str
-    password: str
-    token: str
-    name: str

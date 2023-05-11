@@ -13,6 +13,8 @@ from core import (
 
 from settings import (
     fold_notes,
+)
+from spec_types import (
     Note,
 )
 

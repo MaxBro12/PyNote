@@ -29,23 +29,25 @@ from settings import (
     font_editor_text_family,
     font_editor_text_size,
 )
+from spec_types import Config
 from language import lang
 
 
 class Editor(QVBoxLayout):
     newNote = Signal(str)
 
-    def __init__(self, language: str = 'ru'):
+    def __init__(self, conf: Config, language: str = 'ru'):
         # ! Основа
         super().__init__()
         self.save_times = 0
+        self.conf = conf
         self.widget_i = None
 
         # ? Редактор названия
         self.title_e = QLineEdit()
         self.title_e.setFont(QFont(
             font_editor_title_family,
-            font_editor_title_size,
+            conf['app']['font_editor_title_size'],
             99
         ))
         self.title_e.setPlaceholderText(lang[language]['emp_title'])
@@ -56,6 +58,12 @@ class Editor(QVBoxLayout):
 
         # ? Редактор текста
         self.text_e = QTextEdit()
+        # self.text_e.setFont(QFont(
+        #     font_editor_text_family,
+        #     conf['app']['font_editor_text_size'],
+        #     99
+        # ))
+        self.text_e.setFontPointSize(conf['app']['font_editor_text_size'])
         self.text_e.setPlaceholderText(lang[language]['emp_inner'])
         self.text_e.textChanged.connect(self.slot_save_note)
 
