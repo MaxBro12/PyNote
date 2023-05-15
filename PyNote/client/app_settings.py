@@ -85,9 +85,10 @@ class App_Settings(QWidget):
 class AS_lang(QWidget):
     def __init__(self, parent, conf: Config) -> None:
         super().__init__(parent)
+        # self.setFixedHeight(50)
         self.setStyleSheet(
             f"background-color: {parent.theme['side_panel']};" +
-            "border-radius: 20px;"
+            "border-radius: 10px;"
         )
 
         # ! Текст

@@ -12,7 +12,7 @@ file_conf_inner = {
         'lang': "ru",
         'theme': "dark.toml",
         'opacity': 1,
-        'font_editor_title_size': 25,
+        'font_editor_title_size': 15,
         'font_editor_text_size': 10,
         'font_notes_list_size': 12
     },
