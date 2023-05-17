@@ -129,10 +129,32 @@ class Row_Box(QWidget):
         self.box.setStyleSheet(
             """
             QComboBox {
-                border: 1px solid white;
+                border: 1px solid""" + f" {self.theme['text_color']}" + """;
+
+                border-top-right-radius: 10%;
+                border-bottom-right-radius: 10%;
+
                 padding-top: 100%;
                 padding-bottom: 100%;
                 padding-left: 10px;
+            }
+            QComboBox::on {
+                padding: 0px, 0px, 0px, 0px;
+            }
+            QComboBox::drop-down {
+                border: 0px;
+            }
+            QComboBox::drop-arrow {
+                image: url(:/icons/expand.svg);
+                width: 12px;
+                height: 12px;
+                margine-right: 20px;
+            }
+            QListView {
+                border: 1px solid white;
+                margin: 0px;
+                padding: 0px;
+                outline: 0px;
             }
             """
             # """
@@ -140,9 +162,7 @@ class Row_Box(QWidget):
             #     border: 1px solid white;
             #     padding: 0, 0, 0, 0;
             # }
-            # """
-            # f"""border-color: {self.theme['text_color']};
-            # border: 1px solid {self.theme['text_color']};"""
+            # f"""border-color: {self.theme['text_color']}; border: 1px solid {self.theme['text_color']};"""
         )
 
     @property

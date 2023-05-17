@@ -38,6 +38,7 @@ class Theme(TypedDict):
     file_delete_icon: str
     file_sync_icon: str
     file_new_note_icon: str
+    file_expand_icon: str
 
 
 class User_Data(TypedDict):

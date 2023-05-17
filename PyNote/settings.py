@@ -90,6 +90,7 @@ file_dark_inner = {
     'file_delete_icon': 'PyNote/icons/delete_light.svg',
     'file_sync_icon': 'PyNote/icons/sync_light.svg',
     'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
+    'file_expand_icon': "PyNote/icons/expand_light.svg",
 }
 file_light = 'data/themes/light.toml'
 file_light_inner = {
@@ -100,6 +101,7 @@ file_light_inner = {
     'file_delete_icon': 'PyNote/icons/delete.svg',
     'file_sync_icon': 'PyNote/icons/sync.svg',
     'file_new_note_icon': 'PyNote/icons/newnote.svg',
+    'file_expand_icon': "PyNote/icons/expand.svg",
 }
 file_space = 'data/themes/spacekit.toml'
 file_space_inner = {
@@ -110,6 +112,7 @@ file_space_inner = {
     'file_delete_icon': 'PyNote/icons/delete_light.svg',
     'file_sync_icon': 'PyNote/icons/sync_light.svg',
     'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
+    'file_expand_icon': "PyNote/icons/expand_light.svg",
 }
 
 
