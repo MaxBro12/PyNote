@@ -58,6 +58,11 @@ class MyApp(QtWidgets.QWidget):
         self.notes = get_local_notes()  # + \
         # serv_get_notes(config['server'], self.user)
 
+        # ? Подключение окна настроек
+        print('start')
+        self.setts_app = App_Settings(self.config, self.theme)
+        print('clear')
+
         # ? Топ панель
         self.setWindowIcon(QtGui.QIcon(file_icon))
         self.setWindowTitle('PyNote')
@@ -70,7 +75,7 @@ class MyApp(QtWidgets.QWidget):
         self.layout_m = Main_Layout(self, self.theme)
         self.setLayout(self.layout_m)
 
-        # ! Подключаем основные кнопки
+        # ! Подключаем основные кнопки и сигналы
         self.layout_m.notes_l.notes.settings.add_note.clicked.connect(
             self.add_note
         )
@@ -83,6 +88,7 @@ class MyApp(QtWidgets.QWidget):
         self.layout_m.notes_l.edit.newNote.connect(
             self.add_empty_note
         )
+        self.setts_app.update_conf.connect(self.update_conf())
 
         # ! Применяем настройки
         self.update_conf(False)

@@ -56,18 +56,23 @@ class App_Settings(QWidget):
         # self.setFixedSize(QSize(300, 500))
 
         self.as_lang = AS_lang(self, theme, config)
+        self.as_lang.box.currentTextChanged.connect(self.update_config())
         self.l_main.addWidget(self.as_lang)
 
         self.as_theme = AS_theme(self, theme, config)
+        self.as_theme.box.currentTextChanged.connect(self.update_config())
         self.l_main.addWidget(self.as_theme)
 
         self.as_opacity = AS_opacity(self, theme, config)
+        self.as_opacity.box.editingFinished.connect(self.update_config())
         self.l_main.addWidget(self.as_opacity)
 
         self.as_name = AS_username(self, theme, config)
+        self.as_name.box.editingFinished.connect(self.update_config())
         self.l_main.addWidget(self.as_name)
 
         self.as_pass = AS_password(self, theme, config)
+        self.as_pass.box.editingFinished.connect(self.update_config())
         self.l_main.addWidget(self.as_pass)
 
         # self.as_key = AS_waytokey(self, theme, config)
@@ -90,7 +95,8 @@ class App_Settings(QWidget):
         )
 
     def update_config(self):
-        pass
+        print('Calling update method')
+        self.update_conf.emit()
 
 
 class Row_Box(QWidget):
