@@ -55,28 +55,27 @@ class App_Settings(QWidget):
         # self.l_main.setSpacing(0)
         # self.setFixedSize(QSize(300, 500))
 
+        # Меню
         self.as_lang = AS_lang(self, theme, config)
-        self.as_lang.box.currentTextChanged.connect(self.update_config())
-        self.l_main.addWidget(self.as_lang)
-
         self.as_theme = AS_theme(self, theme, config)
-        self.as_theme.box.currentTextChanged.connect(self.update_config())
-        self.l_main.addWidget(self.as_theme)
-
         self.as_opacity = AS_opacity(self, theme, config)
-        self.as_opacity.box.editingFinished.connect(self.update_config())
-        self.l_main.addWidget(self.as_opacity)
-
         self.as_name = AS_username(self, theme, config)
-        self.as_name.box.editingFinished.connect(self.update_config())
-        self.l_main.addWidget(self.as_name)
-
         self.as_pass = AS_password(self, theme, config)
-        self.as_pass.box.editingFinished.connect(self.update_config())
+
+        # Добавляем на слой
+
+        self.l_main.addWidget(self.as_lang)
+        self.l_main.addWidget(self.as_theme)
+        self.l_main.addWidget(self.as_opacity)
+        self.l_main.addWidget(self.as_name)
         self.l_main.addWidget(self.as_pass)
 
-        # self.as_key = AS_waytokey(self, theme, config)
-        # self.l_main.addWidget(self.as_key)
+        # Подключение
+        self.as_lang.box.currentTextChanged.connect(self.update_config())
+        self.as_theme.box.currentTextChanged.connect(self.update_config())
+        self.as_opacity.box.editingFinished.connect(self.update_config())
+        self.as_name.box.editingFinished.connect(self.update_config())
+        self.as_pass.box.editingFinished.connect(self.update_config())
 
         self.setLayout(self.l_main)
 
@@ -96,10 +95,19 @@ class App_Settings(QWidget):
 
     def update_config(self):
         print('Calling update method')
+
+        self.config['app']['lang'] = self.as_lang.get
+        self.config['app']['theme'] = self.as_theme.get + '.toml'
+        self.config['app']['opacity'] = float(self.as_opacity.get)
+        self.config['user']['username'] = self.as_name.get
+        self.config['user']['password'] = self.as_pass.get
+
         self.update_conf.emit()
 
 
 class Row_Box(QWidget):
+    update_signal = Signal()
+
     def __init__(self, parent, theme: Theme) -> None:
         super().__init__(parent)
         self.theme = theme
@@ -163,12 +171,6 @@ class Row_Box(QWidget):
                 outline: 0px;
             }
             """
-            # """
-            # box QListView {
-            #     border: 1px solid white;
-            #     padding: 0, 0, 0, 0;
-            # }
-            # f"""border-color: {self.theme['text_color']}; border: 1px solid {self.theme['text_color']};"""
         )
 
     @property

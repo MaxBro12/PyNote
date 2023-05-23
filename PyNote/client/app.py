@@ -104,6 +104,8 @@ class MyApp(QtWidgets.QWidget):
         if write_to_file:
             write(self.config, file_conf)
 
+        print('APP COLLING AP')
+
         # ? Обновления параметров
         self.setWindowOpacity(self.config['app']['opacity'])
 
