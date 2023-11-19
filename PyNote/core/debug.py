@@ -1,8 +1,7 @@
 import logging
+from logging.handlers import RotatingFileHandler
 from typing import Union, Literal
 from os import get_terminal_size
-
-from settings import file_log, file_error
 
 
 Level = Literal['debug', 'warning', 'info', 'error', 'crit']
@@ -13,8 +12,49 @@ def error_found(err):
     create_log_file(err)
 
 
-def create_log_file(log: Union[Exception, str], levelname: Level = 'debug'):
-    """Добавляем в лог данные log с указанием типа уровня:
+def log_decorator(func):
+    def wrapper(*args, **kwarks):
+        func(*args, **kwarks)
+        create_log(f'Function {func.__name__} called!')
+    return wrapper
+
+
+def create_log(
+    log: Exception|str,
+    levelname: Level = 'debug',
+    log_file: str = 'logger.log',
+    max_bytes: int = 1_000,
+):
+    logger = logging.Logger(__name__)
+    handler = RotatingFileHandler(
+        log_file, 'a', max_bytes
+    )
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    log_exc = False
+    if type(log) != str:
+        log_exc = True
+    match levelname:
+        case 'debug':
+            logger.debug(log, exc_info=log_exc)
+        case 'warning':
+            logger.warning(log, exc_info=log_exc)
+        case 'info':
+            logger.info(log, exc_info=log_exc)
+        case 'error':
+            logger.error(log, exc_info=log_exc)
+        case 'crit':
+            logger.critical(log, exc_info=log_exc)
+
+
+def create_log_file(
+        log: Union[Exception, str],
+        levelname: Level = 'debug',
+        log_file: str = 'logger.log'
+):
+    """Добавляем в log_file данные log с указанием типа уровня:
     - debug - дебаг
     - warning - предупреждение
     - info - информация
@@ -22,9 +62,10 @@ def create_log_file(log: Union[Exception, str], levelname: Level = 'debug'):
     - crit - критическая ошибка"""
     logging.basicConfig(
         level=logging.DEBUG,
-        filename=file_log,
+        filename=log_file,
         filemode="a",
         format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[RotatingFileHandler(log_file, maxBytes=1_000_000)]
     )
     log_exc = False
     if type(log) != str:

@@ -1,7 +1,1 @@
-from .app import MyApp, MyAppMain
-
-
-__all__ = [
-    'MyApp',
-    'MyAppMain',
-]
+from .error_app import ErrorApp
