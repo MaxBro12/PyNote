@@ -4,7 +4,7 @@ from core import (
     get_files,
     pjoin,
 
-    write_to_toml,
+    write_toml,
     read_toml,
     update_dict_to_type,
     toml_type_check,
@@ -41,7 +41,7 @@ def main_check():
 
 
 def create_settings() -> bool:
-    write_to_toml(FILE_SETTINGS_IN, FILE_SETTINGS)
+    write_toml(FILE_SETTINGS_IN, FILE_SETTINGS)
     create_log(f'FILE {FILE_SETTINGS} CREATED!', 'info')
     return True
 

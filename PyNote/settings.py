@@ -12,12 +12,12 @@ FILE_LOGGER_MAX_LEN: Final = 1_000
 
 FILE_SETTINGS: Final = f'{DIR_DATA}/settings.toml'
 FILE_SETTINGS_IN: Final = {
-    'app': {
+    'MAIN': {
         'width': 1000,
         'height': 700,
+        'opacity': 1.0,
         'lang': "ru",
         'theme': "dark.toml",
-        'opacity': 1,
         'font_editor_title_size': 15,
         'font_editor_text_size': 10,
         'font_notes_list_size': 12
@@ -61,6 +61,9 @@ FONT_EDITOR_TEXT_BOND: Final = 0
 
 
 # ! Приложение
+ALL_SPASING: Final = 2
+ALL_MARGINS: Final = 2
+
 FILE_ICON: Final = 'icons/icon.ico'
 # file_settings_icon = 'PyNote/icons/settings.svg'
 # file_delete_icon = 'PyNote/icons/delete.svg'
@@ -107,3 +110,9 @@ FILE_TH_SPACE_IN: Final = {
 API_NEW: Final = "new"
 API_USR: Final = "usr"
 API_NOTE: Final = "note"
+
+
+# ! Настройки
+SETTINGS_APP_SIZE: Final = [300, 400]
+
+

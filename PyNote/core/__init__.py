@@ -14,7 +14,7 @@ from .filemanage import (
     create_folder,
     
     read_toml,
-    write_to_toml,
+    write_toml,
     update_dict_to_type,
     toml_type_check,
 

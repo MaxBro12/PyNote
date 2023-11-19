@@ -26,7 +26,7 @@ class Lang(TypedDict):
     eng: Phrases
 
 
-lang: Lang = {
+lang = {
     'ru': {
         'emp_title': 'Название заметки',
         'emp_inner': 'Текст...',
@@ -44,6 +44,30 @@ lang: Lang = {
 
         'as_username': 'Логин',
         'as_password': 'Пароль',
+
+        'set_wid_l': 'Ширина',
+        'set_wid_i': '',
+
+        'set_hei_l': 'Высота',
+        'set_hei_i': '',
+
+        'set_opa_l': 'Прозрачность',
+        'set_opa_i': '',
+
+        'set_lang_l': 'Язык',
+        'set_lang_i': '',
+
+        'set_theme_l': 'Тема',
+        'set_theme_i': '',
+
+        'set_title_l': 'Размер Заголовка',
+        'set_title_i': '',
+
+        'set_text_l': 'Размер Текста',
+        'set_text_i': '',
+
+        'set_nl_l': 'Размер коротких закладок',
+        'set_nl_i': '',
     },
     'eng': {
         'emp_title': 'Название заметки',

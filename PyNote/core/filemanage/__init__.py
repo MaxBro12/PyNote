@@ -27,7 +27,7 @@ from .path import (
 
 from .tomlreader import (
     read_toml,
-    write_to_toml,
+    write_toml,
     update_dict_to_type,
     toml_type_check,
 )

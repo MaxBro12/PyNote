@@ -8,10 +8,8 @@ from start import main_check
 
 
 def main(args: list):
-    # ? Загрузка
+    # ? Проверка
     main_check()
-    for i in range(1_000_000):
-        create_log(f'{i}', 'crit')
 
     # ? Запуск приложения
     # app = QApplication(args)
