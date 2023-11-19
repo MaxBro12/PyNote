@@ -1,8 +1,4 @@
 toml
-logging
 requests
-
+fastapi
 PySide6
-
-flask-restful
-requests
