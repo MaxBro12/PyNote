@@ -3,6 +3,7 @@ __pycache__
 .idea
 venv
 
-logger.log
+*.log
+*.log.*
 
 data
