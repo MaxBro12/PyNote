@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QListWidget,
 )
 from PySide6.QtCore import (
-    QSize,
+    QSize, Qt
 )
 
 from core import (
@@ -138,6 +138,7 @@ class SettingsMainPanel(QWidget):
         self.row = QGridLayout()
         self.row.setSpacing(ALL_SPASING)
         self.row.setContentsMargins(2, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.setLayout(self.row)
 
 
