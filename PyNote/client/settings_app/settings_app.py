@@ -2,21 +2,20 @@ from PySide6.QtWidgets import (
     QWidget,
     QStackedWidget,
     QHBoxLayout,
-    QGridLayout,
-    QLabel,
-    QLineEdit,
-    QCheckBox,
-    QComboBox,
     QListWidget,
 )
 from PySide6.QtCore import (
-    QSize, Qt
+    QSize
+)
+from .settings_l_pannel import (
+    SettingsGeneral,
+    SettingsUser,
+    SettingsServer,
 )
 
 from core import (
     read_toml,
     write_toml,
-    toml_type_check,
 )
 
 from lang import lang
@@ -129,190 +128,4 @@ class SettingsWindow(QWidget):
         self.config['server']['token'] = str(self.settingsServer.token_i.text())
 
         write_toml(self.config, FILE_SETTINGS)
-
-
-class SettingsMainPanel(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.row = QGridLayout()
-        self.row.setSpacing(ALL_SPASING)
-        self.row.setContentsMargins(2, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
-        self.row.setAlignment(Qt.AlignmentFlag.AlignTop)
-        self.setLayout(self.row)
-
-
-class SettingsGeneral(SettingsMainPanel):
-    def __init__(self, conf):
-        super().__init__()
-
-        self.conf = conf
-
-        # width
-        self.width_l = QLabel()
-        self.width_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
-        )
-
-        self.width_i = QLineEdit()
-        self.width_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
-        )
-
-        # height
-        self.height_l = QLabel()
-        self.height_l.setText(
-            lang[conf['MAIN']['lang']]['set_hei_l']
-        )
-
-        self.height_i = QLineEdit()
-        self.height_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_hei_i']
-        )
-
-        # opacity
-        self.opacity_l = QLabel()
-        self.opacity_l.setText(
-            lang[conf['MAIN']['lang']]['set_opa_l']
-        )
-
-        self.opacity_i = QLineEdit()
-        self.opacity_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_opa_i']
-        )
-
-        # lang
-        self.lang_l = QLabel()
-        self.lang_l.setText(
-            lang[conf['MAIN']['lang']]['set_lang_l']
-        )
-
-        self.lang_i = QComboBox()
-        self.lang_i.addItems(list(lang.keys()))
-
-        # tmeme
-        self.theme_l = QLabel()
-        self.theme_l.setText(
-            lang[conf['MAIN']['lang']]['set_theme_l']
-        )
-
-        self.theme_i = QComboBox()
-
-        # title_size
-        self.font_title_l = QLabel()
-        self.font_title_l.setText(
-            lang[conf['MAIN']['lang']]['set_title_l']
-        )
-        self.font_title_i = QLineEdit()
-
-        # font_text
-        self.font_text_l = QLabel()
-        self.font_text_l.setText(
-            lang[conf['MAIN']['lang']]['set_text_l']
-        )
-        self.font_text_i = QLineEdit()
-
-        # font_text
-        self.font_nl_l = QLabel()
-        self.font_nl_l.setText(
-            lang[conf['MAIN']['lang']]['set_nl_l']
-        )
-        self.font_nl_i = QLineEdit()
-
-        # ! Добавляем к лойауту
-        self.row.addWidget(self.width_l, 0, 0)
-        self.row.addWidget(self.width_i, 0, 1)
-        self.row.addWidget(self.height_l, 1, 0)
-        self.row.addWidget(self.height_i, 1, 1)
-        self.row.addWidget(self.opacity_l, 2, 0)
-        self.row.addWidget(self.opacity_i, 2, 1)
-        self.row.addWidget(self.lang_l, 3, 0)
-        self.row.addWidget(self.lang_i, 3, 1)
-        self.row.addWidget(self.theme_l, 4, 0)
-        self.row.addWidget(self.theme_i, 4, 1)
-        self.row.addWidget(self.font_title_l, 5, 0)
-        self.row.addWidget(self.font_title_i, 5, 1)
-        self.row.addWidget(self.font_text_l, 6, 0)
-        self.row.addWidget(self.font_text_i, 6, 1)
-        self.row.addWidget(self.font_nl_l, 7, 0)
-        self.row.addWidget(self.font_nl_i, 7, 1)
-
-
-class SettingsUser(SettingsMainPanel):
-    def __init__(self, conf):
-        super().__init__()
-
-        self.conf = conf
-
-        # username
-        self.username_l = QLabel()
-        self.username_l.setText(
-            lang[conf['MAIN']['lang']]['set_username_l']
-        )
-
-        self.username_i = QLineEdit()
-        self.username_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_username_i']
-        )
-        # password
-        self.password_l = QLabel()
-        self.password_l.setText(
-            lang[conf['MAIN']['lang']]['set_password_l']
-        )
-
-        self.password_i = QLineEdit()
-        self.password_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_password_i']
-        )
-
-        # wtkey
-        self.wtkey_l = QLabel()
-        self.wtkey_l.setText(
-            lang[conf['MAIN']['lang']]['set_wtkey_l']
-        )
-
-        self.wtkey_i = QLineEdit()
-        self.wtkey_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wtkey_i']
-        )
-
-        self.row.addWidget(self.username_l, 0, 0)
-        self.row.addWidget(self.username_i, 0, 1)
-        self.row.addWidget(self.password_l, 1, 0)
-        self.row.addWidget(self.password_i, 1, 1)
-        self.row.addWidget(self.wtkey_l, 2, 0)
-        self.row.addWidget(self.wtkey_i, 2, 1)
-
-
-class SettingsServer(SettingsMainPanel):
-     def __init__(self, conf):
-        super().__init__()
-
-        self.conf = conf
-
-        # host
-        self.host_l = QLabel()
-        self.host_l.setText(
-            lang[conf['MAIN']['lang']]['set_host_l']
-        )
-
-        self.host_i = QLineEdit()
-        self.host_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_host_i']
-        )
-        # token
-        self.token_l = QLabel()
-        self.token_l.setText(
-            lang[conf['MAIN']['lang']]['set_token_l']
-        )
-
-        self.token_i = QLineEdit()
-        self.token_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_token_i']
-        )
-
-        self.row.addWidget(self.host_l, 0, 0)
-        self.row.addWidget(self.host_i, 0, 1)
-        self.row.addWidget(self.token_l, 1, 0)
-        self.row.addWidget(self.token_i, 1, 1)
 

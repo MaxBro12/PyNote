@@ -64,7 +64,7 @@ FONT_EDITOR_TEXT_BOND: Final = 0
 ALL_SPASING: Final = 2
 ALL_MARGINS: Final = 2
 
-FILE_ICON: Final = 'icons/icon.ico'
+FILE_APP_ICON: Final = 'icons/icon.ico'
 # file_settings_icon = 'PyNote/icons/settings.svg'
 # file_delete_icon = 'PyNote/icons/delete.svg'
 # file_sync_icon = 'PyNote/icons/sync.svg'
