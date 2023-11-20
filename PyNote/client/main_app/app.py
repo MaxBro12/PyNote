@@ -1,156 +1,75 @@
-from typing import Optional
-from PySide6 import (
-    QtWidgets,
-    QtGui,
-)
-import PySide6.QtCore
-import PySide6.QtWidgets
+from PySide6.QtWidgets import QMainWindow
+from PySide6.QtGui import QIcon
 
-
+from .app_ui import MainAppUI
+from ..settings_app import SettingsWindow
+from ..warning_app import WarningApp 
 from core import (
-    read,
-    write,
+    create_log,
 
     pjoin,
+    wayfinder,
+
+    read_toml,
+    write_toml,
+    toml_type_check,
 )
-from handlers import (
-    get_local_notes,
-    add_local_note,
-
-    login_user,
-
-    serv_get_notes,
-)
-
-from .layout import Main_Layout
-from .app_settings import App_Settings
-
 
 from settings import (
-    file_icon,
-    file_conf,
-    fold_themes,
-)
-from spec_types import (
-    Server_Data,
-    User_Data,
-    Config,
-    Theme,
-
-    cast,
+    DIR_THEMES,
+    FILE_SETTINGS,
+    FILE_APP_ICON,
 )
 
 
-class MyAppMain(QtWidgets.QMainWindow):
-    def __init__(self, config: Config) -> None:
+class MyAppMain(QMainWindow):
+    def __init__(self):
         super().__init__()
-        self.setCentralWidget(MyApp(config))
-
-
-class MyApp(QtWidgets.QWidget):
-    def __init__(self, config: Config):
-        super().__init__()
-        self.config = config
-        self.theme = cast(
-            Theme, read(pjoin(fold_themes, self.config['app']['theme']))
-        )
-        # self.user = login_user(config['server'], config['user'])
-        self.notes = get_local_notes()  # + \
-        # serv_get_notes(config['server'], self.user)
-
-        # ? Подключение окна настроек
-        print('start')
-        self.setts_app = App_Settings(self.config, self.theme)
-        print('clear')
-
-        # ? Топ панель
-        self.setWindowIcon(QtGui.QIcon(file_icon))
+        
+        # Загрузка конфига
+        self.config = read_toml(FILE_SETTINGS) 
+        
+        # Доп окна
+        self.warning = None
+        self.settings = None
+        
+        # Рамка
+        self.setWindowIcon(QIcon(FILE_APP_ICON))
         self.setWindowTitle('PyNote')
 
         # ? Размеры
         self.resize(self.config['app']['width'], self.config['app']['height'])
         self.setMinimumSize(300, 400)
-
-        # ! Разметка
-        self.layout_m = Main_Layout(self, self.theme)
-        self.setLayout(self.layout_m)
-
-        # ! Подключаем основные кнопки и сигналы
-        self.layout_m.notes_l.notes.settings.add_note.clicked.connect(
-            self.add_note
-        )
-        self.layout_m.notes_l.notes.settings.settings.clicked.connect(
-            self.open_settings
-        )
-        self.layout_m.notes_l.notes.list.itemClicked.connect(
-            self.load_note
-        )
-        self.layout_m.notes_l.edit.newNote.connect(
-            self.add_empty_note
-        )
-        self.setts_app.update_conf.connect(self.update_conf())
-
-        # ! Применяем настройки
-        self.update_conf(False)
-
-        # ? Загружаем темку
+                
+        # Тема
         self.load_theme()
 
-        self.update_notes()
-        self.setts_app = None
+    # MAIN ====================================================================
+    def show_settings(self):
+        if self.settings is None:
+            self.settings = SettingsWindow()
+            create_log('Show settings', 'debug')
+            self.settings.show()
+        else:
+            self.settings = None
 
-    def update_conf(self, write_to_file: bool = True):
-        # ? Запись в файл
-        if write_to_file:
-            write(self.config, file_conf)
+    def show_warning(self, msg: str):
+        if self.warning is None:
+            self.warning = WarningApp(msg)
+            create_log(f'Show Warning:\n{msg}', 'debug')
+            self.warning.show()
+        else:
+            self.warning = None
 
-        print('APP COLLING AP')
-
-        # ? Обновления параметров
-        self.setWindowOpacity(self.config['app']['opacity'])
+    def load_config(self):
+        self.config = read_toml(FILE_SETTINGS)
 
     def load_theme(self):
-        self.theme = cast(
-            Theme, read(pjoin(fold_themes, self.config['app']['theme']))
-        )
+        # Проверяем если значение вообще не пустное
+        if self.config['MAIN']['theme']:
+            way = pjoin(DIR_THEMES, self.config['MAIN']['theme'])
+            # Проверяем существование файла до открытия
+            if wayfinder(way):
+                with open(way) as f:
+                    self.setStyleSheet(f.read())
 
-        self.setStyleSheet(
-            f"background-color: {self.theme['background']};" +
-            f"color: {self.theme['text_color']};" +
-            # f"border-color: {theme['background']};" +
-            f"border-style: outset;"
-        )
-
-        # ? Переключаем темы у заметок
-        self.layout_m.notes_l.notes.list.setStyleSheet(
-            f"background-color: {self.theme['side_panel']};"
-        )
-        self.layout_m.notes_l.notes.settings.setStyleSheet(
-            f"background-color: {self.theme['side_panel']};"
-        )
-
-    def update_notes(self):
-        self.notes = get_local_notes()
-        for note in self.notes:
-            self.add_note(
-                note['name'].split('.')[0],
-                note['inner']
-            )
-
-    # ! ================================ SLOTS ================================
-    def add_note(self, name: str = '', inner: str = ''):
-        self.layout_m.notes_l.notes.add(name, inner)
-
-    def add_empty_note(self, name):
-        widget = self.layout_m.notes_l.notes.spec_add(name)
-        self.layout_m.notes_l.edit.update_info(widget)
-
-    def load_note(self, item: QtWidgets.QListWidgetItem):
-        widget = self.layout_m.notes_l.notes.list.itemWidget(item)
-        self.layout_m.notes_l.edit.update_info(widget)
-
-    # ! Слоты для настроек
-    def open_settings(self):
-        if self.setts_app is None:
-            self.setts_app = App_Settings(self.config, self.theme)
-        self.setts_app.show()

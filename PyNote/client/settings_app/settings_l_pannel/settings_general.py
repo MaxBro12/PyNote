@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QComboBox,
 )
+from core import get_themes
 from .settings_main_pannel import SettingsMainPanel
 
 from lang import lang
@@ -63,6 +64,7 @@ class SettingsGeneral(SettingsMainPanel):
         )
 
         self.theme_i = QComboBox()
+        self.theme_i.addItems(get_themes())
 
         # title_size
         self.font_title_l = QLabel()

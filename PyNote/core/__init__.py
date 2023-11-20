@@ -23,4 +23,4 @@ from .filemanage import (
 )
 
 from .exceptions import OsException, ConfigException
-
+from .themes import get_themes, create_theme

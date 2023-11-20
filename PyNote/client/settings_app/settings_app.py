@@ -33,6 +33,7 @@ class SettingsWindow(QWidget):
     def __init__(self):
         # ! Инициализация
         super().__init__()
+        self.setWindowTitle('PyNote settings')
         self.setBaseSize(QSize(SETTINGS_APP_SIZE[0], SETTINGS_APP_SIZE[1]))
         self.config = read_toml(FILE_SETTINGS)
 
