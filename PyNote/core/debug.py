@@ -23,11 +23,11 @@ def create_log(
     log: Exception|str,
     levelname: Level = 'debug',
     log_file: str = 'logger.log',
-    max_bytes: int = 1_000,
+    max_bytes: int = 1_000_000,
 ):
     logger = logging.Logger(__name__)
     handler = RotatingFileHandler(
-        log_file, 'a', max_bytes
+        log_file, 'a', maxBytes=max_bytes, backupCount=1
     )
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
     handler.setFormatter(formatter)

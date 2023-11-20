@@ -45,6 +45,10 @@ lang = {
         'as_username': 'Логин',
         'as_password': 'Пароль',
 
+        'set_gen': 'Основное',
+        'set_user': 'Пользователь',
+        'set_server': 'Сеть',
+        
         'set_wid_l': 'Ширина',
         'set_wid_i': '',
 
@@ -68,6 +72,19 @@ lang = {
 
         'set_nl_l': 'Размер коротких закладок',
         'set_nl_i': '',
+
+        'set_username_l': 'Имя пользователя',
+        'set_username_i': '',
+        'set_password_l': 'Пароль',
+        'set_password_i': '',
+        'set_wtkey_l': 'Путь до ключа',
+        'set_wtkey_i': '',
+
+        'set_host_l': 'Хост сервера',
+        'set_host_i': '',
+
+        'set_token_l': 'Токен доступа',
+        'set_token_i': '',
     },
     'eng': {
         'emp_title': 'Название заметки',

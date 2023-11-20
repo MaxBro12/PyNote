@@ -1,7 +1,7 @@
 from typing import Any, cast
 
 from toml import load, dump
-from ..debug import create_log_file
+from ..debug import create_log
 
 
 def read_toml(way: str) -> dict[str, Any]:
@@ -24,14 +24,14 @@ def toml_type_check(typed_dict: dict, checking_dict: dict) -> bool:
     """Возращает True, если типизация и ключи dict1 соответсвуют dict2"""
     try:
         if len(typed_dict) != len(checking_dict):
-            create_log_file(
+            create_log(
                 f'TOML len: {len(typed_dict)} != {len(checking_dict)}'
             )
             return False
 
         for key in typed_dict.keys():
             if type(checking_dict[key]) != type(typed_dict[key]):
-                create_log_file(
+                create_log(
                     f'TOML type: {key}: ' +
                     f'{type(checking_dict[key])} != {type(typed_dict[key])}'
                 )
@@ -39,5 +39,5 @@ def toml_type_check(typed_dict: dict, checking_dict: dict) -> bool:
 
         return True
     except KeyError:
-        create_log_file('TOML key error!')
+        create_log('TOML key error!')
         return False

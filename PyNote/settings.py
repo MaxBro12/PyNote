@@ -114,5 +114,5 @@ API_NOTE: Final = "note"
 
 # ! Настройки
 SETTINGS_APP_SIZE: Final = [300, 400]
-
+SETTINGS_APP_L_PANNEL_SIZE: Final = 150
 

@@ -22,6 +22,7 @@ from core import (
 from lang import lang
 from settings import (
     SETTINGS_APP_SIZE,
+    SETTINGS_APP_L_PANNEL_SIZE,
     FILE_SETTINGS,
 
     ALL_MARGINS,
@@ -57,19 +58,19 @@ class SettingsWindow(QWidget):
 
         # Установки левой панели
         self.left_p.addItem(
-            lang[self.config['MAIN']['lang']]['main']['set_main']
+            lang[self.config['MAIN']['lang']]['set_gen']
         )
         self.left_p.addItem(
-            lang[self.config['MAIN']['lang']]['main']['set_mining']
+            lang[self.config['MAIN']['lang']]['set_user']
         )
         self.left_p.addItem(
-            lang[self.config['MAIN']['lang']]['main']['set_market']
+            lang[self.config['MAIN']['lang']]['set_server']
         )
         self.right_p.setCurrentIndex(0)
         # self.left_p.itemPressed.connect(self.test_call)
         self.left_p.itemClicked.connect(self.change_st_widget)
 
-        # MAIN
+        # Подключаем основные настройки
         self.settingsGeneral.height_i.setText(str(self.config['MAIN']['height']))
         self.settingsGeneral.height_i.editingFinished.connect(self.save_config)
         self.settingsGeneral.width_i.setText(str(self.config['MAIN']['width']))
@@ -78,16 +79,28 @@ class SettingsWindow(QWidget):
         self.settingsGeneral.opacity_i.editingFinished.connect(self.save_config)
         self.settingsGeneral.lang_i.setCurrentText(self.config['MAIN']['lang'])
         self.settingsGeneral.lang_i.currentIndexChanged.connect(self.save_config)
-        self.settingsGeneral.resizeable_i.setChecked(self.config['MAIN']['resizeable'])
-        self.settingsGeneral.resizeable_i.stateChanged.connect(self.save_config)
-        self.settingsGeneral.always_on_i.setChecked(self.config['MAIN']['always_on'])
-        self.settingsGeneral.always_on_i.stateChanged.connect(self.save_config)
-        self.settingsGeneral.usw_i.setChecked(self.config['MAIN']['use_self_window'])
-        self.settingsGeneral.usw_i.stateChanged.connect(self.save_config)
-        self.settingsGeneral.elf_i.setText(str(self.config['MAIN']['eve_logs_folder']))
-        self.settingsGeneral.elf_i.editingFinished.connect(self.save_config)
-        self.settingsGeneral.last_pr_i.setCurrentText(self.config['MAIN']['last_profile'])
-        self.settingsGeneral.last_pr_i.currentIndexChanged.connect(self.save_config)
+        self.settingsGeneral.theme_i.setCurrentText(self.config['MAIN']['theme'])
+        self.settingsGeneral.theme_i.currentIndexChanged.connect(self.save_config)
+        self.settingsGeneral.font_title_i.setText(str(self.config['MAIN']['font_editor_title_size']))
+        self.settingsGeneral.font_title_i.editingFinished.connect(self.save_config)
+        self.settingsGeneral.font_text_i.setText(str(self.config['MAIN']['font_editor_text_size']))
+        self.settingsGeneral.font_text_i.editingFinished.connect(self.save_config) 
+        self.settingsGeneral.font_nl_i.setText(str(self.config['MAIN']['font_notes_list_size']))
+        self.settingsGeneral.font_nl_i.editingFinished.connect(self.save_config)
+
+        # Подключаем раздел пользователя
+        self.settingsUser.username_i.setText(self.config['user']['username'])
+        self.settingsUser.username_i.editingFinished.connect(self.save_config)
+        self.settingsUser.password_i.setText(self.config['user']['password'])
+        self.settingsUser.password_i.editingFinished.connect(self.save_config)
+        self.settingsUser.wtkey_i.setText(self.config['user']['wtkey'])
+        self.settingsUser.wtkey_i.editingFinished.connect(self.save_config)
+
+        # Подключаем раздел сервера 
+        self.settingsServer.host_i.setText(self.config['server']['host'])
+        self.settingsServer.host_i.editingFinished.connect(self.save_config)
+        self.settingsServer.token_i.setText(self.config['server']['token'])
+        self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
     def test_call(self, s = ''):
         print('YES!', s)
@@ -233,33 +246,33 @@ class SettingsUser(SettingsMainPanel):
         # username
         self.username_l = QLabel()
         self.username_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
+            lang[conf['MAIN']['lang']]['set_username_l']
         )
 
         self.username_i = QLineEdit()
         self.username_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
+            lang[conf['MAIN']['lang']]['set_username_i']
         )
         # password
         self.password_l = QLabel()
         self.password_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
+            lang[conf['MAIN']['lang']]['set_password_l']
         )
 
         self.password_i = QLineEdit()
         self.password_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
+            lang[conf['MAIN']['lang']]['set_password_i']
         )
 
         # wtkey
         self.wtkey_l = QLabel()
         self.wtkey_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
+            lang[conf['MAIN']['lang']]['set_wtkey_l']
         )
 
         self.wtkey_i = QLineEdit()
         self.wtkey_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
+            lang[conf['MAIN']['lang']]['set_wtkey_i']
         )
 
         self.row.addWidget(self.username_l, 0, 0)
@@ -279,22 +292,22 @@ class SettingsServer(SettingsMainPanel):
         # host
         self.host_l = QLabel()
         self.host_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
+            lang[conf['MAIN']['lang']]['set_host_l']
         )
 
         self.host_i = QLineEdit()
         self.host_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
+            lang[conf['MAIN']['lang']]['set_host_i']
         )
         # token
         self.token_l = QLabel()
         self.token_l.setText(
-            lang[conf['MAIN']['lang']]['set_wid_l']
+            lang[conf['MAIN']['lang']]['set_token_l']
         )
 
         self.token_i = QLineEdit()
         self.token_i.setPlaceholderText(
-            lang[conf['MAIN']['lang']]['set_wid_i']
+            lang[conf['MAIN']['lang']]['set_token_i']
         )
 
         self.row.addWidget(self.host_l, 0, 0)
