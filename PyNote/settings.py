@@ -102,11 +102,15 @@ API_NOTE: Final = "note"
 
 
 # ! Настройки
-SETTINGS_APP_SIZE: Final = [300, 400]
+SETTINGS_APP_SIZE: Final = (300, 400)
 SETTINGS_APP_L_PANNEL_SIZE: Final = 150
 
 # ! Приложение
 NOTE_LIST_L_PANNEL_SIZE: Final = 200
+
+EDITOR_TITLE_MAX_HEIGHT: Final = 30
+
+SPACER_ITEM_SIZE: Final = (30, 5)
 
 ALL_SPASING: Final = 2
 ALL_MARGINS: Final = 2

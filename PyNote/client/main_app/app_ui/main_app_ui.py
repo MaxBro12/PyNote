@@ -1,20 +1,23 @@
 from PySide6.QtWidgets import QWidget, QHBoxLayout
 
+from .notelist_ui import NoteListUI
+from .editorui import EditorUI
+
 
 class MainAppUI(QWidget):
-    def __init__(self):
+    def __init__(self, language: str, title_s: int, text_s: int):
         super().__init__()
         self.row = QHBoxLayout()
         self.setLayout(self.row)
         
         # ! Список заметок
-        self.notes = NoteList()
+        self.notes = NoteListUI()
         # ! Редактор заметки
-        self.edit = Editor()
+        self.edit = EditorUI(language, title_s, text_s)
 
-        self.row.addLayout(self.notes, 1)
+        self.row.addWidget(self.notes, 1)
         self.row.addSpacing(5)
-        self.row.addLayout(self.edit, 0)
+        self.row.addWidget(self.edit, 0)
 
 
 class MainAppUI2(QWidget):
