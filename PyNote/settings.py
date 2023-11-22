@@ -33,7 +33,6 @@ FILE_SETTINGS_IN: Final = {
     }
 }
 
-
 # ! Заметки
 TITLE_MAX_LEN: Final = 16
 FILE_NOTE: Final = '_data.toml'
@@ -59,16 +58,6 @@ FONT_EDITOR_TEXT_FAMILY: Final = 'Noto Sans'
 FONT_EDITOR_TEXT_SIZE: Final = ''
 FONT_EDITOR_TEXT_BOND: Final = 0
 
-
-# ! Приложение
-ALL_SPASING: Final = 2
-ALL_MARGINS: Final = 2
-
-FILE_APP_ICON: Final = 'icons/icon.ico'
-# file_settings_icon = 'PyNote/icons/settings.svg'
-# file_delete_icon = 'PyNote/icons/delete.svg'
-# file_sync_icon = 'PyNote/icons/sync.svg'
-# file_new_note_icon = 'PyNote/icons/newnote.svg'
 
 # ? Темы для приложения
 FILE_TH_DARK: Final = 'data/themes/dark.toml'
@@ -115,4 +104,17 @@ API_NOTE: Final = "note"
 # ! Настройки
 SETTINGS_APP_SIZE: Final = [300, 400]
 SETTINGS_APP_L_PANNEL_SIZE: Final = 150
+
+# ! Приложение
+NOTE_LIST_L_PANNEL_SIZE: Final = 200
+
+ALL_SPASING: Final = 2
+ALL_MARGINS: Final = 2
+
+FILE_APP_ICON: Final = 'icons/icon.ico'
+# file_settings_icon = 'PyNote/icons/settings.svg'
+# file_delete_icon = 'PyNote/icons/delete.svg'
+# file_sync_icon = 'PyNote/icons/sync.svg'
+# file_new_note_icon = 'PyNote/icons/newnote.svg'
+
 
