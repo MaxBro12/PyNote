@@ -14,6 +14,7 @@ from core import (
     read_toml,
 
     get_local_notes,
+    add_local_note,
 )
 
 from settings import (
@@ -58,6 +59,9 @@ class MyAppMain(QMainWindow):
 
         # ! Подключаем кнопки и сигналы
         self.main.notes.menu.set_b.clicked.connect(self.show_settings)
+        self.main.notes.menu.add_note_b.clicked.connect(self.add_note)
+        
+        self.main.edit.title_i.editingFinished.connect(self.add_note)
 
         # ! Заметки локальные
         self.update_notes()
@@ -93,13 +97,32 @@ class MyAppMain(QMainWindow):
 
     # NOTES ===================================================================
     def update_notes(self):
+        # Получаем список всех локальных заметок
         lnotes = get_local_notes()
+        # Получаем список имен всех заметок в QListWidget
+        items = [
+            self.main.notes.note_l.itemWidget(
+                self.main.notes.note_l.item(i)
+            ).name.text().removeprefix('  ') 
+            for i in range(self.main.notes.note_l.count())
+        ]
         for i in lnotes:
+            if i['name'] in items:
+                continue    # Если заметка уже есть в QListWidget - пропускаем
             item = QListWidgetItem(self.main.notes.note_l)
             item.setSizeHint(NOTE_LIST_ITEM)
             self.main.notes.note_l.setItemWidget(
                 item,
                 NoteItemUI(i['name'], self.config['MAIN']['lang'])
             )
-            print(f'new {i}')
+    
+    def add_note(self):
+        name = self.main.edit.title_i.text()
+        inner = self.main.edit.editor_i.toPlainText() # TODO: СВЕРИТЬСЯ С EVE_RECRUIT МЕТОДОМ!!!
+        
+        if name == '':
+            name = f"New-{len(get_local_notes())}"
+        add_local_note(name, inner)
+        self.update_notes()
+        print('New note create')
     # SERVER ==================================================================

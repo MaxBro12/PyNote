@@ -26,8 +26,8 @@ def get_local_notes() -> list:
     }, get_files(DIR_NOTES)))
 
 
-def add_local_note(name: str) -> bool:
-    return create_file(pjoin(DIR_NOTES, name + NOTE_EXT))
+def add_local_note(name: str, inner: str) -> bool:
+    return create_file(pjoin(DIR_NOTES, name + NOTE_EXT), inner)
 
 
 def save_local_note(name: str, inner: str = '') -> bool:
