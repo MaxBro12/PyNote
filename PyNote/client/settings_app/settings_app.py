@@ -103,7 +103,7 @@ class SettingsWindow(QWidget):
         self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
     def test_call(self, s = ''):
-        print('YES!', s)
+        print(f'Test call {s}')
     
     def change_st_widget(self):
         self.right_p.setCurrentIndex(self.left_p.currentRow())

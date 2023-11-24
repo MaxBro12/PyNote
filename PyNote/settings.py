@@ -18,7 +18,7 @@ FILE_SETTINGS_IN: Final = {
         'height': 700,
         'opacity': 1.0,
         'lang': "ru",
-        'theme': "",
+        'theme': "dark.css",
         'font_editor_title_size': 15,
         'font_editor_text_size': 10,
         'font_notes_list_size': 12

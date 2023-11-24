@@ -1,5 +1,10 @@
 QMainWindow {
     background-color: black;
+    color: white;
+}
+
+QWidget {
+    color: white;
 }
 
 QPushButton {
@@ -57,6 +62,10 @@ QListWidget {
     border-width: 3px;
     border-color: rgba(50, 50, 50, 1);
     border-style: outset;
+}
+
+QListWidgetItem {
+    color: white;
 }
 
 QLineEdit {

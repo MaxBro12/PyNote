@@ -67,6 +67,7 @@ class MyAppMain(QMainWindow):
         self.main.notes.note_l.itemClicked.connect(self.load_note)
         
         self.main.edit.title_i.editingFinished.connect(self.save_note)
+        self.main.edit.editor_i.textChanged.connect(self.save_note)
 
         # ! Заметки локальные
         self.update_notes()
@@ -102,18 +103,11 @@ class MyAppMain(QMainWindow):
 
     # NOTES ===================================================================
     def update_notes(self):
+        # Очищаем список заметок
+        self.main.notes.note_l.clear()
         # Получаем список всех локальных заметок
         lnotes = get_local_notes()
-        # Получаем список имен всех заметок в QListWidget
-        items = [
-            self.main.notes.note_l.itemWidget(
-                self.main.notes.note_l.item(i)
-            ).name.text().removeprefix('  ')
-            for i in range(self.main.notes.note_l.count())
-        ]
         for i in lnotes:
-            if i['name'] in items:
-                continue    # Если заметка уже есть в QListWidget - пропускаем
             item = QListWidgetItem(self.main.notes.note_l)
             item.setSizeHint(NOTE_LIST_ITEM)
             widget = NoteItemUI(i['name'], item, self.config['MAIN']['lang'])
@@ -121,8 +115,7 @@ class MyAppMain(QMainWindow):
                 item,
                 widget
             )
-
-            # widget.sync_b.clicked.connect(self.del_note)
+            # Подключаем item
             widget.del_s.connect(self.del_note)
 
     def add_note(self):
@@ -130,16 +123,8 @@ class MyAppMain(QMainWindow):
         add_local_note(name, '')
         self.update_notes()
 
-    def load_note(self, item):
-        name = self.main.notes.note_l.itemWidget(item).name.text().removeprefix('  ')
-        self.main.edit.title_l = name
-        self.main.edit.title_i.setText(name)
-        self.main.edit.editor_i.setText(load_local_note(name))
-
     def save_note(self):
-        print(f'{self.main.edit.title_i.text()} > {self.main.edit.title_l}')
         if self.main.edit.title_i.text() != self.main.edit.title_l:
-            print('rename')
             rename_local_note(
                 self.main.edit.title_l,
                 self.main.edit.title_i.text()
@@ -151,19 +136,27 @@ class MyAppMain(QMainWindow):
         )
         self.update_notes()
 
+    def load_note(self, item):
+        name = self.main.notes.note_l.itemWidget(
+            item
+        ).name.text().removeprefix('  ')
+        self.main.edit.title_l = name
+        self.main.edit.title_i.setText(name)
+        self.main.edit.editor_i.setText(load_local_note(name))
+
     def del_note(self, item):
         # Получить количество строк, соответствующих item
         row = self.main.notes.note_l.indexFromItem(item).row()
         # Удаляем заметку
         remove_local_note(
-            self.main.notes.note_l.itemWidget(item).name.text().removeprefix('  ')
+            self.main.notes.note_l.itemWidget(
+                item
+            ).name.text().removeprefix('  ')
         )
         # Удалить item
         item = self.main.notes.note_l.takeItem(row)
         # Удалить widget
         self.main.notes.note_l.removeItemWidget(item)
-
-        del item
 
         self.update_notes()
 
