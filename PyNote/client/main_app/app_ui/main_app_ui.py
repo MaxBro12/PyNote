@@ -3,11 +3,15 @@ from PySide6.QtWidgets import QWidget, QHBoxLayout
 from .notelist_ui import NoteListUI
 from .editorui import EditorUI
 
+from settings import ALL_MARGINS, ALL_SPASING
+
 
 class MainAppUI(QWidget):
     def __init__(self, language: str, title_s: int, text_s: int):
         super().__init__()
         self.row = QHBoxLayout()
+        self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
         
         # ! Список заметок
@@ -19,7 +23,7 @@ class MainAppUI(QWidget):
         self.row.addSpacing(5)
         self.row.addWidget(self.edit, 0)
 
-
+"""
 class MainAppUI2(QWidget):
     def __init__(self, config):
         super().__init__()
@@ -127,3 +131,4 @@ class MainAppUI2(QWidget):
         if self.setts_app is None:
             self.setts_app = App_Settings(self.config, self.theme)
         self.setts_app.show()
+"""

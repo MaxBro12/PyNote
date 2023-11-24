@@ -1,3 +1,4 @@
+"""
 from PySide6.QtWidgets import (
     QVBoxLayout,
 
@@ -104,3 +105,4 @@ class Editor(QVBoxLayout):
 
     def slot_call_new_note(self, widget):
         self.widget_i = widget
+"""

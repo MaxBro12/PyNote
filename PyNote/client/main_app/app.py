@@ -38,11 +38,19 @@ class MyAppMain(QMainWindow):
         self.setWindowTitle('PyNote')
 
         # ? Размеры
-        self.resize(self.config['app']['width'], self.config['app']['height'])
+        self.resize(self.config['MAIN']['width'], self.config['MAIN']['height'])
         self.setMinimumSize(300, 400)
                 
         # Тема
         self.load_theme()
+        
+        # Главный виджет
+        self.main = MainAppUI(
+            self.config['MAIN']['lang'],
+            self.config['MAIN']['font_editor_title_size'],
+            self.config['MAIN']['font_editor_text_size'],
+        )
+        self.setCentralWidget(self.main)
 
     # MAIN ====================================================================
     def show_settings(self):

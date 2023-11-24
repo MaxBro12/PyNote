@@ -10,6 +10,7 @@ from PySide6.QtCore import QSize
 
 from settings import FONT_NOTES_LIST_SIZE, FONT_NOTES_LIST_FAMILY
 from lang import lang
+from settings import ALL_MARGINS, ALL_SPASING
 
 
 class NoteItemUI(QWidget):
@@ -18,6 +19,8 @@ class NoteItemUI(QWidget):
 
         # Разметка
         self.row = QHBoxLayout()
+        self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
  
         # Имя

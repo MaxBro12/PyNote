@@ -11,6 +11,7 @@ from .noteitemui import NoteItemUI
 from .notemenuui import NoteMenuUI
 
 from settings import NOTE_LIST_L_PANNEL_SIZE
+from settings import ALL_MARGINS, ALL_SPASING
 
 
 class NoteListUI(QWidget):
@@ -20,6 +21,8 @@ class NoteListUI(QWidget):
         self.setFixedWidth(NOTE_LIST_L_PANNEL_SIZE)
 
         self.col = QVBoxLayout()
+        self.col.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.col.setSpacing(ALL_SPASING)
         self.setLayout(self.col)
 
         # Список заметок

@@ -1,1 +1,1 @@
-# from .app import MyAppMain
+from .app import MyAppMain

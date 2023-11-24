@@ -29,6 +29,7 @@ from settings import (
     SPACER_ITEM_SIZE,
 )
 from lang import lang
+from settings import ALL_MARGINS, ALL_SPASING
 
 
 class EditorUI(QWidget):
@@ -36,6 +37,8 @@ class EditorUI(QWidget):
         super().__init__()
 
         self.col = QVBoxLayout()
+        self.col.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.col.setSpacing(ALL_SPASING)
         self.setLayout(self.col)
 
         # Название
