@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QListWidgetItem,
 )
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Signal
 
 from lang import lang
 from settings import (
@@ -19,8 +19,11 @@ from settings import (
 
 
 class NoteItemUI(QWidget):
-    def __init__(self, name: str, language: str):
+    del_s = Signal(QListWidgetItem)
+
+    def __init__(self, name: str, item: QListWidgetItem, language: str):
         super().__init__()
+        self.__item = item
 
         # Разметка
         self.row = QHBoxLayout()
@@ -47,4 +50,8 @@ class NoteItemUI(QWidget):
         self.del_b.setToolTip(lang[language]['delete_but'])
         self.del_b.setIconSize(NOTE_LIST_ITEM_ICON)
         self.del_b.setFixedSize(NOTE_LIST_ITEM_B)
+        self.del_b.clicked.connect(self.del_e)
         self.row.addWidget(self.del_b)
+    
+    def del_e(self):
+        self.del_s.emit(self.__item)

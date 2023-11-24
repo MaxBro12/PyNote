@@ -43,5 +43,9 @@ def rename_local_note(last_name: str, new_name: str) -> bool:
     )
 
 
+def load_local_note(name: str) -> str:
+    return load_file(pjoin(DIR_NOTES, name + NOTE_EXT))
+
+
 def remove_local_note(name: str) -> bool:
     return delete_file(pjoin(DIR_NOTES, name + NOTE_EXT))

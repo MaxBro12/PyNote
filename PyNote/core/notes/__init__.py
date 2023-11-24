@@ -4,6 +4,7 @@ from .notes_local import (
     save_local_note,
     rename_local_note,
     remove_local_note,
+    load_local_note,
 )
 """from .notes_server import (
     sent_notes,

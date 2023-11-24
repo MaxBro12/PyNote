@@ -42,6 +42,7 @@ class EditorUI(QWidget):
         self.setLayout(self.col)
 
         # Название
+        self.title_l = ''
         self.title_i = QLineEdit()
         self.title_i.setMaximumHeight(EDITOR_TITLE_MAX_HEIGHT)
         # self.title_i.setSI

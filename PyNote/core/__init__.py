@@ -28,6 +28,7 @@ from .notes import (
     save_local_note,
     rename_local_note,
     remove_local_note,
+    load_local_note,
 )
 
 from .exceptions import OsException, ConfigException

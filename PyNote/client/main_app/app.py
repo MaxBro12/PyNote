@@ -13,8 +13,12 @@ from core import (
 
     read_toml,
 
+    save_local_note,
     get_local_notes,
     add_local_note,
+    remove_local_note,
+    load_local_note,
+    rename_local_note,
 )
 
 from settings import (
@@ -60,8 +64,9 @@ class MyAppMain(QMainWindow):
         # ! Подключаем кнопки и сигналы
         self.main.notes.menu.set_b.clicked.connect(self.show_settings)
         self.main.notes.menu.add_note_b.clicked.connect(self.add_note)
+        self.main.notes.note_l.itemClicked.connect(self.load_note)
         
-        self.main.edit.title_i.editingFinished.connect(self.add_note)
+        self.main.edit.title_i.editingFinished.connect(self.save_note)
 
         # ! Заметки локальные
         self.update_notes()
@@ -103,7 +108,7 @@ class MyAppMain(QMainWindow):
         items = [
             self.main.notes.note_l.itemWidget(
                 self.main.notes.note_l.item(i)
-            ).name.text().removeprefix('  ') 
+            ).name.text().removeprefix('  ')
             for i in range(self.main.notes.note_l.count())
         ]
         for i in lnotes:
@@ -111,18 +116,55 @@ class MyAppMain(QMainWindow):
                 continue    # Если заметка уже есть в QListWidget - пропускаем
             item = QListWidgetItem(self.main.notes.note_l)
             item.setSizeHint(NOTE_LIST_ITEM)
+            widget = NoteItemUI(i['name'], item, self.config['MAIN']['lang'])
             self.main.notes.note_l.setItemWidget(
                 item,
-                NoteItemUI(i['name'], self.config['MAIN']['lang'])
+                widget
             )
-    
+
+            # widget.sync_b.clicked.connect(self.del_note)
+            widget.del_s.connect(self.del_note)
+
     def add_note(self):
-        name = self.main.edit.title_i.text()
-        inner = self.main.edit.editor_i.toPlainText() # TODO: СВЕРИТЬСЯ С EVE_RECRUIT МЕТОДОМ!!!
-        
-        if name == '':
-            name = f"New-{len(get_local_notes())}"
-        add_local_note(name, inner)
+        name = f"New-{len(get_local_notes())}"
+        add_local_note(name, '')
         self.update_notes()
-        print('New note create')
+
+    def load_note(self, item):
+        name = self.main.notes.note_l.itemWidget(item).name.text().removeprefix('  ')
+        self.main.edit.title_l = name
+        self.main.edit.title_i.setText(name)
+        self.main.edit.editor_i.setText(load_local_note(name))
+
+    def save_note(self):
+        print(f'{self.main.edit.title_i.text()} > {self.main.edit.title_l}')
+        if self.main.edit.title_i.text() != self.main.edit.title_l:
+            print('rename')
+            rename_local_note(
+                self.main.edit.title_l,
+                self.main.edit.title_i.text()
+            )
+            self.main.edit.title_l = self.main.edit.title_i.text()
+        add_local_note(
+            self.main.edit.title_i.text(),
+            self.main.edit.editor_i.toMarkdown()
+        )
+        self.update_notes()
+
+    def del_note(self, item):
+        # Получить количество строк, соответствующих item
+        row = self.main.notes.note_l.indexFromItem(item).row()
+        # Удаляем заметку
+        remove_local_note(
+            self.main.notes.note_l.itemWidget(item).name.text().removeprefix('  ')
+        )
+        # Удалить item
+        item = self.main.notes.note_l.takeItem(row)
+        # Удалить widget
+        self.main.notes.note_l.removeItemWidget(item)
+
+        del item
+
+        self.update_notes()
+
     # SERVER ==================================================================
