@@ -10,7 +10,7 @@ class SettingsMainPanel(QWidget):
 
         self.row = QGridLayout()
         self.row.setSpacing(ALL_SPASING)
-        self.row.setContentsMargins(2, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setContentsMargins(ALL_MARGINS)
         self.row.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.setLayout(self.row)
 

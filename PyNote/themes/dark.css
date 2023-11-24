@@ -1,6 +1,5 @@
 QMainWindow {
     background-color: black;
-
 }
 
 QPushButton {
@@ -13,7 +12,7 @@ QPushButton {
 
 QPushButton:hover {
     border-width: 3px;
-    border-color: rgb(255, 255, 255);
+    border-color: rgb(150, 150, 150);
     border-style: outset;
     border-radius: 5px;
     background-color: transparent;
@@ -21,10 +20,10 @@ QPushButton:hover {
 
 QPushButton:pressed {
     border-width: 3px;
-    border-color: powderblue;
+    border-color: rgb(255, 255, 255);
     border-style: outset;
     border-radius: 5px;
-    background-color: rgba(0, 132, 255, 0.651);
+    background-color: rgba(20, 20, 20, 0.651);
 }
 
 #add_note_b {

@@ -37,7 +37,7 @@ class EditorUI(QWidget):
         super().__init__()
 
         self.col = QVBoxLayout()
-        self.col.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.col.setContentsMargins(ALL_MARGINS)
         self.col.setSpacing(ALL_SPASING)
         self.setLayout(self.col)
 
@@ -52,6 +52,7 @@ class EditorUI(QWidget):
         ))
         self.title_i.setPlaceholderText(lang[language]['emp_title'])
         self.title_i.setMaxLength(TITLE_MAX_LEN)
+        self.title_i.setTextMargins(4, 0, 0, 0)
         self.col.addWidget(self.title_i)
 
         # Разделитель

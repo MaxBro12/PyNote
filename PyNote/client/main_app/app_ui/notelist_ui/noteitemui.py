@@ -8,9 +8,14 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QSize
 
-from settings import FONT_NOTES_LIST_SIZE, FONT_NOTES_LIST_FAMILY
 from lang import lang
-from settings import ALL_MARGINS, ALL_SPASING
+from settings import (
+    ALL_MARGINS,
+    ALL_SPASING,
+    NOTE_LIST_ITEM_B,
+    NOTE_LIST_ITEM_L,
+    NOTE_LIST_ITEM_ICON
+)
 
 
 class NoteItemUI(QWidget):
@@ -19,31 +24,27 @@ class NoteItemUI(QWidget):
 
         # Разметка
         self.row = QHBoxLayout()
-        self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setContentsMargins(ALL_MARGINS)
         self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
 
         # Имя
-        self.name = QLabel(name)
+        self.name = QLabel(f"  {name}")
+        self.name.setFixedSize(NOTE_LIST_ITEM_L)
         self.row.addWidget(self.name)
 
         # Синхронизация
         self.sync_b = QPushButton()
         self.sync_b.setObjectName('sync_b')
+        self.sync_b.setToolTip(lang[language]['sync_but'])
+        self.sync_b.setIconSize(NOTE_LIST_ITEM_ICON)
+        self.sync_b.setFixedSize(NOTE_LIST_ITEM_B)
         self.row.addWidget(self.sync_b)
-        self.sync_b.setToolTip(lang[language]['sync_b_but'])
-        # self.sync_b.clicked.connect(self.slot_sync_b)
-        # self.sync_b.setIcon(QIcon(theme['file_sync_icon']))
-        self.sync_b.setIconSize(QSize(20, 20))
-        self.sync_b.setFixedSize(QSize(50, 50))
 
         # Удаление
         self.del_b = QPushButton()
         self.del_b.setObjectName('del_b')
         self.del_b.setToolTip(lang[language]['delete_but'])
-        # self.del_b.clicked.connect(self.slot_delete)
-        # self.del_b.setIcon(QIcon(theme['file_delete_icon']))
-        self.del_b.setIconSize(QSize(20, 20))
-        self.del_b.setFixedSize(QSize(50, 50))
-
+        self.del_b.setIconSize(NOTE_LIST_ITEM_ICON)
+        self.del_b.setFixedSize(NOTE_LIST_ITEM_B)
         self.row.addWidget(self.del_b)

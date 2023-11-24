@@ -1,4 +1,5 @@
 from typing import Final
+from PySide6.QtCore import QSize, QMargins
 
 
 # ! Основное
@@ -45,7 +46,12 @@ EDITOR_TITLE_MAX_HEIGHT: Final = 30
 SPACER_ITEM_SIZE: Final = (30, 5)
 
 ALL_SPASING: Final = 2
-ALL_MARGINS: Final = 2
+ALL_MARGINS = QMargins(2, 2, 2, 2)
+
+NOTE_LIST_ITEM = QSize(100, 45)
+NOTE_LIST_ITEM_L = QSize(100, 40)
+NOTE_LIST_ITEM_B = QSize(40, 40)
+NOTE_LIST_ITEM_ICON = QSize(10, 10)
 
 FILE_APP_ICON: Final = 'icons/icon.ico'
 # file_settings_icon = 'PyNote/icons/settings.svg'
@@ -55,6 +61,7 @@ FILE_APP_ICON: Final = 'icons/icon.ico'
 
 # ! Заметки
 TITLE_MAX_LEN: Final = 16
+NOTE_EXT: Final = '.md'
 FILE_NOTE: Final = '_data.toml'
 FILE_NOTE_SAMPLE: Final = {
     'sync': False,

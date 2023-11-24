@@ -14,7 +14,7 @@ class NoteMenuUI(QWidget):
         super().__init__()
 
         self.row = QHBoxLayout()
-        self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setContentsMargins(ALL_MARGINS)
         self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
 

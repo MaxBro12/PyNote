@@ -38,7 +38,7 @@ class SettingsWindow(QWidget):
         self.config = read_toml(FILE_SETTINGS)
 
         self.col = QHBoxLayout()
-        self.col.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.col.setContentsMargins(ALL_MARGINS)
         self.col.setSpacing(ALL_SPASING)
         self.setLayout(self.col)
 

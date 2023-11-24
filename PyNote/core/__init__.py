@@ -22,5 +22,13 @@ from .filemanage import (
     wayfinder,
 )
 
+from .notes import (
+    get_local_notes,
+    add_local_note,
+    save_local_note,
+    rename_local_note,
+    remove_local_note,
+)
+
 from .exceptions import OsException, ConfigException
 from .themes import get_themes, create_theme

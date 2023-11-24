@@ -21,12 +21,13 @@ class NoteListUI(QWidget):
         self.setFixedWidth(NOTE_LIST_L_PANNEL_SIZE)
 
         self.col = QVBoxLayout()
-        self.col.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.col.setContentsMargins(ALL_MARGINS)
         self.col.setSpacing(ALL_SPASING)
         self.setLayout(self.col)
 
         # Список заметок
         self.note_l = QListWidget()
+        self.note_l.setMaximumWidth(NOTE_LIST_L_PANNEL_SIZE - 5)
         self.col.addWidget(self.note_l)
 
         # Панель управления

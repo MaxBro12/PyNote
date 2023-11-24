@@ -10,7 +10,7 @@ class MainAppUI(QWidget):
     def __init__(self, language: str, title_s: int, text_s: int):
         super().__init__()
         self.row = QHBoxLayout()
-        self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
+        self.row.setContentsMargins(ALL_MARGINS)
         self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
         
