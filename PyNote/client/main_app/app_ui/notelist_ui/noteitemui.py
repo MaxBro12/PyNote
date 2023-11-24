@@ -22,13 +22,14 @@ class NoteItemUI(QWidget):
         self.row.setContentsMargins(ALL_MARGINS, ALL_MARGINS, ALL_MARGINS, ALL_MARGINS)
         self.row.setSpacing(ALL_SPASING)
         self.setLayout(self.row)
- 
+
         # Имя
         self.name = QLabel(name)
         self.row.addWidget(self.name)
 
         # Синхронизация
         self.sync_b = QPushButton()
+        self.sync_b.setObjectName('sync_b')
         self.row.addWidget(self.sync_b)
         self.sync_b.setToolTip(lang[language]['sync_b_but'])
         # self.sync_b.clicked.connect(self.slot_sync_b)
@@ -38,6 +39,7 @@ class NoteItemUI(QWidget):
 
         # Удаление
         self.del_b = QPushButton()
+        self.del_b.setObjectName('del_b')
         self.del_b.setToolTip(lang[language]['delete_but'])
         # self.del_b.clicked.connect(self.slot_delete)
         # self.del_b.setIcon(QIcon(theme['file_delete_icon']))

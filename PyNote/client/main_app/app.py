@@ -11,8 +11,6 @@ from core import (
     wayfinder,
 
     read_toml,
-    write_toml,
-    toml_type_check,
 )
 
 from settings import (
@@ -38,12 +36,14 @@ class MyAppMain(QMainWindow):
         self.setWindowTitle('PyNote')
 
         # ? Размеры
-        self.resize(self.config['MAIN']['width'], self.config['MAIN']['height'])
+        self.resize(
+            self.config['MAIN']['width'], self.config['MAIN']['height']
+        )
         self.setMinimumSize(300, 400)
-                
+
         # Тема
         self.load_theme()
-        
+
         # Главный виджет
         self.main = MainAppUI(
             self.config['MAIN']['lang'],
@@ -51,6 +51,9 @@ class MyAppMain(QMainWindow):
             self.config['MAIN']['font_editor_text_size'],
         )
         self.setCentralWidget(self.main)
+
+        # ! Подключаем кнопки и сигналы
+        self.main.notes.menu.set_b.clicked.connect(self.show_settings())
 
     # MAIN ====================================================================
     def show_settings(self):

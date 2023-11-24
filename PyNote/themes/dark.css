@@ -1,0 +1,79 @@
+QMainWindow {
+    background-color: black;
+
+}
+
+QPushButton {
+    border-width: 3px;
+    border-color: rgba(50, 50, 50, 1);
+    border-style: outset;
+    border-radius: 10px;
+    background-color: black;
+}
+
+QPushButton:hover {
+    border-width: 3px;
+    border-color: rgb(255, 255, 255);
+    border-style: outset;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+QPushButton:pressed {
+    border-width: 3px;
+    border-color: powderblue;
+    border-style: outset;
+    border-radius: 5px;
+    background-color: rgba(0, 132, 255, 0.651);
+}
+
+#add_note_b {
+    background-image: url('./icons/newnote_light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#set_b {
+    background-image: url('./icons/settings_light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#sync_b {
+    background-image: url('./icons/sync_light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#del_b {
+    background-image: url('./icons/delete_light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+QListWidget {
+    border-radius: 10px;
+    background-color: black;
+
+    border-width: 3px;
+    border-color: rgba(50, 50, 50, 1);
+    border-style: outset;
+}
+
+QLineEdit {
+    border-radius: 10px;
+    background-color: black;
+
+    border-width: 3px;
+    border-color: rgba(50, 50, 50, 1);
+    border-style: outset;
+}
+
+QTextEdit {
+    border-radius: 10px;
+    background-color: black;
+
+    border-width: 3px;
+    border-color: rgba(50, 50, 50, 1);
+    border-style: outset;
+}

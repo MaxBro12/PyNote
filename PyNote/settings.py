@@ -5,7 +5,7 @@ from typing import Final
 ERROR_FOUND: Final = 'Found error! Please link logger.log to developer\nError log:'
 DIR_DATA: Final = 'data'
 DIR_NOTES: Final = f'{DIR_DATA}/notes'
-DIR_THEMES: Final = f'{DIR_DATA}/themes'
+DIR_THEMES: Final = 'themes'
 
 FILE_LOGGER: Final = 'logger.log'
 FILE_LOGGER_MAX_LEN: Final = 1_000
@@ -32,6 +32,26 @@ FILE_SETTINGS_IN: Final = {
         'token': "",
     }
 }
+
+# ! Настройки
+SETTINGS_APP_SIZE: Final = (300, 400)
+SETTINGS_APP_L_PANNEL_SIZE: Final = 150
+
+# ! Приложение
+NOTE_LIST_L_PANNEL_SIZE: Final = 200
+
+EDITOR_TITLE_MAX_HEIGHT: Final = 30
+
+SPACER_ITEM_SIZE: Final = (30, 5)
+
+ALL_SPASING: Final = 2
+ALL_MARGINS: Final = 2
+
+FILE_APP_ICON: Final = 'icons/icon.ico'
+# file_settings_icon = 'PyNote/icons/settings.svg'
+# file_delete_icon = 'PyNote/icons/delete.svg'
+# file_sync_icon = 'PyNote/icons/sync.svg'
+# file_new_note_icon = 'PyNote/icons/newnote.svg'
 
 # ! Заметки
 TITLE_MAX_LEN: Final = 16
@@ -94,31 +114,7 @@ FILE_TH_SPACE_IN: Final = {
     'file_expand_icon': "icons/expand_light.svg",
 }
 
-
 # ! Сервер
 API_NEW: Final = "new"
 API_USR: Final = "usr"
 API_NOTE: Final = "note"
-
-
-# ! Настройки
-SETTINGS_APP_SIZE: Final = (300, 400)
-SETTINGS_APP_L_PANNEL_SIZE: Final = 150
-
-# ! Приложение
-NOTE_LIST_L_PANNEL_SIZE: Final = 200
-
-EDITOR_TITLE_MAX_HEIGHT: Final = 30
-
-SPACER_ITEM_SIZE: Final = (30, 5)
-
-ALL_SPASING: Final = 2
-ALL_MARGINS: Final = 2
-
-FILE_APP_ICON: Final = 'icons/icon.ico'
-# file_settings_icon = 'PyNote/icons/settings.svg'
-# file_delete_icon = 'PyNote/icons/delete.svg'
-# file_sync_icon = 'PyNote/icons/sync.svg'
-# file_new_note_icon = 'PyNote/icons/newnote.svg'
-
-

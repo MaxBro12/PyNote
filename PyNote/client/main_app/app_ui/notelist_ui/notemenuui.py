@@ -20,6 +20,7 @@ class NoteMenuUI(QWidget):
 
         # Новая заметка
         self.add_note_b = QPushButton()
+        self.add_note_b.setObjectName('add_note_b')
         # self.add_note_b.setToolTip(lang[language]['add_but'])
         # self.add_note_b.setIcon(QIcon(theme['file_new_note_icon']))
         # self.add_note_b.setIconSize(QSize(30, 30))
@@ -28,6 +29,7 @@ class NoteMenuUI(QWidget):
 
         # Настройки
         self.set_b = QPushButton()
+        self.set_b.setObjectName('set_b')
         # self.set_b.setToolTip(lang[language]['settings_but'])
         # self.settings.setIcon(QIcon(theme['file_settings_icon']))
         # self.settings.setIconSize(QSize(25, 25))
