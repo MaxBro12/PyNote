@@ -1,37 +1,38 @@
-from typing import TypedDict
+from typing import Final
+
+
 # ! Основное
-fold_data = 'server_data'
+DIR_DATA: Final = 'server_data'
 
-file_conf = f'{fold_data}/settings.toml'
-
-file_conf_inner = {
-    'app': {
-        'server_token': "",
+FILE_SETTINGS: Final = f'{DIR_DATA}/settings.toml'
+FILE_SETTINGS_IN: Final = {
+    'SERVER': {
+        'HOST': "",
+        'PORT': "",
+        'TOKEN': "",
+        'DEBUG': "",
     },
-    }
+}
 
-file_log = f'{fold_data}/logger.log'
-file_error = f'{fold_data}/error.log'
+FILE_LOGGER = f'{DIR_DATA}/logger.log'
+FILE_ERROR = f'{DIR_DATA}/error.log'
 
-file_db = f'{fold_data}/base.db'
+FILE_DB = f'{DIR_DATA}/base.db'
 
-fold_notes = f'{fold_data}/notes'
+DIR_NOTES = f'{DIR_DATA}/notes'
 
 
 # ! SQL
-file_db = f'{fold_data}/data.db'
-table = """CREATE TABLE users (
+CREATE_TABLE: Final = """CREATE TABLE users (
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
         password TEXT NOT NULL,
         token TEXT NOT NULL);"""
 
-table_get_users = """SELECT username from users"""
-table_get_id = """SELECT id from users"""
+# table_get_users = """SELECT username from users"""
+# table_get_id = """SELECT id from users"""
 
-token_len = 20
-
-
+"""
 # ! Flask
 debug = False
 port = 3334
@@ -48,16 +49,4 @@ api_user_data_3 = "/usr"
 api_notes_1 = "/note/<string:user>"
 api_notes_2 = "/note/"
 api_notes_3 = "/note"
-
-
-# ! Доп классы
-class User_Dict(TypedDict):
-    id: int
-    username: str
-    password: str
-    token: str
-
-
-class Notes_dict(TypedDict):
-    name: str
-    inner: str
+"""

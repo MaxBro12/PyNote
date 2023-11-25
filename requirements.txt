@@ -1,4 +1,6 @@
+PySide6
 toml
 requests
 fastapi
-PySide6
+uvicorn
+pydantic

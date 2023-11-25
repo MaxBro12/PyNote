@@ -31,11 +31,11 @@ from settings import (
 
 def main_check():
     # ? Проверяем папку с данными
-    check_data()
+    check_fold(DIR_DATA)
     # ? Проверяем файл конфига
     check_conf()
     # ? Проверяем папку с заметками
-    check_notes()
+    check_fold(DIR_NOTES)
     # ? Проверяем папку с темами
     check_themes_dir()
 
@@ -46,14 +46,9 @@ def create_settings() -> bool:
     return True
 
 
-def check_data():
-    if not wayfinder(DIR_DATA):
-        create_folder(DIR_DATA)
-
-
-def check_notes():
-    if not wayfinder(DIR_NOTES):
-        create_folder(DIR_NOTES)
+def check_fold(fold: str):
+    if not wayfinder(fold):
+        create_folder(fold)
 
 
 def check_themes_dir():
