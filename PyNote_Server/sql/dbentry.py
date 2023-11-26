@@ -1,6 +1,6 @@
 from .base import DataBase
 
-from core import create_log_file, create_token, create_id
+from core import create_log, create_token, create_id
 
 
 def add_to_db(db: DataBase, data: dict) -> bool:
@@ -14,5 +14,5 @@ def add_to_db(db: DataBase, data: dict) -> bool:
         db.add(data)
         return True
     except Exception as err:
-        create_log_file(err, 'error')
+        create_log(err, 'error')
         return False

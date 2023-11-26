@@ -1,5 +1,4 @@
-"""from core import (
-    create_log,
+from core.filemanage import (
     get_files,
     load_file,
     create_file,
@@ -7,46 +6,48 @@
     rename_file,
     delete_file,
 
+    wayfinder,
     pjoin,
 )
+from .notes_users import create_userdir
 
 
 from settings import (
     DIR_NOTES,
-    NOTE_EXT,
-)
-from spec_types import (
-    Note,
 )
 
 
-def get_local_notes() -> list:
+def get_user_notes(username: str) -> list:
+    if not wayfinder(pjoin(DIR_NOTES, username)):
+        create_userdir(username)
     return list(map(lambda x: {
-        'name': x.removesuffix(NOTE_EXT)
-    }, get_files(DIR_NOTES)))
+        'name': x,
+        'inner': load_file(pjoin(DIR_NOTES, username, x))
+    }, get_files(pjoin(DIR_NOTES, username))))
 
 
-def add_local_note(name: str, inner: str) -> bool:
-    return create_file(pjoin(DIR_NOTES, name + NOTE_EXT), inner)
+def add_note(username: str, name: str, inner: str) -> bool:
+    if not wayfinder(pjoin(DIR_NOTES, username)):
+        create_userdir(username)
+    return create_file(pjoin(DIR_NOTES, username, name), inner)
 
 
-def save_local_note(name: str, inner: str = '') -> bool:
-    if inner != '':
-        return save_file(pjoin(DIR_NOTES, name + NOTE_EXT), inner)
-    return False
+def delete_note(username: str, name: str) -> bool:
+    return delete_file(pjoin(DIR_NOTES, username, name))
 
 
-def rename_local_note(last_name: str, new_name: str) -> bool:
+# def save_local_note(name: str, inner: str = '') -> bool:
+#     if inner != '':
+#         return save_file(pjoin(DIR_NOTES, name + NOTE_EXT), inner)
+#     return False
+
+
+def rename_note(username: str, last_name: str, new_name: str) -> bool:
     return rename_file(
-        pjoin(DIR_NOTES, last_name + NOTE_EXT),
-        pjoin(DIR_NOTES, new_name + NOTE_EXT)
+        pjoin(DIR_NOTES, username, last_name),
+        pjoin(DIR_NOTES, username, new_name)
     )
 
 
-def load_local_note(name: str) -> str:
-    return load_file(pjoin(DIR_NOTES, name + NOTE_EXT))
-
-
-def remove_local_note(name: str) -> bool:
-    return delete_file(pjoin(DIR_NOTES, name + NOTE_EXT))
-"""
+# def load_local_note(name: str) -> str:
+#     return load_file(pjoin(DIR_NOTES, name + NOTE_EXT))

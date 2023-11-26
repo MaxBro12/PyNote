@@ -26,10 +26,12 @@ DIR_NOTES = f'{DIR_DATA}/notes'
 CREATE_TABLE: Final = """CREATE TABLE users (
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
-        password TEXT NOT NULL,
-        token TEXT NOT NULL);"""
+        password TEXT NOT NULL);
+        CREATE TABLE notes (
+        id INTEGER NOT NULL,
+        notename TEXT NOT NULL);"""
 
-# table_get_users = """SELECT username from users"""
+TABLE_GET_USERNAMES: Final = """SELECT username from users"""
 # table_get_id = """SELECT id from users"""
 
 """

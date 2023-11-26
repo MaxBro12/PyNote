@@ -21,14 +21,17 @@ from .filemanage import (
     pjoin,
     wayfinder,
 )
-"""
+
 from .notes import (
-    get_local_notes,
-    add_local_note,
-    save_local_note,
-    rename_local_note,
-    remove_local_note,
-    load_local_note,
-)"""
+    get_user_notes,
+
+    add_note,
+    delete_note,
+
+    rename_note,
+
+    create_userdir,
+    delete_userdir,
+)
 
 from .exceptions import OsException, ConfigException
