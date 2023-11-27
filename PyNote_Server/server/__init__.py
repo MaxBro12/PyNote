@@ -1,3 +1,7 @@
-from .local import get_local_ip
-# from .source import UsersResources
-# from .flask_up import start_server
+from fastapi import FastAPI
+from .server import Server
+
+
+def create_app(_=None) -> FastAPI:
+    app = FastAPI()
+    return Server(app).get_app()

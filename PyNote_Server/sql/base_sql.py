@@ -8,7 +8,7 @@ from settings import (
     CREATE_TABLE,
     TABLE_GET_USERNAMES,
 )
-from spectypes import UserData
+from .specclasses import UserData
 
 
 class DataBase:
