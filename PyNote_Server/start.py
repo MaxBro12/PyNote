@@ -8,7 +8,7 @@ from core import (
     wayfinder,
     create_folder,
 )
-# from sql import create_base
+from sql import create_base
 
 from settings import (
     DIR_DATA,
@@ -29,7 +29,7 @@ def main_check() -> dict:
     conf = check_conf()
 
     # ? Проверяем базу пользователей
-    # check_db()
+    check_db()
 
     return conf
 
@@ -54,9 +54,8 @@ def check_conf():
             create_log(f'FILE {FILE_SETTINGS} OVERWRITTEN!', 'error')
     return read_toml(FILE_SETTINGS)
 
-"""
+
 def check_db():
     if not wayfinder(FILE_DB):
         create_base()
         create_log(f'DB {FILE_DB} CREATED!', 'info')
-"""
