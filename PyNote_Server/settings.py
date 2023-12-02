@@ -23,12 +23,12 @@ DIR_NOTES = f'{DIR_DATA}/notes'
 
 
 # ! SQL
-CREATE_TABLE: Final = """CREATE TABLE users (
+CREATE_TABLE_USERS: Final = """CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
-        password TEXT NOT NULL);
-        CREATE TABLE notes (
-        id INTEGER NOT NULL,
+        password TEXT NOT NULL);"""
+CREATE_TABLE_NOTES: Final = """CREATE TABLE IF NOT EXISTS notes (
+        id INTEGER PRIMARY KEY,
         notename TEXT NOT NULL);"""
 
 TABLE_GET_USERNAMES: Final = """SELECT username from users"""

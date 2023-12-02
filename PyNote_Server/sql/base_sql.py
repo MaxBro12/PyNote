@@ -5,16 +5,22 @@ from core import create_log, update_dict_to_type
 from settings import (
     FILE_DB,
 
-    CREATE_TABLE,
+    CREATE_TABLE_USERS,
+    CREATE_TABLE_NOTES,
     TABLE_GET_USERNAMES,
 )
 from .specclasses import UserData
+from .exceptions import LoadDBException
 
 
 class DataBase:
     def __init__(self, db_name: str = FILE_DB):
-        self.data = load_db(db_name)
-        self.cursor = self.data.cursor()
+        data = load_db(db_name)
+        if data is not None:
+            self.data = data
+            self.cursor = self.data.cursor()
+        else:
+            raise LoadDBException
 
     def update(self):
         self.data.commit()
@@ -93,7 +99,10 @@ def create_base():
         sql = sqlite3.connect(FILE_DB)
         sqlcursor = sql.cursor()
 
-        sqlcursor.execute(CREATE_TABLE)
+        sqlcursor.execute(CREATE_TABLE_USERS)
+        sql.commit()
+
+        sqlcursor.execute(CREATE_TABLE_NOTES)
         sql.commit()
         sqlcursor.close()
 
@@ -101,11 +110,7 @@ def create_base():
         create_log(error, 'error')
 
 
-def load_db(db_name: str = FILE_DB) -> sqlite3.Connection:
+def load_db(db_name: str = FILE_DB) -> sqlite3.Connection | None:
     """Возвращается база данных под названием db_name.
     Обязательно! Файл должен быть с расширением .db"""
-    try:
-        return sqlite3.connect(db_name)
-    except Exception as error:
-        create_log(error, 'error')
-        return sqlite3.Connection(CREATE_TABLE)
+    return sqlite3.connect(db_name)
