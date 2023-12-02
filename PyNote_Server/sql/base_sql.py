@@ -7,6 +7,7 @@ from settings import (
 
     CREATE_TABLE_USERS,
     CREATE_TABLE_NOTES,
+
     TABLE_GET_USERNAMES,
 )
 from .specclasses import UserData, NoteData, Singleton
@@ -51,7 +52,7 @@ class DataBase(Singleton):
             create_log(f'Cant add ID {data.id}', 'error')
 
     def remove_user(self, uid: int) -> list | None:
-        if self.get(uid) is not None:
+        if self.find(uid):
             a = self.cursor.execute(
                 f"DELETE FROM users WHERE id = '{uid}'"
             ).fetchall()
@@ -63,7 +64,7 @@ class DataBase(Singleton):
             return None
 
     def remove_note(self, data: NoteData) -> list | None:
-        if self.get(data.id) is not None:
+        if self.find(data.id):
             a = self.cursor.execute(
                 f"DELETE FROM note WHERE id = '{data.id}' AND notename = '{data.name}'"
             ).fetchall()
@@ -74,33 +75,32 @@ class DataBase(Singleton):
             create_log(f'Unable delete ID {data.id}')
             return None
 
-    def get(self, uid: int) -> UserData | None:
+    def find(self, uid: int) -> bool:
         try:
-            a = self.cursor.execute(
-                f"SELECT * FROM users WHERE id = '{uid}'"
-            ).fetchall()
-            return update_dict_to_type({
-                'id': a[0][0],
-                'username': a[0][1],
-                'password': a[0][2],
-            }, UserData)
+            return True if self.cursor.execute(
+                f"SELECT uid FROM users WHERE id = '{uid}';"
+            ) else False
         except IndexError:
             create_log(f'Cant find user by id {uid}')
-            return None
+            return False
+
+    def get_notes(self, uid: int) -> list | None:
+        try:
+            a = self.cursor.execute(
+                f"SELECT * FROM notes WHERE id = '{uid}'"
+            ).fetchall()
+            return a
+        except IndexError:
+            create_log(f'Cant find user by id {uid}')
 
     def get_by_name(self, username: str) -> UserData | None:
         try:
             a = self.cursor.execute(
                 f"SELECT * FROM users WHERE username = '{username}'"
             ).fetchall()
-            return update_dict_to_type({
-                'id': a[0][0],
-                'username': a[0][1],
-                'password': a[0][2],
-            }, UserData)
+            return UserData(int(a[0][0]), a[0][1], a[0][2])
         except IndexError:
             create_log(f'Cant find user by name {username}')
-            return None
 
     @property
     def users(self) -> tuple:
