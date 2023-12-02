@@ -9,11 +9,11 @@ from settings import (
     CREATE_TABLE_NOTES,
     TABLE_GET_USERNAMES,
 )
-from .specclasses import UserData
+from .specclasses import UserData, NoteData, Singleton
 from .exceptions import LoadDBException
 
 
-class DataBase:
+class DataBase(Singleton):
     def __init__(self, db_name: str = FILE_DB):
         data = load_db(db_name)
         if data is not None:
@@ -25,20 +25,32 @@ class DataBase:
     def update(self):
         self.data.commit()
 
-    def add(self, data: dict):
+    def add_user(self, data: UserData):
         try:
             self.cursor.execute(
-                f"""INSERT INTO users (id, username, password, token)
-                VALUES ('{data['id']}',
-                '{data['username']}',
-                '{data['password']}');"""
+                f"""INSERT INTO users (id, username, password)
+                VALUES ('{data.id}',
+                '{data.username}',
+                '{data.password}');"""
             )
             self.data.commit()
-            create_log(f'User ID {data["id"]} added', 'info')
+            create_log(f'User ID {data.id} added', 'info')
         except sqlite3.IntegrityError:
-            create_log(f'Cant add ID {data["id"]}', 'error')
+            create_log(f'Cant add ID {data.id}', 'error')
 
-    def remove(self, uid: int) -> list | None:
+    def add_note(self, data: NoteData):
+        try:
+            self.cursor.execute(
+                f"""INSERT INTO notes (id, notename)
+                VALUES ('{data.id}',
+                '{data.name}');"""
+            )
+            self.data.commit()
+            create_log(f'User ID {data.id} added', 'info')
+        except sqlite3.IntegrityError:
+            create_log(f'Cant add ID {data.id}', 'error')
+
+    def remove_user(self, uid: int) -> list | None:
         if self.get(uid) is not None:
             a = self.cursor.execute(
                 f"DELETE FROM users WHERE id = '{uid}'"
@@ -48,6 +60,18 @@ class DataBase:
             return a
         else:
             create_log(f'Unable delete ID {uid}')
+            return None
+
+    def remove_note(self, data: NoteData) -> list | None:
+        if self.get(data.id) is not None:
+            a = self.cursor.execute(
+                f"DELETE FROM note WHERE id = '{data.id}' AND notename = '{data.name}'"
+            ).fetchall()
+            self.data.commit()
+            create_log(f'User {data.id} was deleted', 'info')
+            return a
+        else:
+            create_log(f'Unable delete ID {data.id}')
             return None
 
     def get(self, uid: int) -> UserData | None:
