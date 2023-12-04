@@ -14,6 +14,12 @@ class NoteData:
     name: str
 
 
+@dataclass
+class UserNoteData:
+    user: UserData
+    notes: tuple
+
+
 class Singleton:
     _instances = {}
     def __new__(cls, *args, **kwargs):

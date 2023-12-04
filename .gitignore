@@ -5,6 +5,7 @@ venv
 
 *.log
 *.log.*
+*.sql
 
 data
 server_data

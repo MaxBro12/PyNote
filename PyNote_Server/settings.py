@@ -23,15 +23,20 @@ DIR_NOTES = f'{DIR_DATA}/notes'
 
 
 # ! SQL
+MAX_ID_LEN: Final = 1_000_000
+MIN_ID_LEN: Final = 100_000
+
 CREATE_TABLE_USERS: Final = """CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL);"""
 CREATE_TABLE_NOTES: Final = """CREATE TABLE IF NOT EXISTS notes (
-        id INTEGER PRIMARY KEY,
-        notename TEXT NOT NULL);"""
+        id INTEGER NOT NULL,
+        notename TEXT NOT NULL UNIQUE,
+        FOREIGN KEY (id) REFERENCES users(id));"""
 
-TABLE_GET_USERNAMES: Final = """SELECT username from users"""
+TABLE_GET_IDS: Final = """SELECT id FROM users"""
+TABLE_GET_USERNAMES: Final = """SELECT usernames FROM users"""
 # table_get_id = """SELECT id from users"""
 
 """
