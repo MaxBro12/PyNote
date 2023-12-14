@@ -1,3 +1,3 @@
-from .base_sql import DataBase, create_base
-# from .dbentry import add_to_db
+from .base_sql import DataBase
+from .create_sql import create_base
 from .specclasses import UserData, NoteData, Singleton

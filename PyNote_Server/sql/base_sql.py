@@ -1,7 +1,8 @@
 import sqlite3
 from random import randint
 
-from core import create_log, update_dict_to_type
+from core import create_log
+from create_sql import create_base
 
 from settings import (
     FILE_DB,
@@ -57,7 +58,7 @@ class DataBase(Singleton):
             create_log(f'Cant add ID {data.id}', 'error')
 
     def remove_user(self, uid: int) -> list | None:
-        if self.find(uid):
+        if self.id_in(uid):
             a = self.cursor.execute(
                 f"DELETE FROM users WHERE id = '{uid}'"
             ).fetchall()
@@ -69,7 +70,7 @@ class DataBase(Singleton):
             return None
 
     def remove_note(self, data: NoteData) -> list | None:
-        if self.find(data.id):
+        if self.id_in(data.id):
             a = self.cursor.execute(
                 f"DELETE FROM note WHERE id = '{data.id}' AND notename = '{data.name}'"
             ).fetchall()
@@ -80,7 +81,7 @@ class DataBase(Singleton):
             create_log(f'Unable delete ID {data.id}')
             return None
 
-    def find(self, uid: int) -> bool:
+    def id_in(self, uid: int) -> bool:
         try:
             return True if self.cursor.execute(
                 f"SELECT EXISTS (SELECT 1 FROM users WHERE id = '{uid}');"
@@ -89,12 +90,30 @@ class DataBase(Singleton):
             create_log(f'Cant find user by id {uid}')
             return False
 
+    def name_in(self, username: str) -> bool:
+        try:
+            return True if self.cursor.execute(
+                f"SELECT EXISTS (SELECT 1 FROM users WHERE username = '{username}');"
+            ).fetchall()[0][0] == 1 else False
+        except IndexError:
+            create_log(f'Cant find user by name {username}')
+            return False
+
     def create_id(self) -> int:
         while True:
             a = randint(MIN_ID_LEN, MAX_ID_LEN)
             if a in self.ids:
                 continue
             return a
+    
+    def get_user(self, username: str) -> UserData | None:
+        try:
+            sql_answer = self.cursor.execute(
+                f"SELECT * FROM users WHERE username = '{username}'"
+            ).fetchall()
+            return UserData(sql_answer[0][0], sql_answer[0][1], sql_answer[0][2])
+        except IndexError:
+            create_log(f'Cant find user by name {username}')
 
     def get_notes(self, uid: int) -> tuple:
         try:
@@ -130,28 +149,3 @@ class DataBase(Singleton):
             map(lambda x: x[0],
                 self.cursor.execute(TABLE_GET_USERNAMES).fetchall())
         )
-
-
-def create_base(db_name: str) -> sqlite3.Connection | None:
-    """Создает базу данных"""
-    try:
-        sql = sqlite3.connect(db_name)
-        sqlcursor = sql.cursor()
-
-        sqlcursor.execute(CREATE_TABLE_USERS)
-        sql.commit()
-
-        sqlcursor.execute(CREATE_TABLE_NOTES)
-        sql.commit()
-        sqlcursor.close()
-
-        return sql
-
-    except sqlite3.Error as error:
-        create_log(error, 'error')
-
-
-# def load_db(db_name: str = FILE_DB) -> sqlite3.Connection | None:
-#     """Возвращается база данных под названием db_name.
-#     Обязательно! Файл должен быть с расширением .db"""
-#     return sqlite3.connect(db_name)

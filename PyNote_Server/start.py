@@ -23,7 +23,7 @@ def main_check() -> dict:
     # ? Проверяем папки
     check_fold(DIR_DATA)
     check_fold(DIR_NOTES)
-    # check_db()
+    check_db()
 
     # ? Проверяем файл конфига
     conf = check_conf()
@@ -57,5 +57,5 @@ def check_conf():
 
 def check_db():
     if not wayfinder(FILE_DB):
-        create_base()
+        create_base(FILE_DB)
         create_log(f'DB {FILE_DB} CREATED!', 'info')

@@ -33,11 +33,14 @@ from settings import FILE_DB, CREATE_TABLE_USERS
 
 
 def main(args: list):
-    # config = main_check()
     create_log('LAUNCHING =========================', 'info')
+    config = main_check()
 
     db = DataBase(FILE_DB)
 
+    db.add_user(UserData(db.create_id(), 'test', 'test'))
+    t = db.get_user('maxbro1')
+    print(t)
     # print(db.get_user_data('maxbro'))
     # create_log(f'Server UP at {ip}:{port}', 'info')
     # start_server(ip, conf['app']['server_token'])
