@@ -35,3 +35,9 @@ from .notes import (
 )
 
 from .exceptions import OsException, ConfigException
+from .usernotes import (
+    create_note,
+    create_userfolder,
+    delete_userfolder,
+    delete_folder
+)

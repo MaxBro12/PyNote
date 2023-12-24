@@ -17,7 +17,7 @@ FILE_SETTINGS_IN: Final = {
 FILE_LOGGER = f'{DIR_DATA}/logger.log'
 FILE_ERROR = f'{DIR_DATA}/error.log'
 
-FILE_DB = f'{DIR_DATA}/base.db'
+FILE_DB = f'{DIR_DATA}/base.sqlite3'
 
 DIR_NOTES = f'{DIR_DATA}/notes'
 
