@@ -10,7 +10,7 @@ config = read_toml(FILE_SETTINGS)
 
 def correct_token(token: str) -> bool:
     """Проверяем наличие правильного токена """
-    if config['token'] == token:
+    if config['SERVER']['TOKEN'] == token:
         return True
     create_log('Try to connect with WRONG TOKEN', 'info')
     return False

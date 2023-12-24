@@ -21,7 +21,7 @@ from .filemanage import (
     pjoin,
     wayfinder,
 )
-
+"""
 from .notes import (
     get_user_notes,
 
@@ -33,11 +33,12 @@ from .notes import (
     create_userdir,
     delete_userdir,
 )
+"""
 
 from .exceptions import OsException, ConfigException
 from .usernotes import (
-    create_note,
     create_userfolder,
+    create_note,
     delete_userfolder,
-    delete_folder
+    delete_note
 )

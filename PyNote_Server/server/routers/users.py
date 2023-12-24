@@ -8,7 +8,6 @@ from settings import FILE_DB, FILE_SETTINGS
 
 router = APIRouter()
 db = DataBase(FILE_DB)
-config = read_toml(FILE_SETTINGS)
 
 
 @router.post('/user')

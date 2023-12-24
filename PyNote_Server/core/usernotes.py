@@ -11,7 +11,7 @@ from .filemanage import (
     pjoin,
 )
 
-from PyNote_Server.settings import DIR_NOTES
+from settings import DIR_NOTES
 
 
 def create_userfolder(uid):

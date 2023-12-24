@@ -42,7 +42,7 @@ def delete_user(token: str, username: str, password: str, note: str):
     user = check_access(token, username, password)
     if type(user) == UserData:
         db.remove_note(NoteData(user.id, note))
-        delete_note()
+        delete_note(user.id, note)
         return {'msg': f'Note {note} DELETED'}
     else:
         return user

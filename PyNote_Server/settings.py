@@ -8,7 +8,7 @@ FILE_SETTINGS: Final = f'{DIR_DATA}/settings.toml'
 FILE_SETTINGS_IN: Final = {
     'SERVER': {
         'HOST': "",
-        'PORT': "",
+        'PORT': 8000,
         'TOKEN': "",
         'DEBUG': "",
     },

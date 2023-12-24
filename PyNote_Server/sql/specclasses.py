@@ -17,13 +17,12 @@ class NoteData:
 @dataclass
 class UserNoteData:
     user: UserData
-    notes: tuple
+    notes: tuple[NoteData, ...]
 
 
 class Singleton:
-    _instances = {}
+    _instance = None
     def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__new__(cls)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance

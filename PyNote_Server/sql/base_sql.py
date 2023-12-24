@@ -2,14 +2,10 @@ import sqlite3
 from random import randint
 
 from core import create_log
-from create_sql import create_base
+from .create_sql import create_base
 
 from settings import (
     FILE_DB,
-
-    CREATE_TABLE_USERS,
-    CREATE_TABLE_NOTES,
-
     TABLE_GET_USERNAMES,
     TABLE_GET_IDS,
 
@@ -115,7 +111,7 @@ class DataBase(Singleton):
         except IndexError:
             create_log(f'Cant find user by name {username}')
 
-    def get_notes(self, uid: int) -> tuple:
+    def get_notes(self, uid: int) -> tuple[NoteData, ...]:
         try:
             sql_answer = self.cursor.execute(
                 f"SELECT * FROM notes WHERE id = '{uid}'"
