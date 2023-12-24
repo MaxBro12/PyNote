@@ -1,6 +1,8 @@
 PySide6
 toml
+
 requests
 fastapi
 uvicorn
 pydantic
+aiosqlite

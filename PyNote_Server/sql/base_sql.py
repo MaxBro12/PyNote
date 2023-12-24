@@ -25,10 +25,10 @@ class DataBase(Singleton):
         else:
             raise LoadDBException
 
-    def update(self):
+    async def update(self):
         self.data.commit()
 
-    def add_user(self, data: UserData):
+    async def add_user(self, data: UserData):
         try:
             self.cursor.execute(
                 f"""INSERT INTO users (id, username, password)
@@ -41,7 +41,7 @@ class DataBase(Singleton):
         except sqlite3.IntegrityError:
             create_log(f'Cant add ID {data.id}', 'error')
 
-    def add_note(self, data: NoteData):
+    async def add_note(self, data: NoteData):
         try:
             self.cursor.execute(
                 f"""INSERT INTO notes (id, notename)
@@ -53,7 +53,7 @@ class DataBase(Singleton):
         except sqlite3.IntegrityError:
             create_log(f'Cant add ID {data.id}', 'error')
 
-    def remove_user(self, uid: int) -> list | None:
+    async def remove_user(self, uid: int) -> list | None:
         if self.id_in(uid):
             a = self.cursor.execute(
                 f"DELETE FROM users WHERE id = '{uid}'"
@@ -65,7 +65,7 @@ class DataBase(Singleton):
             create_log(f'Unable delete ID {uid}')
             return None
 
-    def remove_note(self, data: NoteData) -> list | None:
+    async def remove_note(self, data: NoteData) -> list | None:
         if self.id_in(data.id):
             a = self.cursor.execute(
                 f"DELETE FROM note WHERE id = '{data.id}' AND notename = '{data.name}'"
@@ -77,7 +77,7 @@ class DataBase(Singleton):
             create_log(f'Unable delete ID {data.id}')
             return None
 
-    def id_in(self, uid: int) -> bool:
+    async def id_in(self, uid: int) -> bool:
         try:
             return True if self.cursor.execute(
                 f"SELECT EXISTS (SELECT 1 FROM users WHERE id = '{uid}');"
@@ -86,7 +86,7 @@ class DataBase(Singleton):
             create_log(f'Cant find user by id {uid}')
             return False
 
-    def name_in(self, username: str) -> bool:
+    async def name_in(self, username: str) -> bool:
         try:
             return True if self.cursor.execute(
                 f"SELECT EXISTS (SELECT 1 FROM users WHERE username = '{username}');"
@@ -95,14 +95,14 @@ class DataBase(Singleton):
             create_log(f'Cant find user by name {username}')
             return False
 
-    def create_id(self) -> int:
+    async def create_id(self) -> int:
         while True:
             a = randint(MIN_ID_LEN, MAX_ID_LEN)
             if a in self.ids:
                 continue
             return a
     
-    def get_user(self, username: str) -> UserData | None:
+    async def get_user(self, username: str) -> UserData | None:
         try:
             sql_answer = self.cursor.execute(
                 f"SELECT * FROM users WHERE username = '{username}'"
@@ -111,7 +111,7 @@ class DataBase(Singleton):
         except IndexError:
             create_log(f'Cant find user by name {username}')
 
-    def get_notes(self, uid: int) -> tuple[NoteData, ...]:
+    async def get_notes(self, uid: int) -> tuple[NoteData, ...]:
         try:
             sql_answer = self.cursor.execute(
                 f"SELECT * FROM notes WHERE id = '{uid}'"
@@ -122,13 +122,13 @@ class DataBase(Singleton):
             create_log(f'Cant find user by id {uid}')
             return ()
 
-    def get_user_data(self, username: str) -> UserNoteData | None:
+    async def get_user_data(self, username: str) -> UserNoteData | None:
         try:
             a = self.cursor.execute(
                 f"SELECT * FROM users WHERE username = '{username}'"
             ).fetchall()
             a = UserData(a[0][0], a[0][1], a[0][2])
-            return UserNoteData(a, self.get_notes(a.id))
+            return UserNoteData(a, await self.get_notes(a.id))
         except IndexError:
             create_log(f'Cant find user by name {username}')
 

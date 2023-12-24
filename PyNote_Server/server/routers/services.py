@@ -1,10 +1,9 @@
-from sql import DataBase, UserData
+from sql import UserData, db_get_user
 from core import read_toml, create_log
 
-from settings import FILE_DB, FILE_SETTINGS
+from settings import FILE_SETTINGS
 
 
-db = DataBase(FILE_DB)
 config = read_toml(FILE_SETTINGS)
 
 
@@ -16,9 +15,9 @@ def correct_token(token: str) -> bool:
     return False
 
 
-def check_access(token: str, username: str, password: str) -> UserData | dict:
+async def check_access(token: str, username: str, password: str) -> UserData | dict:
     if correct_token(token):
-        user = db.get_user(username)
+        user = await db_get_user(username)
         if user is not None:
             if user.password == password:
                 return user

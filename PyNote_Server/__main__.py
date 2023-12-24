@@ -5,7 +5,7 @@ from server.local import get_local_ip
 
 from core import create_log
 from start import main_check
-from sql import DataBase
+# from sql import DataBase
 from server.routers import users, notes
 
 from settings import FILE_DB
@@ -15,8 +15,6 @@ def main(args: list):
     create_log('LAUNCHING =========================', 'info')
     ip = get_local_ip()
     config = main_check()
-
-    db = DataBase(FILE_DB)
 
     app = FastAPI(title='PyNote Server')
     app.include_router(users.router)
