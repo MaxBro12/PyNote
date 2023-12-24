@@ -5,6 +5,8 @@ from .filemanage import (
     delete_file,
     delete_folder,
 
+    load_file,
+
     remove_dir_tree,
 
     wayfinder,
@@ -14,17 +16,15 @@ from .filemanage import (
 from settings import DIR_NOTES
 
 
-def create_userfolder(uid):
+def create_userfolder(uid: int):
     way = pjoin(DIR_NOTES, str(uid))
     if not wayfinder(way):
         create_folder(way)
 
 
-def create_note(uid, notename: str, inner: str):
-    way = pjoin(DIR_NOTES, str(uid))
-    if not wayfinder(way):
-        create_folder(uid)
-        create_file(pjoin(way, notename), inner)
+def create_note(uid: int, notename: str, inner: str):
+    create_userfolder(uid)
+    create_file(pjoin(DIR_NOTES, str(uid), notename), inner)
 
 
 def delete_userfolder(uid):

@@ -12,6 +12,7 @@ class UserData:
 class NoteData:
     id: int
     name: str
+    inner: str
 
 
 @dataclass

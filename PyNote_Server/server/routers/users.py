@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from sql import UserData, db_add_user, db_remove_user, db_get_user, db_get_usernames, db_create_id
-from core import read_toml, create_log
+from core import read_toml, create_log, delete_userfolder
 
 from .services import correct_token, check_access
 
@@ -27,6 +27,7 @@ async def server_delete_user(token: str, username: str, password: str):
     user = await check_access(token, username, password)
     if type(user) == UserData:
         await db_remove_user(user.id)
+        delete_userfolder(user.id)
         return {'msg': f'User {username} DELETED'}
     else:
         return user

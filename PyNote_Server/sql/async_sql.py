@@ -1,7 +1,10 @@
 import aiosqlite
 from random import randint
 
+from core import load_file, pjoin
+
 from settings import (
+    DIR_NOTES,
     FILE_DB,
     MAX_ID_LEN,
     MIN_ID_LEN,
@@ -50,7 +53,7 @@ async def db_add_note(data: NoteData):
 async def db_remove_note(data: NoteData):
     async with aiosqlite.connect(FILE_DB) as db:
         await db.execute(
-            f"DELETE FROM note WHERE id = '{data.id}' AND notename = '{data.name}'"
+            f"DELETE FROM notes WHERE id = '{data.id}' AND notename = '{data.name}'"
         )
         await db.commit()
 
@@ -60,7 +63,7 @@ async def db_get_all_user_notes(uid):
         async with db.execute(f"SELECT * FROM notes WHERE id = '{uid}'") as cursor:
             notes = []
             async for row in cursor:
-                notes.append(NoteData(row[0], row[1]))
+                notes.append(NoteData(row[0], row[1], load_file(pjoin(DIR_NOTES, str(row[0]), row[1]))))
             return notes
 
 
