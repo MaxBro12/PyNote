@@ -8,6 +8,7 @@ from .async_sql import (
     db_remove_note,
     db_get_all_user_notes,
     db_get_usernames,
+    db_get_notesnames,
     db_get_ids,
 )
 from .create_sql import create_base

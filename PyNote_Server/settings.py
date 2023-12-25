@@ -32,9 +32,10 @@ CREATE_TABLE_USERS: Final = """CREATE TABLE IF NOT EXISTS users (
         password TEXT NOT NULL);"""
 CREATE_TABLE_NOTES: Final = """CREATE TABLE IF NOT EXISTS notes (
         id INTEGER NOT NULL,
-        notename TEXT NOT NULL UNIQUE,
+        notename TEXT NOT NULL,
         CONSTRAINT id_fk FOREIGN KEY (id) REFERENCES users(id)
     );"""
 
 TABLE_GET_IDS: Final = """SELECT id FROM users"""
-TABLE_GET_USERNAMES: Final = """SELECT usernames FROM users"""
+TABLE_GET_USERNAMES: Final = """SELECT username FROM users"""
+

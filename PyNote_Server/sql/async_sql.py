@@ -18,7 +18,7 @@ async def db_add_user(data: UserData):
     async with aiosqlite.connect(FILE_DB) as db:
         await db.execute(
             f"""INSERT INTO users (id, username, password)
-                VALUES ('{data.id}',
+                VALUES ({data.id},
                 '{data.username}',
                 '{data.password}');"""
         )
@@ -28,7 +28,8 @@ async def db_add_user(data: UserData):
 async def db_remove_user(uid: int):
     async with aiosqlite.connect(FILE_DB) as db:
         await db.execute(
-            f"DELETE FROM users, notes WHERE id = '{uid}'"
+            f"""DELETE FROM users WHERE id == {uid};
+            DELETE FROM notes WHERE id == {uid}"""
         )
         await db.commit()
 
@@ -44,7 +45,7 @@ async def db_add_note(data: NoteData):
     async with aiosqlite.connect(FILE_DB) as db:
         await db.execute(
             f"""INSERT INTO notes (id, notename)
-                VALUES ('{data.id}',
+                VALUES ({data.id},
                 '{data.name}');"""
         )
         await db.commit()
@@ -79,6 +80,17 @@ async def db_get_ids() -> list:
 async def db_get_usernames() -> list:
     async with aiosqlite.connect(FILE_DB) as db:
         cursor = await db.execute(TABLE_GET_USERNAMES)
+        ans = []
+        async for row in cursor:
+            ans.append(row[0])
+        return ans
+
+
+async def db_get_notesnames(uid: int) -> list:
+    async with aiosqlite.connect(FILE_DB) as db:
+        cursor = await db.execute(
+            f'SELECT notename FROM notes WHERE id == {uid}'
+        )
         ans = []
         async for row in cursor:
             ans.append(row[0])
