@@ -21,19 +21,6 @@ from .filemanage import (
     pjoin,
     wayfinder,
 )
-"""
-from .notes import (
-    get_user_notes,
-
-    add_note,
-    delete_note,
-
-    rename_note,
-
-    create_userdir,
-    delete_userdir,
-)
-"""
 
 from .exceptions import OsException, ConfigException
 from .usernotes import (

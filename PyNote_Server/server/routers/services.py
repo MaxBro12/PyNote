@@ -21,6 +21,8 @@ async def check_access(token: str, username: str, password: str) -> UserData | d
         if user is not None:
             if user.password == password:
                 return user
+            create_log(f'Try to get {username} with WRONG PASSWORD', 'info')
             return {'msg': 'Wrong password!'}
+        create_log(f'No such user with name {username}', 'info')
         return {'msg': 'User not found'}
     return {'msg': 'Wrong token'}

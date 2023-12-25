@@ -5,10 +5,7 @@ from server.local import get_local_ip
 
 from core import create_log
 from start import main_check
-# from sql import DataBase
 from server.routers import users, notes
-
-from settings import FILE_DB
 
 
 def main(args: list):

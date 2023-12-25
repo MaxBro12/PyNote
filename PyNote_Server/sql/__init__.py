@@ -11,4 +11,4 @@ from .async_sql import (
     db_get_ids,
 )
 from .create_sql import create_base
-from .specclasses import UserData, NoteData, Singleton
+from .specclasses import UserData, NoteData

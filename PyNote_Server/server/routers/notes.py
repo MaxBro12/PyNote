@@ -4,6 +4,7 @@ from sql import UserData, NoteData, db_add_note, db_remove_note, db_get_all_user
 from core import (
     create_note,
     delete_note,
+    create_log
 )
 from .services import check_access
 
@@ -15,6 +16,7 @@ router = APIRouter()
 async def server_get_all_user_notes(token: str, username: str, password: str):
     user = await check_access(token, username, password)
     if type(user) == UserData:
+        create_log(f'Get user notes {username}', 'debug')
         return await db_get_all_user_notes(user.id)
     else:
         return user

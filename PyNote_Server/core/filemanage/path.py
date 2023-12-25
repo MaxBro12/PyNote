@@ -83,14 +83,14 @@ def pathfinder(
 def remove_dir_tree(way_to_folder_name: str) -> bool:
     """Удаляет всю структуру из файлов и папок после пути"""
     try:
-        files = pathfinder(way_to_folder_name)
+        files = pathfinder(way_to_folder_name, append_folder_name=True)
         if files is not None:
             files = files[::-1]
             for i in files:
-                if i[1]:
-                    remove(i[0])
+                if isfile(i):
+                    remove(i)
                 else:
-                    rmdir(i[0])
+                    rmdir(i)
             rmdir(way_to_folder_name)
             return True
         return False

@@ -38,23 +38,3 @@ CREATE_TABLE_NOTES: Final = """CREATE TABLE IF NOT EXISTS notes (
 
 TABLE_GET_IDS: Final = """SELECT id FROM users"""
 TABLE_GET_USERNAMES: Final = """SELECT usernames FROM users"""
-# table_get_id = """SELECT id from users"""
-
-"""
-# ! Flask
-debug = False
-port = 3334
-host = "127.0.0.1"
-
-api_new_user_1 = "/new/<string:user>"
-api_new_user_2 = "/new/"
-api_new_user_3 = "/new"
-
-api_user_data_1 = "/usr/<string:user>"
-api_user_data_2 = "/usr/"
-api_user_data_3 = "/usr"
-
-api_notes_1 = "/note/<string:user>"
-api_notes_2 = "/note/"
-api_notes_3 = "/note"
-"""
