@@ -122,6 +122,6 @@ FILE_TH_SPACE_IN: Final = {
 }
 
 # ! Сервер
-API_NEW: Final = "new"
-API_USR: Final = "usr"
-API_NOTE: Final = "note"
+SERVER_STATUS: Final = 'status'
+SERVER_USER: Final = "user"
+SERVER_NOTES: Final = "notes"

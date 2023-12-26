@@ -1,52 +1,29 @@
-from requests import get, post, exceptions
+from requests import post, delete
 
+from core import create_log
+from .services import url, server_get_status
 
-from core import create_log_file
-
-
-from .urls import url
-
-
+from spec_types import User
 from settings import (
-    api_new,
-    api_usr,
-)
-from spec_types import (
-    Load_User,
-    User_Data,
-    Server_Log,
+    SERVER_USER,
 )
 
 
-def api_check_user(host: str, key: str, name: str) -> bool:
-    try:
-        return True if get(url(host, key, api_new, name)).json()['log'] \
-            else False
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return False
-    except KeyError:
-        create_log_file('Server dont undestend request', 'error')
-        return False
+def server_new_user(host: str, user: User) -> bool:
+    if server_get_status(host):
+        return True if post(url(host, SERVER_USER), params={
+            'token': user.token,
+            'username': user.username,
+            'password': user.password
+        }).json()['msg'] == 'All good' else False
+    return False
 
 
-def api_create_user(host: str, key: str, user: Load_User) \
-        -> User_Data | Server_Log:
-    try:
-        return post(
-            url(host, key, api_new, user['username']), data=user
-        ).json()
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return {'log': 'timeout'}
-
-
-def api_login_user(host: str, key: str, user: Load_User) \
-        -> User_Data | Server_Log:
-    try:
-        return get(
-            url(host, key, api_usr, user['username']), data=user
-        ).json()
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return {'log': 'timeout'}
+def server_delete_user(host: str, user: User) -> bool:
+    if server_get_status(host):
+        return True if delete(url(host, SERVER_USER), params={
+            'token': user.token,
+            'username': user.username,
+            'password': user.password
+        }).json()['msg'] == f'User {user.username} DELETED' else False
+    return False

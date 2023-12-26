@@ -1,55 +1,45 @@
-from requests import get, post, delete, exceptions
+from requests import get, post, delete
 
-
-from core import create_log_file
-
-
-from .urls import url
-
+from core import create_log
+from .services import url, server_get_status
 
 from settings import (
-    api_notes,
+    SERVER_NOTES,
 )
 from spec_types import (
     Note,
-    Get_User_Note,
-    Post_Note,
-    Delete_Note,
-
-    User_Data,
-    User_Note,
+    User
 )
 
 
-def api_get_notes(host: str, key: str, data: User_Data) -> list[Note] | None:
-    try:
-        return get(url(host, key, api_notes), data=data).json()['log']
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return None
+def server_get_notes(host: str, user: User) -> list[Note]:
+    if server_get_status(host):
+        return list(map(lambda x: Note(x['name'], x['inner']), get(url(host, SERVER_NOTES), params={
+            'token': user.token,
+            'username': user.username,
+            'password': user.password
+        }).json()))
+    return []
 
 
-def api_save_note(host: str, key: str, data: User_Note) -> bool:
-    try:
-        return True if post(
-            url(host, key, api_notes), data=data
-        ).json()['log'] else False
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return False
-    except KeyError:
-        create_log_file('Server dont undestend request', 'error')
-        return False
+def server_add_note(host: str, user: User, note: Note) -> bool:
+    if server_get_status(host):
+        return True if post(url(host, SERVER_NOTES), params={
+            'token': user.token,
+            'username': user.username,
+            'password': user.password,
+            'note': note.name,
+            'inner': note.inner
+        }).json()['msg']  == f'Note {note.name} CREATED' else False
+    return False
 
 
-def api_delete_note(host: str, key: str, data: Delete_Note) -> bool:
-    try:
-        return True if delete(
-            url(host, key, api_notes), data=data
-        ).json()['log'] else False
-    except exceptions.Timeout:
-        create_log_file('Server timeout!', 'error')
-        return False
-    except KeyError:
-        create_log_file('Server dont undestend request', 'error')
-        return False
+def server_delete_note(host: str, user: User, note: Note) -> bool:
+    if server_get_status(host):
+        return True if delete(url(host, SERVER_NOTES), params={
+            'token': user.token,
+            'username': user.username,
+            'password': user.password,
+            'note': note.name,
+        }).json()['msg'] == f'Note {note.name} DELETED' else False 
+    return False
