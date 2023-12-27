@@ -5,24 +5,27 @@ from PySide6.QtWidgets import (
     QListWidget,
 )
 from PySide6.QtCore import (
-    QSize
+    QSize,
+    QTimer,
 )
+
 from .settings_l_pannel import (
     SettingsGeneral,
     SettingsUser,
     SettingsServer,
 )
-
 from core import (
     read_toml,
     write_toml,
 )
+from server.services import server_get_status
 
 from lang import lang
 from settings import (
     SETTINGS_APP_SIZE,
     SETTINGS_APP_L_PANNEL_SIZE,
     FILE_SETTINGS,
+    TIMER_SERVER_STATUS_CALL,
 
     ALL_MARGINS,
     ALL_SPASING,
@@ -102,6 +105,12 @@ class SettingsWindow(QWidget):
         self.settingsServer.token_i.setText(self.config['server']['token'])
         self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
+        # ! Server call
+        self.timer = QTimer()
+        self.timer.setInterval(TIMER_SERVER_STATUS_CALL)
+        self.timer.timeout.connect(self.server_call)
+        self.timer.start()
+
     def test_call(self, s = ''):
         print(f'Test call {s}')
     
@@ -129,4 +138,11 @@ class SettingsWindow(QWidget):
         self.config['server']['token'] = str(self.settingsServer.token_i.text())
 
         write_toml(self.config, FILE_SETTINGS)
+
+    # ? Server part
+    def server_call(self):
+        pass
+        #self.settingsServer.status_i.set_color(
+        #    server_get_status(self.config['server']['host'])
+        #)
 

@@ -43,7 +43,7 @@ NOTE_LIST_L_PANNEL_SIZE: Final = 200
 
 EDITOR_TITLE_MAX_HEIGHT: Final = 30
 
-SPACER_ITEM_SIZE: Final = (30, 5)
+SPACER_ITEM_SIZE: Final = (30, 1)
 
 ALL_SPASING: Final = 2
 ALL_MARGINS = QMargins(2, 2, 2, 2)
@@ -125,3 +125,4 @@ FILE_TH_SPACE_IN: Final = {
 SERVER_STATUS: Final = 'status'
 SERVER_USER: Final = "user"
 SERVER_NOTES: Final = "notes"
+TIMER_SERVER_STATUS_CALL: Final = 10_000
