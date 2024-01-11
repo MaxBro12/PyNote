@@ -5,6 +5,7 @@ from .settings_dialogs import (
     NewUserExistsWarning,
     NewUserCreated,
     UserDeleteWarning,
+    UserWasDeletedWarning
 )
 
 from spec_types import User
@@ -47,4 +48,6 @@ class WorkerServerSt(QObject):
             return None
         dia = UserDeleteWarning(language=lang)
         if dia.exec():
-            server_delete_user(host, user)
+            if server_delete_user(host, user):
+                dia = UserWasDeletedWarning(language=lang, username=user.username)
+                dia.exec()

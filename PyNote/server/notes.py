@@ -14,7 +14,7 @@ from spec_types import (
 
 def server_get_notes(host: str, user: User) -> list[Note]:
     if server_get_status(host):
-        return list(map(lambda x: Note(x['name'], x['inner']), get(url(host, SERVER_NOTES), data={
+        return list(map(lambda x: Note(x['name'], x['inner']), get(url(host, SERVER_NOTES), json={
             'token': user.token,
             'username': user.username,
             'password': user.password
@@ -24,7 +24,7 @@ def server_get_notes(host: str, user: User) -> list[Note]:
 
 def server_add_note(host: str, user: User, note: Note) -> bool:
     if server_get_status(host):
-        return True if post(url(host, SERVER_NOTES), data={
+        return True if post(url(host, SERVER_NOTES), json={
             'token': user.token,
             'username': user.username,
             'password': user.password,
@@ -36,7 +36,7 @@ def server_add_note(host: str, user: User, note: Note) -> bool:
 
 def server_delete_note(host: str, user: User, note: Note) -> bool:
     if server_get_status(host):
-        return True if delete(url(host, SERVER_NOTES), data={
+        return True if delete(url(host, SERVER_NOTES), headers={
             'token': user.token,
             'username': user.username,
             'password': user.password,
