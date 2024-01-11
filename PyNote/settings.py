@@ -126,3 +126,4 @@ SERVER_STATUS: Final = 'status'
 SERVER_USER: Final = "user"
 SERVER_NOTES: Final = "notes"
 TIMER_SERVER_STATUS_CALL: Final = 10_000
+TIMER_SERVER_NOTES_CALL: Final = 15_000
