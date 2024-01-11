@@ -11,7 +11,7 @@ from settings import (
 
 def server_new_user(host: str, user: User) -> bool:
     if server_get_status(host):
-        return True if post(url(host, SERVER_USER), params={
+        return True if post(url(host, SERVER_USER), data={
             'token': user.token,
             'username': user.username,
             'password': user.password
@@ -21,7 +21,7 @@ def server_new_user(host: str, user: User) -> bool:
 
 def server_delete_user(host: str, user: User) -> bool:
     if server_get_status(host):
-        return True if delete(url(host, SERVER_USER), params={
+        return True if delete(url(host, SERVER_USER), data={
             'token': user.token,
             'username': user.username,
             'password': user.password
