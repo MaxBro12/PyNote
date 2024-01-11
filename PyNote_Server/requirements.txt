@@ -1,0 +1,6 @@
+toml
+requests
+fastapi
+uvicorn
+pydantic
+aiosqlite
