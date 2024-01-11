@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
+    QPushButton,
 )
 from .settings_main_pannel import SettingsMainPanel
 
@@ -34,6 +35,16 @@ class SettingsUser(SettingsMainPanel):
             lang[conf['MAIN']['lang']]['set_password_i']
         )
 
+        # Login
+        self.new_user = QPushButton()
+        self.new_user.setText(
+            lang[conf['MAIN']['lang']]['new_user_b']
+        )
+        self.delete_user = QPushButton()
+        self.delete_user.setText(
+            lang[conf['MAIN']['lang']]['delete_user_b']
+        )
+
         # wtkey
         self.wtkey_l = QLabel()
         self.wtkey_l.setText(
@@ -49,7 +60,9 @@ class SettingsUser(SettingsMainPanel):
         self.row.addWidget(self.username_i, 0, 1)
         self.row.addWidget(self.password_l, 1, 0)
         self.row.addWidget(self.password_i, 1, 1)
-        self.row.addWidget(self.wtkey_l, 2, 0)
-        self.row.addWidget(self.wtkey_i, 2, 1)
+        self.row.addWidget(self.new_user, 2, 0)
+        self.row.addWidget(self.delete_user, 2, 1)
+        self.row.addWidget(self.wtkey_l, 3, 0)
+        self.row.addWidget(self.wtkey_i, 3, 1)
 
 

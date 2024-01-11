@@ -75,16 +75,28 @@ lang = {
 
         'set_username_l': 'Имя пользователя',
         'set_username_i': '',
+
         'set_password_l': 'Пароль',
         'set_password_i': '',
+
+        'new_user_b': 'Создать аккаунт',
+        'delete_user_b': '! УДАЛИТЬ АККАУНТ !',
+
         'set_wtkey_l': 'Путь до ключа',
         'set_wtkey_i': '',
 
         'set_host_l': 'Хост сервера',
         'set_host_i': '',
 
+        'serv_st_l': 'Статус сервера',
+        'serv_st_i': '',
+
         'set_token_l': 'Токен доступа',
         'set_token_i': '',
+
+        'dia_new_user_exists': 'Данный пользователь уже существует',
+        'dia_new_user_created': 'Пользователь {username} создан',
+        'dia_delete_user_acces': 'Вы уверены что хотите удалить пользователя?',
     },
     'eng': {
         'emp_title': 'Название заметки',

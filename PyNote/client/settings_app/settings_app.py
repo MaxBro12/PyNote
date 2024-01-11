@@ -1,3 +1,4 @@
+from http import server
 from PySide6.QtWidgets import (
     QWidget,
     QStackedWidget,
@@ -5,14 +6,17 @@ from PySide6.QtWidgets import (
     QListWidget,
 )
 from PySide6.QtCore import (
-    QSize
+    QSize,
+    QTimer,
+    QThread,
 )
+
 from .settings_l_pannel import (
     SettingsGeneral,
     SettingsUser,
     SettingsServer,
 )
-
+from .server_thread import WorkerServerSt
 from core import (
     read_toml,
     write_toml,
@@ -23,10 +27,12 @@ from settings import (
     SETTINGS_APP_SIZE,
     SETTINGS_APP_L_PANNEL_SIZE,
     FILE_SETTINGS,
+    TIMER_SERVER_STATUS_CALL,
 
     ALL_MARGINS,
     ALL_SPASING,
 )
+from spec_types import User
 
 
 class SettingsWindow(QWidget):
@@ -102,6 +108,22 @@ class SettingsWindow(QWidget):
         self.settingsServer.token_i.setText(self.config['server']['token'])
         self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
+        # ! Dialogs
+        self.settingsUser.new_user.clicked.connect(self.server_create_user)
+        self.settingsUser.delete_user.clicked.connect(self.server_delete_user)
+
+
+        # ! Server call
+        self.server_thread = QThread()
+        self.server_worker = WorkerServerSt()
+        self.server_worker.moveToThread(self.server_thread)
+        self.server_thread.started.connect(self.server_worker.get_server_st)
+
+        self.timer = QTimer()
+        self.timer.setInterval(TIMER_SERVER_STATUS_CALL)
+        self.timer.timeout.connect(self.server_call)
+        self.timer.start()
+
     def test_call(self, s = ''):
         print(f'Test call {s}')
     
@@ -130,3 +152,32 @@ class SettingsWindow(QWidget):
 
         write_toml(self.config, FILE_SETTINGS)
 
+    # ? Server part
+    def server_call(self):
+        self.server_thread.start()
+        self.server_worker.get_server_st(self.config['server']['host'])
+        self.settingsServer.status_i.set_color(self.server_worker.server_st)
+
+    def server_create_user(self):
+        self.server_thread.start()
+        self.server_worker.create_new_user(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            self.config['MAIN']['lang']
+        )
+
+    def server_delete_user(self):
+        self.server_thread.start()
+        self.server_worker.delete_new_user(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            self.config['MAIN']['lang']
+        )

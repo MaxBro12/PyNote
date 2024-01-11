@@ -8,7 +8,7 @@ QWidget {
 }
 
 QPushButton {
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgba(50, 50, 50, 1);
     border-style: outset;
     border-radius: 10px;
@@ -16,7 +16,7 @@ QPushButton {
 }
 
 QPushButton:hover {
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgb(150, 150, 150);
     border-style: outset;
     border-radius: 5px;
@@ -24,7 +24,7 @@ QPushButton:hover {
 }
 
 QPushButton:pressed {
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgb(255, 255, 255);
     border-style: outset;
     border-radius: 5px;
@@ -59,7 +59,7 @@ QListWidget {
     border-radius: 10px;
     background-color: black;
 
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgba(50, 50, 50, 1);
     border-style: outset;
 }
@@ -72,7 +72,7 @@ QLineEdit {
     border-radius: 10px;
     background-color: black;
 
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgba(50, 50, 50, 1);
     border-style: outset;
 }
@@ -81,7 +81,7 @@ QTextEdit {
     border-radius: 10px;
     background-color: black;
 
-    border-width: 3px;
+    border-width: 2px;
     border-color: rgba(50, 50, 50, 1);
     border-style: outset;
 }

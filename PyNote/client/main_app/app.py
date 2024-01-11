@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QThread, QTimer
 
 from .app_ui import MainAppUI, NoteItemUI
+from .app_server_thread import WorkerServerSt
 from ..settings_app import SettingsWindow
 from ..warning_app import WarningApp 
 from core import (
@@ -26,7 +27,10 @@ from settings import (
     FILE_SETTINGS,
     FILE_APP_ICON,
     NOTE_LIST_ITEM,
+    TIMER_SERVER_NOTES_CALL,
+    NOTE_EXT
 )
+from spec_types import User, Note
 
 
 class MyAppMain(QMainWindow):
@@ -71,6 +75,17 @@ class MyAppMain(QMainWindow):
 
         # ! Заметки локальные
         self.update_notes()
+
+        # ! SERVER
+        self.server_thread = QThread()
+        self.server_worker = WorkerServerSt()
+        self.server_worker.moveToThread(self.server_thread)
+        self.server_thread.started.connect(self.server_worker.get_all_notes)
+
+        self.server_timer = QTimer()
+        self.server_timer.setInterval(TIMER_SERVER_NOTES_CALL)
+        self.server_timer.timeout.connect(self.get_notes_from_server)
+        self.server_timer.start()
 
     # MAIN ====================================================================
     def show_settings(self):
@@ -129,11 +144,23 @@ class MyAppMain(QMainWindow):
                 self.main.edit.title_l,
                 self.main.edit.title_i.text()
             )
+            # self.create_note_from_server(Note(
+            #     self.main.edit.title_i.text(),
+            #     self.main.edit.editor_i.toMarkdown()
+            # ))
+            self.delete_note_from_server(Note(
+                self.main.edit.title_l,
+                ''
+            ))
             self.main.edit.title_l = self.main.edit.title_i.text()
         add_local_note(
             self.main.edit.title_i.text(),
             self.main.edit.editor_i.toMarkdown()
         )
+        self.create_note_from_server(Note(
+            self.main.edit.title_i.text(),
+            self.main.edit.editor_i.toMarkdown()
+        ))
         self.update_notes()
 
     def load_note(self, item):
@@ -153,6 +180,12 @@ class MyAppMain(QMainWindow):
                 item
             ).name.text().removeprefix('  ')
         )
+        self.delete_note_from_server(Note(
+            self.main.notes.note_l.itemWidget(
+                item
+            ).name.text().removeprefix('  '),
+            ''
+        ))
         # Удалить item
         item = self.main.notes.note_l.takeItem(row)
         # Удалить widget
@@ -161,3 +194,50 @@ class MyAppMain(QMainWindow):
         self.update_notes()
 
     # SERVER ==================================================================
+    def get_notes_from_server(self):
+        self.server_thread.start()
+        notes = self.server_worker.get_all_notes(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            )
+        )
+        if notes is None:
+            return None
+        lnotes = get_local_notes()
+        lnotes = list(map(lambda x: Note(
+            x['name'],
+            load_local_note(x['name'])
+        ), lnotes))
+        lnotes = [i for i in lnotes if i not in notes]
+        for i in notes:
+            add_local_note(i.name, i.inner)
+        self.update_notes()
+        for i in lnotes:
+            self.create_note_from_server(i)
+
+    def delete_note_from_server(self, note: Note):
+        self.server_thread.start()
+        self.server_worker.delete_note(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            note
+        )
+
+    def create_note_from_server(self, note: Note):
+        self.server_thread.start()
+        self.server_worker.add_note(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            note
+        )
