@@ -1,3 +1,4 @@
+from http import server
 from PySide6.QtWidgets import (
     QWidget,
     QStackedWidget,
@@ -31,6 +32,7 @@ from settings import (
     ALL_MARGINS,
     ALL_SPASING,
 )
+from spec_types import User
 
 
 class SettingsWindow(QWidget):
@@ -106,6 +108,11 @@ class SettingsWindow(QWidget):
         self.settingsServer.token_i.setText(self.config['server']['token'])
         self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
+        # ! Dialogs
+        self.settingsUser.new_user.clicked.connect(self.server_create_user)
+        self.settingsUser.delete_user.clicked.connect(self.server_delete_user)
+
+
         # ! Server call
         self.server_thread = QThread()
         self.server_worker = WorkerServerSt()
@@ -150,3 +157,27 @@ class SettingsWindow(QWidget):
         self.server_thread.start()
         self.server_worker.get_server_st(self.config['server']['host'])
         self.settingsServer.status_i.set_color(self.server_worker.server_st)
+
+    def server_create_user(self):
+        self.server_thread.start()
+        self.server_worker.create_new_user(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            self.config['MAIN']['lang']
+        )
+
+    def server_delete_user(self):
+        self.server_thread.start()
+        self.server_worker.delete_new_user(
+            self.config['server']['host'],
+            User(
+                self.config['server']['token'],
+                self.config['user']['username'],
+                self.config['user']['password']
+            ),
+            self.config['MAIN']['lang']
+        )

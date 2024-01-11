@@ -93,6 +93,10 @@ lang = {
 
         'set_token_l': 'Токен доступа',
         'set_token_i': '',
+
+        'dia_new_user_exists': 'Данный пользователь уже существует',
+        'dia_new_user_created': 'Пользователь {username} создан',
+        'dia_delete_user_acces': 'Вы уверены что хотите удалить пользователя?',
     },
     'eng': {
         'emp_title': 'Название заметки',

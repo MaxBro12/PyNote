@@ -1,6 +1,12 @@
 from PySide6.QtCore import QObject, Signal
 from server.services import server_get_status
 from server.users import server_new_user, server_delete_user
+from .settings_dialogs import (
+    NewUserExistsWarning,
+    NewUserCreated,
+    UserDeleteWarning,
+)
+
 from spec_types import User
 
 
@@ -20,16 +26,25 @@ class WorkerServerSt(QObject):
             self, 
             host: str | None = None,
             user: User | None = None,
+            lang: str = 'ru'
     ):
         if host is None or user is None:
             return None
-        server_new_user(host, user)
+        if not server_new_user(host, user):
+            dia = NewUserExistsWarning(language=lang)
+            dia.exec()
+        else:
+            dia = NewUserCreated(language=lang, username=user.username)
+            dia.exec()
 
     def delete_new_user(
             self, 
             host: str | None = None,
             user: User | None = None,
+            lang: str = 'ru'
     ):
         if host is None or user is None:
             return None
-        server_delete_user(host, user)
+        dia = UserDeleteWarning(language=lang)
+        if dia.exec():
+            server_delete_user(host, user)
