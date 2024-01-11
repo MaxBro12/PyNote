@@ -1,29 +1,29 @@
+import uvicorn
 from sys import argv
+from fastapi import FastAPI
+from server.local import get_local_ip
+
+from core import create_log
+from start import main_check
+from server.routers import users, notes, status
 
 
-from core import create_log_file
-from launch import main_check
-from sql import DataBase, add_to_db
-from server import start_server, get_local_ip
-
-
-from settings import file_db, host, port, debug
-
-
-def main(args: list = []):
-    create_log_file('LAUNCHING =======================', 'debug')
-    conf = main_check()
-    # db = DataBase(file_db)
-
+def main(args: list):
+    create_log('LAUNCHING =========================', 'info')
     ip = get_local_ip()
-    create_log_file(f'Server UP at {ip}:{port}', 'info')
-    start_server(ip, conf['app']['server_token'])
+    config = main_check()
+
+    app = FastAPI(title='PyNote Server')
+    app.include_router(users.router)
+    app.include_router(notes.router)
+    app.include_router(status.router)
+
+    create_log(f'Server UP at {ip}:{config['SERVER']['PORT']}', 'info')
+    uvicorn.run(app, host=ip, port=config['SERVER']['PORT'])
 
 
 if __name__ == '__main__':
     try:
-        argv.pop()
         main(argv)
-
     except Exception as err:
-        create_log_file(err, 'crit')
+        create_log(err, 'crit')

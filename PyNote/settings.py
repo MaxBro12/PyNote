@@ -1,17 +1,24 @@
+from typing import Final
+from PySide6.QtCore import QSize, QMargins
+
 
 # ! Основное
-file_log = 'data/logger.log'
-file_error = 'error.log'
+ERROR_FOUND: Final = 'Found error! Please link logger.log to developer\nError log:'
+DIR_DATA: Final = 'data'
+DIR_NOTES: Final = f'{DIR_DATA}/notes'
+DIR_THEMES: Final = 'themes'
 
-fold_data = 'data'
-file_conf = 'data/settings.toml'
-file_conf_inner = {
-    'app': {
+FILE_LOGGER: Final = 'logger.log'
+FILE_LOGGER_MAX_LEN: Final = 1_000
+
+FILE_SETTINGS: Final = f'{DIR_DATA}/settings.toml'
+FILE_SETTINGS_IN: Final = {
+    'MAIN': {
         'width': 1000,
         'height': 700,
+        'opacity': 1.0,
         'lang': "ru",
-        'theme': "dark.toml",
-        'opacity': 1,
+        'theme': "dark.css",
         'font_editor_title_size': 15,
         'font_editor_text_size': 10,
         'font_notes_list_size': 12
@@ -26,30 +33,39 @@ file_conf_inner = {
         'token': "",
     }
 }
-file_conf_row = r"""\[app\]
-width = [\d]*
-height = [\d]*
-lang = "[\w]*"
-theme = "[\w]*\.toml"
-opacity = [^\n]*
-font_editor_title_size = [\d]*
-font_editor_text_size = [\d]*
-font_notes_list_size = [\d]*\n
-\[user\]
-username = "[\w]*"
-password = "[\w]*"
-wtkey = "[^"]*"\n
-\[server\]
-host = "[^"]*"
-token = "[\w]*"
-"""
 
+# ! Настройки
+SETTINGS_APP_SIZE: Final = (300, 400)
+SETTINGS_APP_L_PANNEL_SIZE: Final = 150
+
+SETTINGS_DIA_SIZE: Final = QSize(250, 70)
+
+# ! Приложение
+NOTE_LIST_L_PANNEL_SIZE: Final = 200
+
+EDITOR_TITLE_MAX_HEIGHT: Final = 30
+
+SPACER_ITEM_SIZE: Final = (30, 1)
+
+ALL_SPASING: Final = 2
+ALL_MARGINS = QMargins(2, 2, 2, 2)
+
+NOTE_LIST_ITEM = QSize(100, 45)
+NOTE_LIST_ITEM_L = QSize(100, 40)
+NOTE_LIST_ITEM_B = QSize(40, 40)
+NOTE_LIST_ITEM_ICON = QSize(10, 10)
+
+FILE_APP_ICON: Final = 'icons/icon.ico'
+# file_settings_icon = 'PyNote/icons/settings.svg'
+# file_delete_icon = 'PyNote/icons/delete.svg'
+# file_sync_icon = 'PyNote/icons/sync.svg'
+# file_new_note_icon = 'PyNote/icons/newnote.svg'
 
 # ! Заметки
-title_max_length = 16
-fold_notes = 'data/notes'
-file_notes = '_data.toml'
-file_notes_sample = {
+TITLE_MAX_LEN: Final = 16
+NOTE_EXT: Final = '.md'
+FILE_NOTE: Final = '_data.toml'
+FILE_NOTE_SAMPLE: Final = {
     'sync': False,
 
     'last_save': '',
@@ -59,64 +75,57 @@ file_notes_sample = {
 }
 
 # ? Шрифты
-font_notes_list_family = 'Noto Sans Brahmi'
-font_notes_list_size = 12
-font_notes_list_bond = 0
+FONT_NOTES_LIST_FAMILY: Final = 'Noto Sans Brahmi'
+FONT_NOTES_LIST_SIZE: Final = 12
+FONT_NOTES_LIST_BOND: Final = 0
 
-font_editor_title_family = 'Noto Sans Brahmi'
-font_editor_title_size = 15
-font_editor_title_bond = 0
+FONT_EDITOR_TITLE_FAMILY: Final = 'Noto Sans Brahmi'
+FONT_EDITOR_TITLE_SIZE: Final = 15
+FONT_EDITOR_TITLE_BOND: Final = 0
 
-font_editor_text_family = 'Noto Sans'
-font_editor_text_size = ''
-font_editor_text_bond = 0
+FONT_EDITOR_TEXT_FAMILY: Final = 'Noto Sans'
+FONT_EDITOR_TEXT_SIZE: Final = ''
+FONT_EDITOR_TEXT_BOND: Final = 0
 
-
-# ! Приложение
-file_icon = 'PyNote/icons/icon.ico'
-# file_settings_icon = 'PyNote/icons/settings.svg'
-# file_delete_icon = 'PyNote/icons/delete.svg'
-# file_sync_icon = 'PyNote/icons/sync.svg'
-# file_new_note_icon = 'PyNote/icons/newnote.svg'
 
 # ? Темы для приложения
-fold_themes = 'data/themes'
-file_dark = 'data/themes/dark.toml'
-file_dark_inner = {
+FILE_TH_DARK: Final = 'data/themes/dark.toml'
+FILE_TH_DARK_IN: Final = {
     'background': '#1e1e1e',
     'text_color': '#ffffff',
     'side_panel': '#252526',
-    'file_settings_icon': 'PyNote/icons/settings_light.svg',
-    'file_delete_icon': 'PyNote/icons/delete_light.svg',
-    'file_sync_icon': 'PyNote/icons/sync_light.svg',
-    'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
-    'file_expand_icon': "PyNote/icons/expand_light.svg",
+    'file_settings_icon': 'icons/settings_light.svg',
+    'file_delete_icon': 'icons/delete_light.svg',
+    'file_sync_icon': 'icons/sync_light.svg',
+    'file_new_note_icon': 'icons/newnote_light.svg',
+    'file_expand_icon': "icons/expand_light.svg",
 }
-file_light = 'data/themes/light.toml'
-file_light_inner = {
+FILE_TH_LIGHT: Final = 'data/themes/light.toml'
+FILE_TH_LIGHT_IN: Final = {
     'background': '#ffffff',
     'text_color': '#000000',
     'side_panel': '#f3f3f3',
-    'file_settings_icon': 'PyNote/icons/settings.svg',
-    'file_delete_icon': 'PyNote/icons/delete.svg',
-    'file_sync_icon': 'PyNote/icons/sync.svg',
-    'file_new_note_icon': 'PyNote/icons/newnote.svg',
-    'file_expand_icon': "PyNote/icons/expand.svg",
+    'file_settings_icon': 'icons/settings.svg',
+    'file_delete_icon': 'icons/delete.svg',
+    'file_sync_icon': 'icons/sync.svg',
+    'file_new_note_icon': 'icons/newnote.svg',
+    'file_expand_icon': "icons/expand.svg",
 }
-file_space = 'data/themes/spacekit.toml'
-file_space_inner = {
+FILE_TH_SPACE: Final = 'data/themes/spacekit.toml'
+FILE_TH_SPACE_IN: Final = {
     'background': '#2b303b',
     'text_color': '#ffffff',
     'side_panel': '#1c1f26',
-    'file_settings_icon': 'PyNote/icons/settings_light.svg',
-    'file_delete_icon': 'PyNote/icons/delete_light.svg',
-    'file_sync_icon': 'PyNote/icons/sync_light.svg',
-    'file_new_note_icon': 'PyNote/icons/newnote_light.svg',
-    'file_expand_icon': "PyNote/icons/expand_light.svg",
+    'file_settings_icon': 'icons/settings_light.svg',
+    'file_delete_icon': 'icons/delete_light.svg',
+    'file_sync_icon': 'icons/sync_light.svg',
+    'file_new_note_icon': 'icons/newnote_light.svg',
+    'file_expand_icon': "icons/expand_light.svg",
 }
 
-
 # ! Сервер
-api_new = "new"
-api_usr = "usr"
-api_notes = "note"
+SERVER_STATUS: Final = 'status'
+SERVER_USER: Final = "user"
+SERVER_NOTES: Final = "notes"
+TIMER_SERVER_STATUS_CALL: Final = 10_000
+TIMER_SERVER_NOTES_CALL: Final = 15_000

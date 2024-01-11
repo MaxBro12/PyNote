@@ -1,40 +1,30 @@
-from sys import argv
+from sys import argv, exit
 
-from core import create_log_file
-from launch import main_check
-from handlers import login_user
-from client import MyApp, MyAppMain
+from PySide6.QtWidgets import QApplication
 
-from PySide6 import QtWidgets
-from sys import exit
-
-from settings import file_log
-from spec_types import Server_Data, Load_User
+from client import ErrorApp, MyAppMain
+from core import create_log
+from start import main_check
 
 
 def main(args: list):
-    # ? Загрузка
-    conf = main_check()
-    if conf['server']['token'] == '':
-        conf['server']['token'] = 'a'
-    create_log_file('===== Application launched successfully =====', 'info')
-
-    # ? Сервер
-
+    # ? Проверка
+    main_check()
     # ? Запуск приложения
-    app = QtWidgets.QApplication(args)
-    widget = MyApp(conf)
+    app = QApplication(args)
+    widget = MyAppMain()
     widget.show()
     exit(app.exec())
 
 
 if __name__ == '__main__':
     try:
-        argv.pop()
         main(argv)
     except Exception as err:
-        create_log_file(err, 'crit')
-        print(
-            "Во время работы приложния обнаружена ошибка!\n" +
-            f"Отправьте файл {file_log} разработчику."
-        )
+        create_log(err, 'crit')
+
+        if QApplication.instance() is None:
+            app = QApplication([])
+        widget = ErrorApp(err)
+        widget.show()
+        exit(QApplication.exec())
