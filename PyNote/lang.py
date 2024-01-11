@@ -97,6 +97,7 @@ lang = {
         'dia_new_user_exists': 'Данный пользователь уже существует',
         'dia_new_user_created': 'Пользователь {username} создан',
         'dia_delete_user_acces': 'Вы уверены что хотите удалить пользователя?',
+        'dia_user_was_deleted': 'Пользователь {username} удален',
     },
     'eng': {
         'emp_title': 'Название заметки',
