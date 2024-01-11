@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import (
     QSize,
     QTimer,
+    QThread,
 )
 
 from .settings_l_pannel import (
@@ -14,11 +15,11 @@ from .settings_l_pannel import (
     SettingsUser,
     SettingsServer,
 )
+from .server_thread import WorkerServerSt
 from core import (
     read_toml,
     write_toml,
 )
-from server.services import server_get_status
 
 from lang import lang
 from settings import (
@@ -106,6 +107,11 @@ class SettingsWindow(QWidget):
         self.settingsServer.token_i.editingFinished.connect(self.save_config)
 
         # ! Server call
+        self.server_thread = QThread()
+        self.server_worker = WorkerServerSt()
+        self.server_worker.moveToThread(self.server_thread)
+        self.server_thread.started.connect(self.server_worker.get_server_st)
+
         self.timer = QTimer()
         self.timer.setInterval(TIMER_SERVER_STATUS_CALL)
         self.timer.timeout.connect(self.server_call)
@@ -141,8 +147,6 @@ class SettingsWindow(QWidget):
 
     # ? Server part
     def server_call(self):
-        pass
-        #self.settingsServer.status_i.set_color(
-        #    server_get_status(self.config['server']['host'])
-        #)
-
+        self.server_thread.start()
+        self.server_worker.get_server_st(self.config['server']['host'])
+        self.settingsServer.status_i.set_color(self.server_worker.server_st)
