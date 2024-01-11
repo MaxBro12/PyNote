@@ -28,8 +28,10 @@ async def db_add_user(data: UserData):
 async def db_remove_user(uid: int):
     async with aiosqlite.connect(FILE_DB) as db:
         await db.execute(
-            f"""DELETE FROM users WHERE id == {uid};
-            DELETE FROM notes WHERE id == {uid}"""
+            f"DELETE FROM users WHERE id == {uid};"
+        )
+        await db.execute(
+            f"DELETE FROM notes WHERE id == {uid};"
         )
         await db.commit()
 
