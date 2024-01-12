@@ -26,7 +26,7 @@ async def server_new_user(usermodel: UserModel):
             await db_add_user(
                 UserData(uid, usermodel.username, usermodel.password)
             )
-            create_log(f'Added user {usermodel.username}', 'debug')
+            create_log(f'Added user {uid}', 'debug')
             return {'msg': 'All good'}
     return {'msg': 'Wrong token'}
 
@@ -41,7 +41,7 @@ async def server_delete_user(usermodel: UserModel):
     if type(user) == UserData:
         await db_remove_user(user.id)
         delete_userfolder(user.id)
-        create_log(f'Deleted user {usermodel.username}', 'debug')
+        create_log(f'Deleted user {user.id}', 'debug')
         return {'msg': f'User {usermodel.username} DELETED'}
     else:
         return user

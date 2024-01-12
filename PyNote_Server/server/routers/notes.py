@@ -28,7 +28,7 @@ async def server_get_all_user_notes(usermodel: UserModel):
         usermodel.password
     )
     if type(user) == UserData:
-        create_log(f'Get user notes {usermodel.username}', 'debug')
+        create_log(f'Get user notes {user.id}', 'debug')
         return await db_get_all_user_notes(user.id)
     else:
         return user
